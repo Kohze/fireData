@@ -2,13 +2,13 @@
 
 ---
 
-FireData integrates R Datascience with the abilities and possibilities of the Google Firebase Framework. 
+FireData integrates R Datascience with the abilities and possibilities of the Google Firebase Framework.
 
-Firebase makes it possible to exchange in realtime information in the Cloud and thereby opening the R language to IoT hardware/data processing. Other than that it is also imensly usefull for shiny application to integrate Social Authentications and persistent data & uploads. 
+Firebase makes it possible to exchange in real-time information in the Cloud and thereby opening the R language to IoT hardware/data processing. Other than that it is also immensely useful for shiny application to integrate Social Authentications and persistent data & uploads.
 
 ---
 
-The first step is now a proov of concept, that we can save data.frames/vectors in the Firebase DB (as JSON) and retrive them again in a speedwise meaningful way. 
+The first step is now a prove of concept, that we can save data.frames/vectors in the Firebase DB (as JSON) and retrieve them again in a speed wise meaningful way.
 
 
 List do to as proof of concept:
