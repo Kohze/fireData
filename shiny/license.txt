@@ -1,0 +1,7 @@
+MIT license
+
+originally written by Joe Cheng and 
+converted to HTML+Material Design for the R.Codes tutorial by Robin Kohze 
+(I wouldnt care if you delete this license file, but ask for Joe Cheng for his permission first).
+
+If you delete Joe Cheng's parts of the server.R file is completly free of license and this file can be deleted.

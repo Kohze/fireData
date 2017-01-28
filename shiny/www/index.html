@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>  <script type="application/shiny-singletons"></script>  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.12.4];babel-polyfill[6.7.2];shiny[0.14.2];</script><script src="shared/json2-min.js"></script>
+    <script src="shared/jquery.min.js"></script>
+    <script src="shared/babel-polyfill.min.js"></script>
+    <script src="shared/shiny.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <script src="../materialize.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/selectize-bootswatch/1.0/selectize.cosmo.css" />
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
+    <!-- the style below makes sure that the inputs are not jumping on click -->
+    <style>
+    .selectize-input input { height: 20px; }
+    .selectize-input div.item + input { display: inline-block; }
+    </style>
+    <script>
+    // Initialize Google Firebase
+    // change the initials to your own
+    var config = {
+      apiKey: "AIzaSyCaP98eopFnaJ-lri9S285lgAthmjvGi7U",
+      authDomain: "shiny-c0ddf.firebaseapp.com",
+      databaseURL: "https://shiny-c0ddf.firebaseio.com",
+      storageBucket: "shiny-c0ddf.appspot.com",
+      messagingSenderId: "977097431155"
+    };
+    firebase.initializeApp(config);
+    //firebase init end
+    </script>
+  </head>
+  <body style="background-color: rgb(244,244,244)">
+    <div class="carousel carousel-slider " style="height: 100vh;">
+      <div class="carousel-item blue white-text center" href="#one!">
+        <!-- login button -->
+        <button id="LoginButton" style="margin-top: 35vh" class="waves-effect waves-light btn-large">Google&nbsp;Login</button>
+      </div>
+      <div class="carousel-item white center" href="#two!">
+
+      <!-- Page2 starts here: you can add here your shiny code -->
+        <form>
+          <div style="width: 800px; margin: auto; ">
+            <div class="row" style="padding-top:5px;">
+              <div class="col s4">
+                <!-- first input: $xcol -->
+                <div class="input-field">
+                  <div>
+                    <select id="xcol"><option value="Sepal.Length" selected>Sepal.Length</option>
+                    <option value="Sepal.Width">Sepal.Width</option>
+                    <option value="Petal.Length">Petal.Length</option>
+                    <option value="Petal.Width">Petal.Width</option>
+                    <option value="Species">Species</option></select>
+                    <script type="application/json" data-for="xcol" data-nonempty="">{}</script>
+                  </div>
+                </div>
+              </div>
+              <div class="col s4">
+                <!-- second input: $ycol -->
+                <div class="input-field">
+                  <div>
+                    <select id="ycol">
+                      <option value="Sepal.Length">Sepal.Length</option>
+                      <option value="Sepal.Width" selected>Sepal.Width</option>
+                      <option value="Petal.Length">Petal.Length</option>
+                      <option value="Petal.Width">Petal.Width</option>
+                      <option value="Species">Species</option></select>
+                      <script type="application/json" data-for="ycol" data-nonempty="">{}</script>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s4">
+                  <!-- third input: $clusters -->
+                  <div class="input-field">
+                    <input id="clusters" type="number" class="form-control" value="3" min="1" max="9"/>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div style="height: 100vh;" class="col s12">
+                  <!-- graphic output: $plot1 -->
+                  <div id="plot1" class="shiny-plot-output" style="width: 100% ; height: 50vh"></div>
+                </div>
+              </div>
+            </div>
+          </form>
+        <!-- Page2 ends here -->
+
+        </div>
+      </div>
+    <script>    
+    //firebase google login function
+    function googleLogin(){
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider).then(function(result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        var userNew = firebase.auth().currentUser;
+        // ...
+      $('.carousel').carousel('set', 1);
+      }).catch(function(error) {
+      // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+        });
+    };
+
+    $(document).ready(function(){
+      $('.carousel.carousel-slider').carousel({
+          // those lines define the moving slides
+          full_width: true,
+          no_wrap: true,
+          dist: 0,
+          time_constant: 550,
+      });
+ 
+      $('#LoginButton').click(function(){
+        // click on the login botton activates the googleLogin() function
+          googleLogin();
+      });
+
+    });
+    </script>
+  </body>
+</html>

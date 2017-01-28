@@ -1,0 +1,9 @@
+name: loginShiny
+account: frapbotbeta
+server: shinyapps.io
+appId: 152370
+bundleId: 686630
+url: https://frapbotbeta.shinyapps.io/loginShiny/
+when: 1484974362.16001
+asMultiple: FALSE
+asStatic: FALSE
