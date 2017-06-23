@@ -12,7 +12,7 @@ fireData_upload <- function(x, projectURL, directory = "main"){
  } else {
     output = x
  }
-  Response = POST(paste0(projectURL,"/","directory",".json"), body = toJSON(output, auto_unbox = TRUE))
+  Response = POST(paste0(projectURL,"/","directory",".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
   return(httr::content(Response))
 }
 
@@ -24,10 +24,24 @@ fireData_download <- function(x, projectURL, directory){
   print("works")
 }
 
-#' @title fireData_classConversion()
-#' @param x A data.frame or data.table
-#' @return showing shapiro.test output of the data.frame
+#' @title FireData_backup()
+#' @param projectUrl The Firebase Project Url
+#' @param secretKey The firebase secret key, which can be found in the Config/ Service Accounts/ Database secrets firebase page.
+#' @param fileName The output file name. Can be any string with .json format
+#' @return Returns either a warning or the backup file name.
 #' @export
+fireData_backup <- function(projectURL, secretKey, fileName){
+  print("Fetching Data")
+  urlPath = paste0(projectURL,"/.json?auth=",secretKey)
+  curl_download(url = urlPath,
+                destfile=fileName,
+                quiet = FALSE)
+  print(paste0("Backup created in ", fileName))
+}
+
+#' @title fireData_classConversion()
+#' @param x is the S4 class object
+#' @return returns base64 encoded binary value of class object
 fireData_classConversion <- function(x){
   #convert object to base64
   tempPath = tempfile()
@@ -38,7 +52,6 @@ fireData_classConversion <- function(x){
   pRolocList = list("base64Set" =  base64Set)
   return(pRolocList)
 }
-
 
 #' @title path_check()
 #' @description replaces all disallowed path symbols with a "-"

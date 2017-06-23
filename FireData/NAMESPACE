@@ -3,3 +3,4 @@
 export(fireData_upload)
 export(fireData_download)
 export(path_check)
+export(fireData_backup)

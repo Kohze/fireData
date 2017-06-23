@@ -10,4 +10,6 @@ LazyData: true
 RoxygenNote: 6.0.1
 Depends: 
   httr (>= 1.2.1),
-  jsonlite (>= 	1.4)
+  jsonlite (>= 	1.4),
+  curl (>= 2.3)
+
