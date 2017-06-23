@@ -34,7 +34,7 @@ fireData_backup <- function(projectURL, secretKey, fileName){
   print("Fetching Data")
   urlPath = paste0(projectURL,"/.json?auth=",secretKey)
   curl_download(url = urlPath,
-                destfile=fileName,
+                destfile = fileName,
                 quiet = FALSE)
   print(paste0("Backup created in ", fileName))
 }
@@ -47,7 +47,7 @@ fireData_backup <- function(projectURL, secretKey, fileName){
 #' @export
 FireData_auth <- function(projectAPI, email, password){
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=", projectAPI)
-  userData = POST(url = AuthUrl, body=list("email" = email, "password" = password), encode = "json")
+  userData = POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
   return(content(userData))
 }
 
@@ -59,10 +59,24 @@ FireData_auth <- function(projectAPI, email, password){
 #' @export
 FireData_createUser <- function(projectAPI, email, password){
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=", projectAPI)
-  userData = POST(url = AuthUrl, body=list("email" = email, "password" = password), encode = "json")
+  userData = POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
   return(content(userData))
 }
 
+#' @title FireData_resetPassword()
+#' @param projectAPI The Firebase Project API {string}
+#' @param email The user email {string}
+#' @return Sends a reset email to respective user.
+#' @export
+FireData_resetPassword <- function(projectAPI, email){
+  AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=", projectAPI)
+  userData = POST(url = AuthUrl, body = list("email" = email, "requestType" = "PASSWORD_RESET"), encode = "json")
+  if ("error" %in% names(content(userData))) {
+    warning(paste0("User email ", email, " was not found in the database"))
+  } else {
+    print(paste0("Password reset email was send to ", email))
+  }
+}
 
 #' @title fireData_classConversion()
 #' @param x is the S4 class object
