@@ -51,6 +51,19 @@ FireData_auth <- function(projectAPI, email, password){
   return(content(userData))
 }
 
+#' @title FireData_createUser()
+#' @param projectAPI The Firebase Project API {string}
+#' @param email The user email {string}
+#' @param password The user password {string}
+#' @return Registers a new user and returns the status.
+#' @export
+FireData_createUser <- function(projectAPI, email, password){
+  AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=", projectAPI)
+  userData = POST(url = AuthUrl, body=list("email" = email, "password" = password), encode = "json")
+  return(content(userData))
+}
+
+
 #' @title fireData_classConversion()
 #' @param x is the S4 class object
 #' @return returns base64 encoded binary value of class object
