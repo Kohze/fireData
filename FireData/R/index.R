@@ -4,7 +4,7 @@
 #' @param x A data.frame or data.table {object}
 #' @param projectURL The Firebase project URL {string}
 #' @param directory The optimal Firebase subdirectory {string}
-#' @return returns http request return. Includes the key.
+#' @return returns http request answer which includes the random key.
 #' @export
 fireData_upload <- function(x, projectURL, directory = "main"){
  if (isS4(x)) {
@@ -37,6 +37,18 @@ fireData_backup <- function(projectURL, secretKey, fileName){
                 destfile=fileName,
                 quiet = FALSE)
   print(paste0("Backup created in ", fileName))
+}
+
+#' @title FireData_auth()
+#' @param projectAPI The Firebase Project API {string}
+#' @param email The user email {string}
+#' @param password The user password {string}
+#' @return Returns the content of the firebase API request, such as the state of registration, idToken, and validity of the user password.
+#' @export
+FireData_auth <- function(projectAPI, email, password){
+  AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=", projectAPI)
+  userData = POST(url = AuthUrl, body=list("email" = email, "password" = password), encode = "json")
+  return(content(userData))
 }
 
 #' @title fireData_classConversion()
