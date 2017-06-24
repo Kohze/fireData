@@ -1,8 +1,8 @@
 Package: fireData
-Title: FireData - A Firebase Package
+Title: FireData - A Google Firebase Package
 Version: 0.0.0.9000
 Authors@R: person("Robin", "Kohze", email = "Robin@Kohze.com", role = c("aut", "cre"))
-Description: fireData allows R user to utilize all features of the Firebase realtime database
+Description: fireData allows R user to utilize all features of the Firebase realtime database.
 Depends: R (>= 3.3.3)
 License: MIT
 Encoding: UTF-8

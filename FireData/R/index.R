@@ -21,13 +21,15 @@ fireData_upload <- function(x, projectURL, directory = "main"){
 #' @return showing shapiro.test output of the data.frame
 #' @export
 fireData_download <- function(x, projectURL, directory){
-  print("works")
+   urlPath = paste0(projectURL,"/.json?auth=",secretKey)
+   data = GET(paste0(dbURL,path,".json"))
+   retrievedData = content(data,"text")
 }
 
 #' @title FireData_backup()
-#' @param projectUrl The Firebase Project Url
-#' @param secretKey The firebase secret key, which can be found in the Config/ Service Accounts/ Database secrets firebase page.
-#' @param fileName The output file name. Can be any string with .json format
+#' @param projectUrl The Firebase Project Url {string}
+#' @param secretKey The firebase secret key, which can be found in the Config/ Service Accounts/ Database secrets firebase page. {string}
+#' @param fileName The output file name. Can be any string with .json format {string}
 #' @return Returns either a warning or the backup file name.
 #' @export
 fireData_backup <- function(projectURL, secretKey, fileName){
@@ -66,7 +68,7 @@ FireData_createUser <- function(projectAPI, email, password){
 #' @title FireData_resetPassword()
 #' @param projectAPI The Firebase Project API {string}
 #' @param email The user email {string}
-#' @return Sends a reset email to respective user.
+#' @return Sends a reset email to respective user. Returns a success or warning message.
 #' @export
 FireData_resetPassword <- function(projectAPI, email){
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=", projectAPI)
