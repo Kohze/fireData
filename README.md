@@ -1,5 +1,13 @@
 #### FireData
 
+
+Milestone 1 (25-06-2017):
+
+[x] user authentication
+[x] general API functionality (upload, download)
+[x] user registration/pw resett
+[x] token generation
+
 ---
 
 FireData integrates R Datascience with the abilities and possibilities of the Google Firebase Framework.
