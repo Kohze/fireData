@@ -17,7 +17,7 @@ after_success:
 
   - Rscript \
     --default-packages='httr,curl,testthat,jsonlite' \
-    -e 'covr::codecov()'
+    -e 'library(covr); codecov(token="065e3977-f8e1-4ce8-b984-6c1b8de579e6")'
 
 notifications:
   email:
