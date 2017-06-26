@@ -13,4 +13,5 @@ Depends:
   jsonlite (>= 	1.4),
   curl (>= 2.3)
 Suggests: 
-  testthat
+  testthat (>= 1.0),
+  covr (>= 2.2.2)
