@@ -20,15 +20,15 @@ fireData_upload <- function(x, projectURL, directory = "main"){
 #' @param x A data.frame or data.table
 #' @return showing shapiro.test output of the data.frame
 #' @export
-fireData_download <- function(x, projectURL, directory, secretKey = "none"){
+fireData_download <- function(projectURL, fileName, secretKey = "none"){
    if(secretKey == "none") {
-      urlPath = paste0(projectURL,"/.json?")
-      data = GET(paste0(projectURL,path,".json"))
+      urlPath = paste0(projectURL,"/",fileName,".json")
+      data = GET(urlPath)
    } else {
-      urlPath = paste0(projectURL,"/.json?auth=",secretKey)
-      data = GET(paste0(dbURL,path,".json"))
+     urlPath = paste0(projectURL,"/",fileName,".json?auth=",secretKey)
+     data = GET(urlPath)
    }
-   retrievedData = content(data,"text")
+   return(content(data,"text"))
 }
 
 #' @title FireData_backup()
