@@ -1,13 +1,15 @@
 language: r
 r:
-  - oldrel
   - release
-  - devel
 cache: packages
 sudo: false
 
 r_packages:
   - covr
+  - httr
+  - jsonlite
+  - curl
+  - testthat
 
 after_success:
   - Rscript -e 'covr::codecov()'
