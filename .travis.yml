@@ -1,0 +1,20 @@
+language: r
+r:
+  - oldrel
+  - release
+  - devel
+cache: packages
+sudo: false
+
+r_packages:
+  - covr
+
+after_success:
+  - Rscript -e 'covr::codecov()'
+
+after_failure:
+  - find *Rcheck -name '*.fail' -print -exec cat '{}' \;
+
+notifications:
+  email:
+    on_failure: robin@kohze.com
