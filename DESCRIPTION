@@ -12,4 +12,5 @@ Depends:
   httr (>= 1.2.1),
   jsonlite (>= 	1.4),
   curl (>= 2.3)
-
+Suggests: 
+  testthat

@@ -12,10 +12,10 @@ r_packages:
   - testthat
 
 after_success:
-  - Rscript -e 'covr::codecov()'
 
-after_failure:
-  - find *Rcheck -name '*.fail' -print -exec cat '{}' \;
+  - Rscript \
+    --default-packages='httr,curl,testthat,jsonlite' \
+    -e 'covr::codecov()'
 
 notifications:
   email:
