@@ -1,6 +1,6 @@
 #### FireData
 
-Status: [![Build Status](https://travis-ci.org/Kohze/FireData.svg?branch=master)](https://travis-ci.org/Kohze/FireData)
+[![Build Status](https://travis-ci.org/Kohze/FireData.svg?branch=master)](https://travis-ci.org/Kohze/FireData)
 
 Milestone 1 (25-06-2017):
 
