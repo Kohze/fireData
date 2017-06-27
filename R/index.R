@@ -16,7 +16,8 @@ fireData_upload <- function(x, projectURL, directory = "main"){
   return(httr::content(Response))
 }
 
-#' @title FireData_download()
+#' @title fireData_download()
+#' @description fireData_download is the packages main data download function. The function provides the neccessary boilerplate code to load firebase realtime database data into R sessions. Those data can be variables, data.frames, lists and even s4 classes.
 #' @param x A data.frame or data.table
 #' @return showing shapiro.test output of the data.frame
 #' @export
@@ -46,7 +47,8 @@ fireData_backup <- function(projectURL, secretKey, fileName){
   print(paste0("Backup created in ", fileName))
 }
 
-#' @title FireData_auth()
+#' @title fireData_auth()
+#' @description fireData_auth checks the validity of a login and returns the temporary JWT user token. FireData_auth can be used to store individual user data in specified directories that are only accessible to that specific user.
 #' @param projectAPI The Firebase Project API {string}
 #' @param email The user email {string}
 #' @param password The user password {string}
