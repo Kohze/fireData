@@ -6,9 +6,9 @@
 #' @param directory The optimal Firebase subdirectory {string}
 #' @return returns http request answer which includes the random key.
 #' @export
-fireData_upload <- function(x, projectURL, directory = "main"){
+upload <- function(x, projectURL, directory = "main"){
  if (isS4(x)) {
-    output = fireData_classConversion(x)
+    output = classConversion(x)
  } else {
     output = x
  }
@@ -21,7 +21,7 @@ fireData_upload <- function(x, projectURL, directory = "main"){
 #' @param x A data.frame or data.table
 #' @return showing shapiro.test output of the data.frame
 #' @export
-fireData_download <- function(projectURL, fileName, secretKey = "none"){
+download <- function(projectURL, fileName, secretKey = "none"){
    if(secretKey == "none") {
       urlPath = paste0(projectURL,"/",fileName,".json")
       data = GET(urlPath)
@@ -38,7 +38,7 @@ fireData_download <- function(projectURL, fileName, secretKey = "none"){
 #' @param fileName The output file name. Can be any string with .json format {string}
 #' @return Returns either a warning or the backup file name.
 #' @export
-fireData_backup <- function(projectURL, secretKey, fileName){
+DataBackup <- function(projectURL, secretKey, fileName){
   print("Fetching Data")
   urlPath = paste0(projectURL,"/.json?auth=",secretKey)
   curl_download(url = urlPath,
@@ -54,7 +54,7 @@ fireData_backup <- function(projectURL, secretKey, fileName){
 #' @param password The user password {string}
 #' @return Returns the content of the firebase API request, such as the state of registration, idToken, and validity of the user password.
 #' @export
-FireData_auth <- function(projectAPI, email, password){
+auth <- function(projectAPI, email, password){
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=", projectAPI)
   userData = POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
   return(content(userData))
@@ -66,7 +66,7 @@ FireData_auth <- function(projectAPI, email, password){
 #' @param password The user password {string}
 #' @return Registers a new user and returns the status.
 #' @export
-FireData_createUser <- function(projectAPI, email, password){
+createUser <- function(projectAPI, email, password){
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=", projectAPI)
   userData = POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
   return(content(userData))
@@ -77,7 +77,7 @@ FireData_createUser <- function(projectAPI, email, password){
 #' @param email The user email {string}
 #' @return Sends a reset email to respective user. Returns a success or warning message.
 #' @export
-FireData_resetPassword <- function(projectAPI, email){
+resetPassword <- function(projectAPI, email){
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=", projectAPI)
   userData = POST(url = AuthUrl, body = list("email" = email, "requestType" = "PASSWORD_RESET"), encode = "json")
   if ("error" %in% names(content(userData))) {
@@ -90,7 +90,7 @@ FireData_resetPassword <- function(projectAPI, email){
 #' @title fireData_classConversion()
 #' @param x is the S4 class object
 #' @return returns base64 encoded binary value of class object
-fireData_classConversion <- function(x){
+classConversion <- function(x){
   #convert object to base64
   tempPath = tempfile()
   saveRDS(x, file = tempPath)
