@@ -1,4 +1,4 @@
 library("testthat")
 library("fireData")
 
-devtools::test()
+test_check("fireData")
