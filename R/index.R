@@ -1,4 +1,4 @@
-#' @title fireData_upload()
+#' @title The firebase data upload function:
 #' @author Robin Kohze
 #' @description The function allows to upload data objects, such as variables,lists and data.frames
 #' @param x A data.frame or data.table {object}
@@ -16,7 +16,7 @@ upload <- function(x, projectURL, directory = "main"){
   return(httr::content(Response))
 }
 
-#' @title fireData_download()
+#' @title The firebase data download function:
 #' @description fireData_download is the packages main data download function. The function provides the neccessary boilerplate code to load firebase realtime database data into R sessions. Those data can be variables, data.frames, lists and even s4 classes.
 #' @param x A data.frame or data.table
 #' @return showing shapiro.test output of the data.frame
@@ -32,7 +32,7 @@ download <- function(projectURL, fileName, secretKey = "none"){
    return(content(data,"text"))
 }
 
-#' @title FireData_backup()
+#' @title The firebase database backup function:
 #' @param projectUrl The Firebase Project Url {string}
 #' @param secretKey The firebase secret key, which can be found in the Config/ Service Accounts/ Database secrets firebase page. {string}
 #' @param fileName The output file name. Can be any string with .json format {string}
@@ -47,7 +47,7 @@ DataBackup <- function(projectURL, secretKey, fileName){
   print(paste0("Backup created in ", fileName))
 }
 
-#' @title fireData_auth()
+#' @title The user authentication function:
 #' @description fireData_auth checks the validity of a login and returns the temporary JWT user token. FireData_auth can be used to store individual user data in specified directories that are only accessible to that specific user.
 #' @param projectAPI The Firebase Project API {string}
 #' @param email The user email {string}
@@ -60,7 +60,7 @@ auth <- function(projectAPI, email, password){
   return(content(userData))
 }
 
-#' @title FireData_createUser()
+#' @title Firebase user creation function
 #' @param projectAPI The Firebase Project API {string}
 #' @param email The user email {string}
 #' @param password The user password {string}
@@ -72,7 +72,7 @@ createUser <- function(projectAPI, email, password){
   return(content(userData))
 }
 
-#' @title FireData_resetPassword()
+#' @title Reset the user password:
 #' @param projectAPI The Firebase Project API {string}
 #' @param email The user email {string}
 #' @return Sends a reset email to respective user. Returns a success or warning message.
@@ -87,7 +87,7 @@ resetPassword <- function(projectAPI, email){
   }
 }
 
-#' @title fireData_classConversion()
+#' @title Internal class to binary conversion:
 #' @param x is the S4 class object
 #' @return returns base64 encoded binary value of class object
 classConversion <- function(x){
@@ -101,7 +101,7 @@ classConversion <- function(x){
   return(pRolocList)
 }
 
-#' @title path_check()
+#' @title Path key replacement function:
 #' @description replaces all disallowed path symbols with a "-"
 #' @param x the path {string}
 #' @return the approved and cleaned path_string
