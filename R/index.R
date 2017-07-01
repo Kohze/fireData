@@ -103,7 +103,7 @@ classConversion <- function(x){
 
 #' @title Path key replacement function:
 #' @description replaces all disallowed path symbols with a "-"
-#' @param x the path {string}
+#' @param path is the db path {string}
 #' @return the approved and cleaned path_string
 #' @export
 path_check <- function(path){
