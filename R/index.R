@@ -89,6 +89,7 @@ resetPassword <- function(projectAPI, email){
 
 #' @title Internal class to binary conversion:
 #' @param x is the S4 class object
+#' @description The conversion is needed to conserve all class information
 #' @return returns base64 encoded binary value of class object
 classConversion <- function(x){
   #convert object to base64
