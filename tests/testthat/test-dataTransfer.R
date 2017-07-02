@@ -12,3 +12,11 @@ test_that("Test the Firebase download functionality", {
   responseDataFrame = fromJSON(response)
   expect_true(is.data.frame(responseDataFrame))
 })
+
+
+test_that("Test the firebase backup functionality", {
+  response = DataBackup(projectURL = "https://firedata-efa5a.firebaseio.com",
+                        secretKey = "2bYA6k72wKna90MqPGa6yuMG7jAysoDJZwJqYXsm",
+                        "test.json")
+  expect_equal(nchar(response), 27)
+})
