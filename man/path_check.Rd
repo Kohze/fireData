@@ -2,12 +2,12 @@
 % Please edit documentation in R/index.R
 \name{path_check}
 \alias{path_check}
-\title{path_check()}
+\title{Path key replacement function:}
 \usage{
 path_check(path)
 }
 \arguments{
-\item{x}{the path {string}}
+\item{path}{is the db path {string}}
 }
 \value{
 the approved and cleaned path_string

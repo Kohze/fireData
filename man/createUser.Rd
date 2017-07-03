@@ -2,7 +2,7 @@
 % Please edit documentation in R/index.R
 \name{createUser}
 \alias{createUser}
-\title{FireData_createUser()}
+\title{Firebase user creation function}
 \usage{
 createUser(projectAPI, email, password)
 }
@@ -15,4 +15,7 @@ createUser(projectAPI, email, password)
 }
 \value{
 Registers a new user and returns the status.
+}
+\description{
+Creates a new firebase user account. All user accounts can accessed at the firebase.com project console. One of the advantages of firebase accounts in R is the ability to access a website and analyse the data of the website with the very same login.
 }

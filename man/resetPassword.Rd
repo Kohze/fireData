@@ -2,7 +2,7 @@
 % Please edit documentation in R/index.R
 \name{resetPassword}
 \alias{resetPassword}
-\title{FireData_resetPassword()}
+\title{Reset the user password:}
 \usage{
 resetPassword(projectAPI, email)
 }

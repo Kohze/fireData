@@ -2,7 +2,7 @@
 % Please edit documentation in R/index.R
 \name{auth}
 \alias{auth}
-\title{fireData_auth()}
+\title{The user authentication function:}
 \usage{
 auth(projectAPI, email, password)
 }

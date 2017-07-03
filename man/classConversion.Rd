@@ -2,7 +2,7 @@
 % Please edit documentation in R/index.R
 \name{classConversion}
 \alias{classConversion}
-\title{fireData_classConversion()}
+\title{Internal class to binary conversion:}
 \usage{
 classConversion(x)
 }
@@ -11,4 +11,7 @@ classConversion(x)
 }
 \value{
 returns base64 encoded binary value of class object
+}
+\description{
+The conversion is needed to conserve all class information
 }

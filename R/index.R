@@ -36,9 +36,10 @@ download <- function(projectURL, fileName, secretKey = "none"){
 #' @param projectUrl The Firebase Project Url {string}
 #' @param secretKey The firebase secret key, which can be found in the Config/ Service Accounts/ Database secrets firebase page. {string}
 #' @param fileName The output file name. Can be any string with .json format {string}
+#' @description The backup functionality allows to download the whole database into a .json file (which can later be uploaded in the firebase console to do a restore of the DB). Generally this function may allow to save costs by not relying on the Firebase automatic backup function that is only available with the Firebase Blaze premium payment contract.
 #' @return Returns either a warning or the backup file name.
 #' @export
-DataBackup <- function(projectURL, secretKey, fileName){
+dataBackup <- function(projectURL, secretKey, fileName){
   print("Fetching Data")
   urlPath = paste0(projectURL,"/.json?auth=",secretKey)
   curl_download(url = urlPath,
@@ -64,6 +65,7 @@ auth <- function(projectAPI, email, password){
 #' @param projectAPI The Firebase Project API {string}
 #' @param email The user email {string}
 #' @param password The user password {string}
+#' @description Creates a new firebase user account. All user accounts can accessed at the firebase.com project console. One of the advantages of firebase accounts in R is the ability to access a website and analyse the data of the website with the very same login.
 #' @return Registers a new user and returns the status.
 #' @export
 createUser <- function(projectAPI, email, password){
