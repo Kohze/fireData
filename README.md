@@ -1,5 +1,5 @@
 #### FireData
-
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Kohze/FireData/master/LICENSE.txt)
 [![Build Status](https://travis-ci.org/Kohze/FireData.svg?branch=master)](https://travis-ci.org/Kohze/FireData)
 [![codecov](https://codecov.io/gh/Kohze/FireData/branch/master/graph/badge.svg)](https://codecov.io/gh/Kohze/FireData)
 
