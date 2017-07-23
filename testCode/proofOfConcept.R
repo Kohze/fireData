@@ -7,7 +7,7 @@ library(pRolocdata)
 #project settings
 dbURL <- "https://spatialmap-1b08e.firebaseio.com"
 
-###### manual commands for testing purposes 
+###### manual commands for testing purposes
 #delete DB
 path = "/raw"
 path2 = "/meta"
@@ -27,10 +27,10 @@ PUT(paste0(dbURL,path3,".json"), body = toJSON(mtcars))
 # saveRDS(E14TG2aS1, tempPath)
 # binarySet = readBin(tempPath, what = "raw", n = 5000000)
 # base64Set = toJSON(base64_enc(binarySet),raw = "hex")
-# 
+#
 # #adding content
 # POST(paste0(dbURL,path,".json"), body = base64Set)
-# 
+#
 # #retrieving data
 # data = GET(paste0(dbURL,path,".json"))
 # retrievedData = content(data,"text")
@@ -42,9 +42,9 @@ PUT(paste0(dbURL,path3,".json"), body = toJSON(mtcars))
 # for (i in 1:length(a)){
 #   a[i] = head(strsplit(a[i], split = " ")[[1]],1)
 # }
-# 
+#
 # b = a[nchar(a) > 2]
-###### end of manual commands 
+###### end of manual commands
 
 #uploading all pRolocData MSnSets
 for (i in b) {
@@ -58,12 +58,12 @@ pRolocUpload <- function(dataset, name){
   Response = POST(paste0(dbURL,"/meta",".json"), body = toJSON(pRolocMeta, auto_unbox = TRUE))
   #pRolocRawData
   pRolocRaw = pRolocRawData(eval(as.name(dataset)))
-  PUT(paste0(dbURL,"/raw/",content(Response),".json"), body = toJSON(pRolocRaw, auto_unbox = TRUE))
+  PUT(paste0(dbURL,"/raw/",httr::content(Response),".json"), body = toJSON(pRolocRaw, auto_unbox = TRUE))
   #pRolocData
   pRolocDataVar = pRolocFData(eval(as.name(dataset)))
-  PUT(paste0(dbURL,"/data/",content(Response),".json"), body = toJSON(pRolocDataVar, auto_unbox = TRUE))
+  PUT(paste0(dbURL,"/data/",httr::content(Response),".json"), body = toJSON(pRolocDataVar, auto_unbox = TRUE))
   #generateKeys
-  keyCollection(eval(as.name(dataset)), content(Response))
+  keyCollection(eval(as.name(dataset)), httr::content(Response))
   #success message
   print(paste0(name, " got transfered to firebase."))
 }
@@ -99,7 +99,7 @@ pRolocUpload <- function(dataset, name){
 #   retrievedData = httr::content(data,"text")
 #   tempFire = tempfile()
 #   writeBin(base64_dec(fromJSON(retrievedData)), tempFire)
-#   
+#
 #   #comparing both objects
 #   return(identical(toString(tools::md5sum(tempRoloc)), toString(tools::md5sum(tempFire))))
 # }
@@ -108,7 +108,7 @@ pRolocUpload <- function(dataset, name){
 #lapply(b, function(x) tryCatch(firebaseQuality(x), error = function(e) NULL))
 
 #testing plot2D for all datasets
-#plotTest <- function(dName){  
+#plotTest <- function(dName){
 #  data = plot2D(eval(as.name(dName)), plot=FALSE)
 #  return("works")
 #}
@@ -134,7 +134,7 @@ createColors <- function(object){
   colorAssigment=unlist(sapply(markers, function(x) colorTable$markerVec[which(colorTable$uniqueMarkers == x)]))
   return(colorAssigment)
 }
-  
+
 #extract data from MSnSet object
 pRolocRawData <-function(object){
   #convert object to base64
@@ -149,12 +149,12 @@ pRolocRawData <-function(object){
 
 pRolocFData <- function(object){
   pcaData = as.data.frame(plot2D(object, plot = FALSE))
-  
-  fScatter = data.frame("PCA1" = pcaData[[1]], 
-                        "PCA2" = pcaData[[2]], 
+
+  fScatter = data.frame("PCA1" = pcaData[[1]],
+                        "PCA2" = pcaData[[2]],
                         "Colors" = createColors(object))
   fSetData = fData(object)
-  
+
   for (i in 1:length((fSetData))){
     if (i == 1){
       p = data.frame(fSetData[[i]])
@@ -162,7 +162,7 @@ pRolocFData <- function(object){
       p = data.frame(p, fSetData[[i]])
     }
   }
-  
+
   #filtering forbidden keys
   originalNames = names(fSetData)
   originalNames = gsub("\\$","-", originalNames)
@@ -172,14 +172,14 @@ pRolocFData <- function(object){
   originalNames = gsub("\\/","-", originalNames)
   originalNames = gsub("\\.","-", originalNames)
   names(p) = originalNames
-  
+
   p = cbind(p, data.frame("id" = row.names(fSetData)))
   fSet = cbind(fScatter,p)
-  
+
   exprsSet = exprs(object)
   exprsSet = cbind(exprsSet, data.frame("id" = row.names(exprsSet)))
   row.names(exprsSet) = NULL
-  
+
   originalNames2 = names(exprsSet)
   originalNames2 = gsub("\\$","-", originalNames2)
   originalNames2 = gsub("\\#","-", originalNames2)
@@ -188,7 +188,7 @@ pRolocFData <- function(object){
   originalNames2 = gsub("\\/","-", originalNames2)
   originalNames2 = gsub("\\.","-", originalNames2)
   names(exprsSet) = originalNames2
-  
+
   pRolocList = list("fSet" = fSet, "exprsSet" = exprsSet)
   return(pRolocList)
 }
@@ -204,24 +204,24 @@ pRolocMetaFrame <- function(object, varName){
   abstract = object@experimentData@abstract
   lab = object@experimentData@lab
   pubMedIds = object@experimentData@pubMedIds
-  
+
   tissue = object@experimentData@samples$tissue
   cellLine = object@experimentData@samples$cellLine
   species = object@experimentData@samples$species
   operator = object@experimentData@samples$operator
-  
+
   markerClasses = toString(pRoloc::getMarkerClasses(object))
   featureNames = toString(featureNames(object))
-  
+
   #List generation
-  pRolocList = list("varName" = varName, 
+  pRolocList = list("varName" = varName,
                     "title" = title,
-                    "author" = author, 
-                    "email" = email, 
-                    "contact" = contact, 
-                    "dataStamp" = dataStamp, 
-                    "abstract" = abstract, 
-                    "lab" = lab, 
+                    "author" = author,
+                    "email" = email,
+                    "contact" = contact,
+                    "dataStamp" = dataStamp,
+                    "abstract" = abstract,
+                    "lab" = lab,
                     "pubMedIds" = pubMedIds,
                     "tissue" = tissue,
                     "cellLine" = cellLine,

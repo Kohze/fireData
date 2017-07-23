@@ -29,7 +29,7 @@ download <- function(projectURL, fileName, secretKey = "none"){
      urlPath = paste0(projectURL,"/",fileName,".json?auth=",secretKey)
      data = GET(urlPath)
    }
-   return(content(data,"text"))
+   return(httr::content(data,"text"))
 }
 
 #' @title The firebase database backup function:
@@ -39,7 +39,11 @@ download <- function(projectURL, fileName, secretKey = "none"){
 #' @description The backup functionality allows to download the whole database into a .json file (which can later be uploaded in the firebase console to do a restore of the DB). Generally this function may allow to save costs by not relying on the Firebase automatic backup function that is only available with the Firebase Blaze premium payment contract.
 #' @return Returns either a warning or the backup file name.
 #' @export
-dataBackup <- function(projectURL, secretKey, fileName){
+dataBackup <- function(projectURL, secretKey="prompt", fileName){
+  if (secretKey == "prompt"){
+    secretKey <- readline(prompt = "secretKey: ")
+    print("Connecting to SpatialMaps:")
+  }
   print("Fetching Data")
   urlPath = paste0(projectURL,"/.json?auth=",secretKey)
   curl_download(url = urlPath,
@@ -55,10 +59,15 @@ dataBackup <- function(projectURL, secretKey, fileName){
 #' @param password The user password {string}
 #' @return Returns the content of the firebase API request, such as the state of registration, idToken, and validity of the user password.
 #' @export
-auth <- function(projectAPI, email, password){
+auth <- function(projectAPI, email="prompt", password="prompt"){
+  if (password == "prompt" && email == "prompt"){
+        email <- readline(prompt = "Email: ")
+        password <- readline(prompt = "Password: ")
+        print("Connecting to SpatialMaps:")
+  }
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=", projectAPI)
   userData = POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
-  return(content(userData))
+  return(httr::content(userData))
 }
 
 #' @title Firebase user creation function
@@ -68,10 +77,15 @@ auth <- function(projectAPI, email, password){
 #' @description Creates a new firebase user account. All user accounts can accessed at the firebase.com project console. One of the advantages of firebase accounts in R is the ability to access a website and analyse the data of the website with the very same login.
 #' @return Registers a new user and returns the status.
 #' @export
-createUser <- function(projectAPI, email, password){
+createUser <- function(projectAPI, email="prompt", password="prompt"){
+  if (password == "prompt" && email == "prompt"){
+    email <- readline(prompt = "Email: ")
+    password <- readline(prompt = "Password: ")
+    print("Connecting to SpatialMaps:")
+  }
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=", projectAPI)
   userData = POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
-  return(content(userData))
+  return(httr::content(userData))
 }
 
 #' @title Reset the user password:
@@ -82,7 +96,7 @@ createUser <- function(projectAPI, email, password){
 resetPassword <- function(projectAPI, email){
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=", projectAPI)
   userData = POST(url = AuthUrl, body = list("email" = email, "requestType" = "PASSWORD_RESET"), encode = "json")
-  if ("error" %in% names(content(userData))) {
+  if ("error" %in% names(httr::content(userData))) {
     warning(paste0("User email ", email, " was not found in the database"))
   } else {
     print(paste0("Password reset email was send to ", email))
