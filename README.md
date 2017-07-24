@@ -3,6 +3,12 @@
 [![Build Status](https://travis-ci.org/Kohze/FireData.svg?branch=master)](https://travis-ci.org/Kohze/FireData)
 [![codecov](https://codecov.io/gh/Kohze/FireData/branch/master/graph/badge.svg)](https://codecov.io/gh/Kohze/FireData)
 
+Mileston 2 (24-07-2017):
+
+- [x] integrated fireData in the spatialMaps project (currently fork is pending)
+- [x] Added more secure logins by adding prompts
+- [x] Extending the descriptions
+- [x] added unit tests and reached 100% test coverage 
 
 Milestone 1 (25-06-2017):
 
