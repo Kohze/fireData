@@ -50,9 +50,9 @@ Firebase makes it possible to exchange in real-time information in the Cloud and
 
 - register a new user
 
-´´´createUser(projectAPI = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", email = "your@email.com", password = "12341234" ))´´´
+```createUser(projectAPI = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", email = "your@email.com", password = "12341234" ))```
 
 
-... more examples will be added soon
+more examples will be added soon
 
 
