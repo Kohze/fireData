@@ -13,12 +13,14 @@ upload <- function(x, projectURL, directory = "main"){
     output = x
  }
   Response = POST(paste0(projectURL,"/","directory",".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
-  return(httr::content(Response))
+  return(httr::content(Response)$name)
 }
 
 #' @title The firebase data download function:
-#' @description fireData_download is the packages main data download function. The function provides the neccessary boilerplate code to load firebase realtime database data into R sessions. Those data can be variables, data.frames, lists and even s4 classes.
+#' @description fireData::download is the package's main data download function. The function provides the neccessary boilerplate code to load firebase realtime database data into R sessions. Those data can be variables, data.frames, lists and even s4 classes.
 #' @param x A data.frame or data.table
+#' @param fileName The name of the uploaded dataset that is used for the database path.
+#' @param secretKey The firebase secret case in case the database security rules are set to "auth" {string}.
 #' @return showing shapiro.test output of the data.frame
 #' @export
 download <- function(projectURL, fileName, secretKey = "none"){
@@ -53,7 +55,7 @@ dataBackup <- function(projectURL, secretKey="prompt", fileName){
 }
 
 #' @title The user authentication function:
-#' @description fireData_auth checks the validity of a login and returns the temporary JWT user token. FireData_auth can be used to store individual user data in specified directories that are only accessible to that specific user.
+#' @description fireData::auth checks the validity of a login and returns the temporary JWT user token. FireData_auth can be used to store individual user data in specified directories that are only accessible to that specific user.
 #' @param projectAPI The Firebase Project API {string}
 #' @param email The user email {string}
 #' @param password The user password {string}
@@ -105,7 +107,7 @@ resetPassword <- function(projectAPI, email){
 
 #' @title Internal class to binary conversion:
 #' @param x is the S4 class object
-#' @description The conversion is needed to conserve all class information
+#' @description The internal conversion is needed to conserve all class information
 #' @return returns base64 encoded binary value of class object
 classConversion <- function(x){
   #convert object to base64
