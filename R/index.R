@@ -31,7 +31,7 @@ download <- function(projectURL, fileName, secretKey = "none"){
      urlPath = paste0(projectURL,"/",fileName,".json?auth=",secretKey)
      data = GET(urlPath)
    }
-   return(httr::content(data,"text"))
+   return(jsonlite::fromJSON(httr::content(data,"text")))
 }
 
 #' @title The firebase database backup function:
