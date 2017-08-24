@@ -18,7 +18,7 @@ upload <- function(x, projectURL, directory = "main", token = "none"){
 }
 
 #' @title Data conversion function
-#' @description The internal data conversion function to bring data in the right json format.
+#' @description The internal data conversion function to bring data in the right json format. In case the uploaded file is a s4 class object, the object is converted to a binary s4 object.
 #' @param x the input file.
 #' @return returns optionally reformatted data.
 fileConversion <- function(x){
@@ -29,14 +29,14 @@ fileConversion <- function(x){
   }
 }
 
-#' @title The firebase data download function:
-#' @description fireData::download is the package's main data download function. The function provides the neccessary boilerplate code to load firebase realtime database data into R sessions. Those data can be variables, data.frames, lists and even s4 classes.
-#' @param x A data.frame or data.table
-#' @param fileName The name of the uploaded dataset that is used for the database path.
-#' @param secretKey The firebase secret case in case the database security rules are set to "auth" {string}.
-#' @return showing shapiro.test output of the data.frame
-#' @export
-download <- function(projectURL, fileName, secretKey = "none", token = "none"){
+#' @title Data conversion function
+#' @description The internal data conversion function to bring data in the right json format. In case the uploaded file is a s4 class object, the object is converted to a binary s4 object.
+#' @param projectURL The firebase database url. {string}
+#' @param fileName The filename or subdirectory. {string}
+#' @param secretKey The optional database secret key for admin access. {string}
+#' @param token token The user access token that can be retrieved with the auth() function. Required when if the database rules specify the need for user authentications. {string}
+#' @return returns optionally reformatted data.
+download <- function(projectURL, fileName, secretKey = "none", token = "none", isClass=FALSE) {
 
    if (secretKey == "none") {
      urlPath = paste0(projectURL,"/",fileName,".json")
@@ -47,8 +47,29 @@ download <- function(projectURL, fileName, secretKey = "none", token = "none"){
    }
 
    data = GET(urlPath)
+
    if (is.null(jsonlite::fromJSON(httr::content(data,"text")))) warning("No data found at database location.")
-   return(jsonlite::fromJSON(httr::content(data,"text")))
+   if (isClass) {
+     retrievedData = httr::content(data,"text")
+     tempPath2 = tempfile()
+     writeBin(base64_dec(fromJSON(retrievedData)), tempPath2)
+     x <- readRDS(tempPath2)
+     return(x)
+   } else {
+     return(jsonlite::fromJSON(httr::content(data,"text")))
+   }
+}
+
+#' @title Data conversion function
+#' @description The internal data conversion function to bring data in the right json format. In case the uploaded file is a s4 class object, the object is converted to a binary s4 object.
+#' @param x the input file.
+#' @return returns optionally reformatted data.
+loadClass <- function(dataset){
+  retrievedData = httr::content(data,"text")
+  tempPath2 = tempfile()
+  writeBin(base64_dec(fromJSON(retrievedData)), tempPath2)
+  x <- readRDS(tempPath2)
+  return(x)
 }
 
 #' @title The firebase database backup function:
@@ -59,7 +80,7 @@ download <- function(projectURL, fileName, secretKey = "none", token = "none"){
 #' @return Returns either a warning or the backup file name.
 #' @export
 dataBackup <- function(projectURL, secretKey="prompt", fileName){
-  if (secretKey == "prompt"){
+  if (secretKey == "prompt") {
     secretKey <- readline(prompt = "secretKey: ")
     print("Connecting to SpatialMaps:")
   }
@@ -79,7 +100,7 @@ dataBackup <- function(projectURL, secretKey="prompt", fileName){
 #' @return Returns the content of the firebase API request, such as the state of registration, idToken, and validity of the user password.
 #' @export
 auth <- function(projectAPI, email="prompt", password="prompt"){
-  if (password == "prompt" && email == "prompt"){
+  if (password == "prompt" && email == "prompt") {
         email <- readline(prompt = "Email: ")
         password <- readline(prompt = "Password: ")
         print("Connecting to SpatialMaps:")
@@ -97,7 +118,7 @@ auth <- function(projectAPI, email="prompt", password="prompt"){
 #' @return Registers a new user and returns the status.
 #' @export
 createUser <- function(projectAPI, email="prompt", password="prompt"){
-  if (password == "prompt" && email == "prompt"){
+  if (password == "prompt" && email == "prompt") {
     email <- readline(prompt = "Email: ")
     password <- readline(prompt = "Password: ")
     print("Connecting to SpatialMaps:")
