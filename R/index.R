@@ -51,26 +51,15 @@ download <- function(projectURL, fileName, secretKey = "none", token = "none", i
    if (is.null(jsonlite::fromJSON(httr::content(data,"text")))) warning("No data found at database location.")
    if (isClass) {
      retrievedData = httr::content(data,"text")
-     tempPath2 = tempfile()
-     writeBin(base64_dec(fromJSON(retrievedData)), tempPath2)
-     x <- readRDS(tempPath2)
+     tempPath = tempfile()
+     writeBin(base64_dec(fromJSON(retrievedData)), tempPath)
+     x <- readRDS(tempPath)
      return(x)
    } else {
      return(jsonlite::fromJSON(httr::content(data,"text")))
    }
 }
 
-#' @title Data conversion function
-#' @description The internal data conversion function to bring data in the right json format. In case the uploaded file is a s4 class object, the object is converted to a binary s4 object.
-#' @param x the input file.
-#' @return returns optionally reformatted data.
-loadClass <- function(dataset){
-  retrievedData = httr::content(data,"text")
-  tempPath2 = tempfile()
-  writeBin(base64_dec(fromJSON(retrievedData)), tempPath2)
-  x <- readRDS(tempPath2)
-  return(x)
-}
 
 #' @title The firebase database backup function:
 #' @param projectUrl The Firebase Project Url {string}
