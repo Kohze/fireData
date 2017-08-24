@@ -20,7 +20,7 @@ upload <- function(x, projectURL, directory = "main", token = "none"){
 #' @title Data conversion function
 #' @description The internal data conversion function to bring data in the right json format.
 #' @param x the input file.
-#' @return returns json string
+#' @return returns optionally reformatted data.
 fileConversion <- function(x){
   if (isS4(x)) {
     output = classConversion(x)
@@ -36,15 +36,18 @@ fileConversion <- function(x){
 #' @param secretKey The firebase secret case in case the database security rules are set to "auth" {string}.
 #' @return showing shapiro.test output of the data.frame
 #' @export
-download <- function(projectURL, fileName, secretKey = "none"){
-   if(secretKey == "none") {
-      urlPath = paste0(projectURL,"/",fileName,".json")
-      data = GET(urlPath)
+download <- function(projectURL, fileName, secretKey = "none", token = "none"){
+
+   if (secretKey == "none") {
+     urlPath = paste0(projectURL,"/",fileName,".json")
+   } else if (token != "none") {
+     urlPath = paste0(projectURL,"/",fileName,".json?access_token=",token)
    } else {
      urlPath = paste0(projectURL,"/",fileName,".json?auth=",secretKey)
-     data = GET(urlPath)
    }
-   if(is.null(jsonlite::fromJSON(httr::content(data,"text")))) warning("No data found at database location.")
+
+   data = GET(urlPath)
+   if (is.null(jsonlite::fromJSON(httr::content(data,"text")))) warning("No data found at database location.")
    return(jsonlite::fromJSON(httr::content(data,"text")))
 }
 
