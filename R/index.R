@@ -8,17 +8,25 @@
 #' @return returns http request answer which includes the random key.
 #' @export
 upload <- function(x, projectURL, directory = "main", token = "none"){
- if (isS4(x)) {
-    output = classConversion(x)
- } else {
-    output = x
- }
- if(token == "none") {
+ output = fileConversion(x)
+ if (token == "none") {
   Response = POST(paste0(projectURL,"/",directory,".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
  } else {
    Response = POST(paste0(projectURL,"/",directory,".json?access_token=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
  }
-  return(httr::content(Response)$name)
+  return(paste0(directory,"/",httr::content(Response)$name))
+}
+
+#' @title Data conversion function
+#' @description The internal data conversion function to bring data in the right json format.
+#' @param x the input file.
+#' @return returns json string
+fileConversion <- function(x){
+  if (isS4(x)) {
+    output = classConversion(x)
+  } else {
+    output = x
+  }
 }
 
 #' @title The firebase data download function:
@@ -36,6 +44,7 @@ download <- function(projectURL, fileName, secretKey = "none"){
      urlPath = paste0(projectURL,"/",fileName,".json?auth=",secretKey)
      data = GET(urlPath)
    }
+   if(is.null(jsonlite::fromJSON(httr::content(data,"text")))) warning("No data found at database location.")
    return(jsonlite::fromJSON(httr::content(data,"text")))
 }
 
