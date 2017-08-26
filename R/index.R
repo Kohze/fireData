@@ -34,9 +34,10 @@ fileConversion <- function(x){
 #' @param projectURL The firebase database url. {string}
 #' @param fileName The filename or subdirectory. {string}
 #' @param secretKey The optional database secret key for admin access. {string}
-#' @param token token The user access token that can be retrieved with the auth() function. Required when if the database rules specify the need for user authentications. {string}
+#' @param token The user access token that can be retrieved with the auth() function. Required when if the database rules specify the need for user authentications. {string}
+#' @param isClass In case a s4 class object is downloaded, fireData expects a isClass=TRUE
 #' @return returns optionally reformatted data.
-download <- function(projectURL, fileName, secretKey = "none", token = "none", isClass=FALSE) {
+download <- function(projectURL, fileName, secretKey = "none", token = "none", isClass = FALSE) {
 
    if (secretKey == "none") {
      urlPath = paste0(projectURL,"/",fileName,".json")
@@ -53,8 +54,7 @@ download <- function(projectURL, fileName, secretKey = "none", token = "none", i
      retrievedData = httr::content(data,"text")
      tempPath = tempfile()
      writeBin(jsonlite::base64_dec(jsonlite::fromJSON(retrievedData)), tempPath)
-     x <- readRDS(tempPath)
-     return(x)
+     return(readRDS(tempPath))
    } else {
      return(jsonlite::fromJSON(httr::content(data,"text")))
    }
