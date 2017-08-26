@@ -10,9 +10,9 @@
 upload <- function(x, projectURL, directory = "main", token = "none"){
  output = fileConversion(x)
  if (token == "none") {
-  Response = POST(paste0(projectURL,"/",directory,".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+  Response = httr::POST(paste0(projectURL,"/",directory,".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
  } else {
-   Response = POST(paste0(projectURL,"/",directory,".json?access_token=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+   Response = httr::POST(paste0(projectURL,"/",directory,".json?access_token=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
  }
   return(paste0(directory,"/",httr::content(Response)$name))
 }
@@ -46,20 +46,19 @@ download <- function(projectURL, fileName, secretKey = "none", token = "none", i
      urlPath = paste0(projectURL,"/",fileName,".json?auth=",secretKey)
    }
 
-   data = GET(urlPath)
+   data = httr::GET(urlPath)
 
    if (is.null(jsonlite::fromJSON(httr::content(data,"text")))) warning("No data found at database location.")
    if (isClass) {
      retrievedData = httr::content(data,"text")
      tempPath = tempfile()
-     writeBin(base64_dec(fromJSON(retrievedData)), tempPath)
+     writeBin(jsonlite::base64_dec(jsonlite::fromJSON(retrievedData)), tempPath)
      x <- readRDS(tempPath)
      return(x)
    } else {
      return(jsonlite::fromJSON(httr::content(data,"text")))
    }
 }
-
 
 #' @title The firebase database backup function:
 #' @param projectUrl The Firebase Project Url {string}
@@ -75,7 +74,7 @@ dataBackup <- function(projectURL, secretKey="prompt", fileName){
   }
   print("Fetching Data")
   urlPath = paste0(projectURL,"/.json?auth=",secretKey)
-  curl_download(url = urlPath,
+  curl::curl_download(url = urlPath,
                 destfile = fileName,
                 quiet = FALSE)
   print(paste0("Backup created in ", fileName))
@@ -95,7 +94,7 @@ auth <- function(projectAPI, email="prompt", password="prompt"){
         print("Connecting to SpatialMaps:")
   }
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=", projectAPI)
-  userData = POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
+  userData = httr::POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
   return(httr::content(userData))
 }
 
@@ -113,7 +112,7 @@ createUser <- function(projectAPI, email="prompt", password="prompt"){
     print("Connecting to SpatialMaps:")
   }
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=", projectAPI)
-  userData = POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
+  userData = httr::POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
   return(httr::content(userData))
 }
 
@@ -124,7 +123,7 @@ createUser <- function(projectAPI, email="prompt", password="prompt"){
 #' @export
 resetPassword <- function(projectAPI, email){
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=", projectAPI)
-  userData = POST(url = AuthUrl, body = list("email" = email, "requestType" = "PASSWORD_RESET"), encode = "json")
+  userData = httr::POST(url = AuthUrl, body = list("email" = email, "requestType" = "PASSWORD_RESET"), encode = "json")
   if ("error" %in% names(httr::content(userData))) {
     warning(paste0("User email ", email, " was not found in the database"))
   } else {
