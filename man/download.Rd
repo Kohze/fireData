@@ -2,16 +2,25 @@
 % Please edit documentation in R/index.R
 \name{download}
 \alias{download}
-\title{The firebase data download function:}
+\title{Data conversion function}
 \usage{
-download(projectURL, fileName, secretKey = "none")
+download(projectURL, fileName, secretKey = "none", token = "none",
+  isClass = FALSE)
 }
 \arguments{
-\item{x}{A data.frame or data.table}
+\item{projectURL}{The firebase database url. {string}}
+
+\item{fileName}{The filename or subdirectory. {string}}
+
+\item{secretKey}{The optional database secret key for admin access. {string}}
+
+\item{token}{The user access token that can be retrieved with the auth() function. Required when if the database rules specify the need for user authentications. {string}}
+
+\item{isClass}{In case a s4 class object is downloaded, fireData expects a isClass=TRUE}
 }
 \value{
-showing shapiro.test output of the data.frame
+returns optionally reformatted data.
 }
 \description{
-fireData_download is the packages main data download function. The function provides the neccessary boilerplate code to load firebase realtime database data into R sessions. Those data can be variables, data.frames, lists and even s4 classes.
+The internal data conversion function to bring data in the right json format. In case the uploaded file is a s4 class object, the object is converted to a binary s4 object.
 }

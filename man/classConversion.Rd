@@ -13,5 +13,5 @@ classConversion(x)
 returns base64 encoded binary value of class object
 }
 \description{
-The conversion is needed to conserve all class information
+The internal conversion is needed to conserve all class information
 }

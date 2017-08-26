@@ -37,6 +37,7 @@ fileConversion <- function(x){
 #' @param token The user access token that can be retrieved with the auth() function. Required when if the database rules specify the need for user authentications. {string}
 #' @param isClass In case a s4 class object is downloaded, fireData expects a isClass=TRUE
 #' @return returns optionally reformatted data.
+#' @export
 download <- function(projectURL, fileName, secretKey = "none", token = "none", isClass = FALSE) {
 
    if (secretKey == "none") {

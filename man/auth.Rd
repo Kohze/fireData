@@ -4,7 +4,7 @@
 \alias{auth}
 \title{The user authentication function:}
 \usage{
-auth(projectAPI, email, password)
+auth(projectAPI, email = "prompt", password = "prompt")
 }
 \arguments{
 \item{projectAPI}{The Firebase Project API {string}}
@@ -17,5 +17,5 @@ auth(projectAPI, email, password)
 Returns the content of the firebase API request, such as the state of registration, idToken, and validity of the user password.
 }
 \description{
-fireData_auth checks the validity of a login and returns the temporary JWT user token. FireData_auth can be used to store individual user data in specified directories that are only accessible to that specific user.
+fireData::auth checks the validity of a login and returns the temporary JWT user token. FireData_auth can be used to store individual user data in specified directories that are only accessible to that specific user.
 }

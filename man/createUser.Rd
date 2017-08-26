@@ -4,7 +4,7 @@
 \alias{createUser}
 \title{Firebase user creation function}
 \usage{
-createUser(projectAPI, email, password)
+createUser(projectAPI, email = "prompt", password = "prompt")
 }
 \arguments{
 \item{projectAPI}{The Firebase Project API {string}}

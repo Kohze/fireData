@@ -4,7 +4,7 @@
 \alias{upload}
 \title{The firebase data upload function:}
 \usage{
-upload(x, projectURL, directory = "main")
+upload(x, projectURL, directory = "main", token = "none")
 }
 \arguments{
 \item{x}{A data.frame or data.table {object}}
@@ -12,6 +12,8 @@ upload(x, projectURL, directory = "main")
 \item{projectURL}{The Firebase project URL {string}}
 
 \item{directory}{The optimal Firebase subdirectory {string}}
+
+\item{token}{The user access token that can be retrieved with the auth() function. Required when if the database rules specify the need for user authentications. {string}}
 }
 \value{
 returns http request answer which includes the random key.
