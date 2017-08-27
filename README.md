@@ -13,20 +13,16 @@ FireData integrates R Datascience with the abilities and possibilities of the Go
 
 Firebase makes it possible to exchange in real-time information in the Cloud and thereby opening the R language to IoT hardware/data processing. Other than that it is also immensely useful for shiny application to integrate Social Authentications and persistent data & uploads.
 
----
+This package was created within the framework of Google Summer of Code 2017. 
 
 ![fireData](http://frapbot.kohze.com/fireData/setup.jpg)
-
-### Getting Started
 
 - visit at https://firebase.google.com/
 - login and enter the "console"
 - add new project
 - find the API keys at the "overview" page clicking on add firebase to web-app
 
-![fireData](http://frapbot.kohze.com/fireData/examples.jpg)
-
-### Examples
+![examples](http://frapbot.kohze.com/fireData/examples.jpg)
 
 - uploading a data.frame:
 
@@ -68,5 +64,4 @@ Milestone 1 (25-06-2017):
 - [x] user registration/pw resett
 - [x] token generation
 
----
 
