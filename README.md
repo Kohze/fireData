@@ -84,6 +84,6 @@ Milestone 1 (25-06-2017):
 
 ---
 
-knowledgements:
+**Aknowledgements:**
 
 I hereby want to thank my GSOC mentors L. Pedraza, S. Schmidt for their project support and especially L. Gatto for his insights and experience to make this package a reality. 
