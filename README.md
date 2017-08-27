@@ -1,4 +1,4 @@
-![fireData](http://frapbot.kohze.com/fireData/topImage2.jpg)
+![fireData](http://frapbot.kohze.com/fireData/topImage5.jpg)
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Kohze/FireData/master/LICENSE.txt)
 [![Build Status](https://travis-ci.org/Kohze/FireData.svg?branch=master)](https://travis-ci.org/Kohze/FireData)
@@ -17,10 +17,20 @@ This package was created within the framework of Google Summer of Code 2017.
 
 ![fireData](http://frapbot.kohze.com/fireData/setup2.jpg)
 
+**Database Setup:**
 - visit at https://firebase.google.com/
 - login and enter the "console"
 - add new project
 - find the API keys at the "overview" page clicking on add firebase to web-app
+
+**R Package Setup:**
+
+```
+if (!require("devtools")) install.packages("devtools")
+devtools::install_github("Kohze/fireData")
+
+library(fireData)
+```
 
 ![examples](http://frapbot.kohze.com/fireData/examples2.jpg)
 
