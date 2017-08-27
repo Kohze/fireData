@@ -1,4 +1,4 @@
-![fireData](http://frapbot.kohze.com/fireData/topImage.jpg)
+![fireData](http://frapbot.kohze.com/fireData/topImage2.jpg)
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Kohze/FireData/master/LICENSE.txt)
 [![Build Status](https://travis-ci.org/Kohze/FireData.svg?branch=master)](https://travis-ci.org/Kohze/FireData)
@@ -15,14 +15,14 @@ Firebase makes it possible to exchange in real-time information in the Cloud and
 
 This package was created within the framework of Google Summer of Code 2017. 
 
-![fireData](http://frapbot.kohze.com/fireData/setup.jpg)
+![fireData](http://frapbot.kohze.com/fireData/setup2.jpg)
 
 - visit at https://firebase.google.com/
 - login and enter the "console"
 - add new project
 - find the API keys at the "overview" page clicking on add firebase to web-app
 
-![examples](http://frapbot.kohze.com/fireData/examples.jpg)
+![examples](http://frapbot.kohze.com/fireData/examples2.jpg)
 
 - uploading a data.frame:
 
@@ -39,7 +39,7 @@ This package was created within the framework of Google Summer of Code 2017.
 
 more examples will be added soon
 
-![fireData](http://frapbot.kohze.com/fireData/related.jpg)
+![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
 
 fireData is already integrated into a several projects. 
 
@@ -48,7 +48,7 @@ fireData is already integrated into a several projects.
 - Cryptotrade-hq bot: A simple data collector (with shiny) that uses firebase for secure storage of API keys.
 
 
-![fireData](http://frapbot.kohze.com/fireData/development.jpg)
+![fireData](http://frapbot.kohze.com/fireData/development2.jpg)
 
 Mileston 2 (24-07-2017):
 
