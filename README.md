@@ -1,4 +1,4 @@
-![fireData](http://frapbot.kohze.com/fireData/topImage5.jpg)
+![fireData](http://frapbot.kohze.com/fireData/topImage6.jpg)
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Kohze/FireData/master/LICENSE.txt)
 [![Build Status](https://travis-ci.org/Kohze/FireData.svg?branch=master)](https://travis-ci.org/Kohze/FireData)
@@ -59,6 +59,13 @@ fireData is already integrated into a several projects.
 
 
 ![fireData](http://frapbot.kohze.com/fireData/development2.jpg)
+
+Mileston 3 (28-07-2017):
+
+- [x] Added DB access via firebase DB secret
+- [x] Extended class/data.frame/list support
+- [x] Updated Unit Tests
+- [x] Added 2 example projects for fireData (spatialmaps & cryptotrade-hq)  
 
 Mileston 2 (24-07-2017):
 
