@@ -62,7 +62,7 @@ download <- function(projectURL, fileName, secretKey = "none", token = "none", i
 }
 
 #' @title The firebase database backup function:
-#' @param projectUrl The Firebase Project Url {string}
+#' @param projectURL The Firebase Project Url {string}
 #' @param secretKey The firebase secret key, which can be found in the Config/ Service Accounts/ Database secrets firebase page. {string}
 #' @param fileName The output file name. Can be any string with .json format {string}
 #' @description The backup functionality allows to download the whole database into a .json file (which can later be uploaded in the firebase console to do a restore of the DB). Generally this function may allow to save costs by not relying on the Firebase automatic backup function that is only available with the Firebase Blaze premium payment contract.
@@ -117,10 +117,11 @@ createUser <- function(projectAPI, email="prompt", password="prompt"){
   return(httr::content(userData))
 }
 
-#' @title Reset the user password:
+#' @title Password resett function:
 #' @param projectAPI The Firebase Project API {string}
 #' @param email The user email {string}
-#' @return Sends a reset email to respective user. Returns a success or warning message.
+#' @description Resets the user password and sends an email to the user account.
+#' @return Success or warning message.
 #' @export
 resetPassword <- function(projectAPI, email){
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=", projectAPI)

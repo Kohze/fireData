@@ -1,17 +1,24 @@
 Package: fireData
-Title: FireData - A Google Firebase Package
-Version: 0.0.0.9000
+Title: Connecting R to Google Firebase
+Version: 1.0.0.9000
 Authors@R: person("Robin", "Kohze", email = "Robin@Kohze.com", role = c("aut", "cre"))
-Description: fireData allows R user to utilize all features of the Firebase realtime database.
+Description: fireData allows R users to utilize all API features of the Google Firebase realtime database.
+    Common usecases of firebase are creating user logins with persistent data storage for mobile apps, shiny applications
+    or IOT applications. See the fireData github repository for more information.
 Depends: R (>= 3.3.3)
-License: MIT
+License: MIT + file LICENCE
+URL: https://github.com/Kohze/fireData
+BugReports: https://github.com/Kohze/fireData/issues
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Imports: 
+Imports:
   httr (>= 1.2.1),
   jsonlite (>= 	1.4),
   curl (>= 2.3)
-Suggests: 
+Suggests:
   testthat (>= 1.0),
-  covr (>= 2.2.2)
+  covr (>= 2.2.2),
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

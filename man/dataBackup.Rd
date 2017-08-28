@@ -7,11 +7,11 @@
 dataBackup(projectURL, secretKey = "prompt", fileName)
 }
 \arguments{
+\item{projectURL}{The Firebase Project Url {string}}
+
 \item{secretKey}{The firebase secret key, which can be found in the Config/ Service Accounts/ Database secrets firebase page. {string}}
 
 \item{fileName}{The output file name. Can be any string with .json format {string}}
-
-\item{projectUrl}{The Firebase Project Url {string}}
 }
 \value{
 Returns either a warning or the backup file name.

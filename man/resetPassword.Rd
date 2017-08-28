@@ -2,7 +2,7 @@
 % Please edit documentation in R/index.R
 \name{resetPassword}
 \alias{resetPassword}
-\title{Reset the user password:}
+\title{Password resett function:}
 \usage{
 resetPassword(projectAPI, email)
 }
@@ -12,5 +12,8 @@ resetPassword(projectAPI, email)
 \item{email}{The user email {string}}
 }
 \value{
-Sends a reset email to respective user. Returns a success or warning message.
+Success or warning message.
+}
+\description{
+Resets the user password and sends an email to the user account.
 }
