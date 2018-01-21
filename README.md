@@ -9,8 +9,6 @@
 
 --- 
 
-**warning** currently the user authentication REST API token is not working with the upload/download functionality. We try to fix it the next days, in the meantime those functions are only working without the ```token``` argument. In case you already found a solution let us know in the issue tab. 
-
 FireData integrates R Datascience with the abilities and possibilities of the Google Firebase Framework.
 
 Firebase makes it possible to exchange in real-time information in the Cloud and thereby opening the R language to IoT hardware/data processing. Other than that it is also immensely useful for shiny application to integrate Social Authentications and persistent data & uploads.
