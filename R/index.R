@@ -12,7 +12,7 @@ upload <- function(x, projectURL, directory = "main", token = "none"){
  if (token == "none") {
   Response = httr::POST(paste0(projectURL,"/",directory,".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
  } else {
-   Response = httr::POST(paste0(projectURL,"/",directory,".json?access_token=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+   Response = httr::POST(paste0(projectURL,"/",directory,".json?auth=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
  }
   return(paste0(directory,"/",httr::content(Response)$name))
 }
@@ -43,7 +43,7 @@ download <- function(projectURL, fileName, secretKey = "none", token = "none", i
    if (secretKey == "none") {
      urlPath = paste0(projectURL,"/",fileName,".json")
    } else if (token != "none") {
-     urlPath = paste0(projectURL,"/",fileName,".json?access_token=",token)
+     urlPath = paste0(projectURL,"/",fileName,".json?auth=",token)
    } else {
      urlPath = paste0(projectURL,"/",fileName,".json?auth=",secretKey)
    }
@@ -95,7 +95,7 @@ auth <- function(projectAPI, email="prompt", password="prompt"){
         print("Connecting to SpatialMaps:")
   }
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=", projectAPI)
-  userData = httr::POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
+  userData = httr::POST(url = AuthUrl, body = list("email" = email, "password" = password, "returnSecureToken" = "True"), encode = "json")
   return(httr::content(userData))
 }
 
