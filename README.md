@@ -40,7 +40,7 @@ library(fireData)
 
 - download a data.frame:
 
-```download(projectURL = "https://firedata-b0e54.firebaseio.com/directory", fileName = "-KqxJtP4-cwkpnvLgAtw")```
+```download(projectURL = "https://firedata-b0e54.firebaseio.com/main", fileName = "-KxwWNTVdplXFRZwGMkH")```
 
 - register a new user
 
