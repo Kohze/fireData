@@ -9,8 +9,6 @@
 
 --- 
 
-**warning** currently the user authentication REST API token is not working with the upload/download functionality. We try to fix it the next days, in the meantime those functions are only working without the ```token``` argument. In case you already found a solution let us know in the issue tab. 
-
 FireData integrates R Datascience with the abilities and possibilities of the Google Firebase Framework.
 
 Firebase makes it possible to exchange in real-time information in the Cloud and thereby opening the R language to IoT hardware/data processing. Other than that it is also immensely useful for shiny application to integrate Social Authentications and persistent data & uploads.
@@ -42,7 +40,7 @@ library(fireData)
 
 - download a data.frame:
 
-```download(projectURL = "https://firedata-b0e54.firebaseio.com/directory", fileName = "-KqxJtP4-cwkpnvLgAtw")```
+```download(projectURL = "https://firedata-b0e54.firebaseio.com/", fileName = "main/-KxwWNTVdplXFRZwGMkH")```
 
 - register a new user
 
@@ -62,14 +60,14 @@ fireData is already integrated into a several projects.
 
 ![fireData](http://frapbot.kohze.com/fireData/development2.jpg)
 
-Mileston 3 (28-07-2017):
+Milestone 3 (28-08-2017):
 
 - [x] Added DB access via firebase DB secret
 - [x] Extended class/data.frame/list support
 - [x] Updated Unit Tests
 - [x] Added 2 example projects for fireData (spatialmaps & cryptotrade-hq)  
 
-Mileston 2 (24-07-2017):
+Milestone 2 (24-07-2017):
 
 - [x] integrated fireData in the spatialMaps project (currently fork is pending)
 - [x] Added more secure logins by adding prompts
