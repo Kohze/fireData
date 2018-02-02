@@ -40,7 +40,7 @@ fileConversion <- function(x){
 #' @export
 download <- function(projectURL, fileName, secretKey = "none", token = "none", isClass = FALSE) {
 
-   if (secretKey == "none") {
+   if (secretKey == "none" && token == "none") {
      urlPath = paste0(projectURL,"/",fileName,".json")
    } else if (token != "none") {
      urlPath = paste0(projectURL,"/",fileName,".json?auth=",token)
