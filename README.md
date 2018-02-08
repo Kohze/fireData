@@ -46,8 +46,18 @@ library(fireData)
 
 ```createUser(projectAPI = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", email = "your@email.com", password = "12341234" )```
 
+- create token for authenticated requests (can be used for the token argument of upload/download)
 
-more examples will be added soon
+```auth(projectAPI = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", email = "robin@kohze.com", password = "12341234")```
+
+- resett user password
+
+```resetPassword(projectAPI = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", email = "useYourOwn@email.com")```
+
+- backup the database and save as .json
+
+```dataBackup(projectURL = "https://firedata-efa5a.firebaseio.com", secretKey = "2bYA6k72wKna90MqPGa6yuMG7jAysoDJZwJqYXsm", "test.json")```
+        
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
 
