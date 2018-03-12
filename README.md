@@ -70,27 +70,7 @@ fireData is already integrated into a several projects.
 
 ![fireData](http://frapbot.kohze.com/fireData/development2.jpg)
 
-Milestone 3 (28-08-2017):
-
-- [x] Added DB access via firebase DB secret
-- [x] Extended class/data.frame/list support
-- [x] Updated Unit Tests
-- [x] Added 2 example projects for fireData (spatialmaps & cryptotrade-hq)  
-
-Milestone 2 (24-07-2017):
-
-- [x] integrated fireData in the spatialMaps project (currently fork is pending)
-- [x] Added more secure logins by adding prompts
-- [x] Extending the descriptions/documentation
-- [x] added unit tests and reached 100% test coverage 
-
-Milestone 1 (25-06-2017):
-
-- [x] user authentication
-- [x] general API functionality (upload, download)
-- [x] user registration/pw resett
-- [x] token generation
-
+We are currently applying for a Google Summer of Code grant to support a student during the summer month to develop the package further. Feel free to apply. 
 
 ---
 
