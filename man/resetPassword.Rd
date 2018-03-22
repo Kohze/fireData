@@ -17,3 +17,8 @@ Success or warning message.
 \description{
 Resets the user password and sends an email to the user account.
 }
+\examples{
+\dontrun{
+resetPassword(projectAPI = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", email = "useYourOwn@email.com")
+}
+}

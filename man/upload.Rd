@@ -21,6 +21,11 @@ returns http request answer which includes the random key.
 \description{
 The function allows to upload data objects, such as variables,lists and data.frames
 }
+\examples{
+\dontrun{
+upload(x = mtcars, projectURL = "https://firedata-b0e54.firebaseio.com/", directory = "main")
+}
+}
 \author{
 Robin Kohze
 }

@@ -19,3 +19,8 @@ Returns the content of the firebase API request, such as the state of registrati
 \description{
 fireData::auth checks the validity of a login and returns the temporary JWT user token. FireData_auth can be used to store individual user data in specified directories that are only accessible to that specific user.
 }
+\examples{
+\dontrun{
+auth(projectAPI = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", email = "robin@kohze.com", password = "12341234")
+}
+}
