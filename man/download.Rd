@@ -24,3 +24,8 @@ returns optionally reformatted data.
 \description{
 The internal data conversion function to bring data in the right json format. In case the uploaded file is a s4 class object, the object is converted to a binary s4 object.
 }
+\examples{
+\dontrun{
+download(projectURL = "https://firedata-b0e54.firebaseio.com/", fileName = "main/-KxwWNTVdplXFRZwGMkH")
+}
+}

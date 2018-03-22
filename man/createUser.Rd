@@ -19,3 +19,8 @@ Registers a new user and returns the status.
 \description{
 Creates a new firebase user account. All user accounts can accessed at the firebase.com project console. One of the advantages of firebase accounts in R is the ability to access a website and analyse the data of the website with the very same login.
 }
+\examples{
+\dontrun{
+createUser(projectAPI = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", email = "your@email.com", password = "12341234" )
+}
+}
