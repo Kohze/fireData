@@ -70,7 +70,7 @@ fireData is already integrated into a several projects.
 
 ![fireData](http://frapbot.kohze.com/fireData/development2.jpg)
 
-We are currently applying for a Google Summer of Code grant to support a student during the summer month to develop the package further. Feel free to apply. 
+We are currently planning to add the new Cloud Firebase database and enhance the integration into R web applications. 
 
 ---
 
