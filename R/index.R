@@ -116,6 +116,22 @@ auth <- function(projectAPI, email="prompt", password="prompt"){
   return(httr::content(userData))
 }
 
+#' @title The anonymous login function:
+#' @author Paul Spende
+#' @description fireData::anonymousLogin signs in a user anonymously.
+#' @param projectAPI The Firebase Project API {string}
+#' @return Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.
+#' @export
+#' @examples
+#' \dontrun{
+#' anonymousLogin(projectAPI = AIzaSyAYX_RxenP08jWpHExzsZIaO3CXeZhUSW8)
+#' }
+anonymousLogin <- function(projectAPI){
+  anonymousLoginURL = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=", projectAPI)
+  anonymousLoginData = httr::POST(url = anonymousLoginURL, body = list("returnSecureToken" = "True"), encode = "json")
+  return(httr::content(anonymousLoginData))
+}
+
 #' @title Firebase user creation function
 #' @param projectAPI The Firebase Project API {string}
 #' @param email The user email {string}
