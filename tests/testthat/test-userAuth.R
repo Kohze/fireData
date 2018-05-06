@@ -27,7 +27,7 @@ test_that("Test for user creation", {
 })
 
 test_that("Test the firebase anonymous login", {
-  response = anonymousLogin(projectAPI = projectAPI)
+  response = anonymous_login(project_api = projectAPI)
   expect_identical(response$kind, "identitytoolkit#SignupNewUserResponse")
   expect_identical((response$idToken != ""), TRUE)
   expect_identical(response$email, NULL)
