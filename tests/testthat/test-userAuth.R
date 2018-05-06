@@ -26,4 +26,14 @@ test_that("Test for user creation", {
   expect_true("email" %in% names(createUser(projectAPI = projectAPI, email = paste0("testMail", as.numeric(format(Sys.time(), "%OS3")) * 1000, "@googleMail.com"), password = "12341234" )))
 })
 
+test_that("Test the firebase anonymous login", {
+  response = anonymousLogin(projectAPI = projectAPI)
+  expect_identical(response$kind, "identitytoolkit#SignupNewUserResponse")
+  expect_identical((response$idToken != ""), TRUE)
+  expect_identical(response$email, NULL)
+  expect_identical((response$refreshToken != ""), TRUE)
+  expect_identical(response$expiresIn, "3600")
+  expect_identical((response$localId != ""), TRUE)
+})
+
 
