@@ -118,18 +118,37 @@ auth <- function(projectAPI, email="prompt", password="prompt"){
 
 #' @title The anonymous login function:
 #' @author Paul Spende
-#' @description fireData::anonymousLogin signs in a user anonymously.
-#' @param projectAPI The Firebase Project API {string}
+#' @description fireData::anonymous_login signs in a user anonymously.
+#' @param project_api The Firebase Project API {string}
 #' @return Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.
 #' @export
 #' @examples
 #' \dontrun{
-#' anonymousLogin(projectAPI = AIzaSyAYX_RxenP08jWpHExzsZIaO3CXeZhUSW8)
+#' anonymous_login(project_api = AIzaSyAYX_RxenP08jWpHExzsZIaO3CXeZhUSW8)
 #' }
-anonymousLogin <- function(projectAPI){
-  anonymousLoginURL = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=", projectAPI)
-  anonymousLoginData = httr::POST(url = anonymousLoginURL, body = list("returnSecureToken" = "True"), encode = "json")
-  return(httr::content(anonymousLoginData))
+anonymous_login <- function(project_api) {
+  anonymous_login_url <- paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=", project_api)
+  anonymous_login_data <- httr::POST(url = anonymous_login_url, body = list("returnSecureToken" = "True"), encode = "json")
+  return(httr::content(anonymous_login_data))
+}
+
+#' @title The OAuth login function:
+#' @author Paul Spende
+#' @description fireData::o_auth_login signs in a user with OAuth credentials.
+#' @param project_api The Firebase Project API {string}
+#' @param request_uri The URI to which the IDP redirects the user back. {string}
+#' @param post_body Contains the OAuth credential (an ID token or access token) and provider ID which issues the credential. {string}
+#' @param return_idp_credential Whether to force the return of the OAuth credential on the following errors: FEDERATED_USER_ID_ALREADY_LINKED and EMAIL_EXISTS. {boolean}
+#' @return TODO: Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+o_auth_login <- function(project_api, request_uri, post_body, return_idp_credential){
+  o_auth_login_url <- paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyAssertion?key=", project_api)
+  o_auth_login_data <- httr::POST(url = o_auth_login_url, body = list("requestUri" = request_uri, "postBody" = post_body, "returnSecureToken" = "True", "returnIdpCredential" = return_idp_credential), encode = "json")
+  httr::content(o_auth_login_data)
 }
 
 #' @title Firebase user creation function
@@ -151,7 +170,7 @@ createUser <- function(projectAPI, email="prompt", password="prompt"){
   }
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=", projectAPI)
   userData = httr::POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
-  return(httr::content(userData))
+  httr::content(userData)
 }
 
 #' @title Password resett function:
