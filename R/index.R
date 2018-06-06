@@ -151,6 +151,33 @@ o_auth_login <- function(project_api, request_uri, post_body, return_idp_credent
   httr::content(o_auth_login_data)
 }
 
+#' @title The OAuth login function for google:
+#' @author Paul Spende
+#' @description fireData::google_login signs in a user with OAuth credentials.
+#' @param project_api The Firebase Project API {string}
+#' @param request_uri The URI to which the IDP redirects the user back. {string}
+#' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
+#' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
+#' @param return_idp_credential Whether to force the return of the OAuth credential on the following errors: FEDERATED_USER_ID_ALREADY_LINKED and EMAIL_EXISTS. {boolean}
+#' @return TODO: Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+google_login <- function(project_api, web_client_id, web_client_secret, request_uri, return_idp_credential=TRUE){
+  myapp <- oauth_app("google",
+                     key = web_client_id,
+                     secret = web_client_secret)
+
+  google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
+                                 scope = "https://www.googleapis.com/auth/userinfo.profile")
+
+  pbody <- paste0("id_token=", google_token$credentials$id_token, "&providerId=google.com")
+
+  o_auth_login(project_api = project_api, request_uri = request_uri, post_body = pbody, return_idp_credential = return_idp_credential)
+}
+
 #' @title Firebase user creation function
 #' @param projectAPI The Firebase Project API {string}
 #' @param email The user email {string}
