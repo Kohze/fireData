@@ -225,7 +225,9 @@ resetPassword <- function(projectAPI, email){
 #' @description fireData::upload_storage uploads a file to the firebase storage.
 #' @param bucket_name The name of your storage bucket. {string}
 #' @param object_name The name you want to give your file in the storage. {string}
-#' @param oauth2_token The OAuth2.0 idToken that you retrieve with the right scope for cloud storage. {string}
+#' @param service_id The id of the service account, that has rights for the cloud storage. {string}
+#' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
+#' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
 #' @param file_path The path of the file you want to upload. {string}
 #' @return TODO: Returns the storage object informations.
 #' @export
@@ -233,7 +235,7 @@ resetPassword <- function(projectAPI, email){
 #' \dontrun{
 #' TODO:
 #' }
-upload_storage <- function(bucket_name, object_name, web_client_id, web_client_secret, file_path){
+upload_storage <- function(bucket_name, object_name, service_id, web_client_id, web_client_secret, file_path){
   myapp <- oauth_app("google",
                      key = web_client_id,
                      secret = web_client_secret)
@@ -241,7 +243,9 @@ upload_storage <- function(bucket_name, object_name, web_client_id, web_client_s
   google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
                                  scope = "https://www.googleapis.com/auth/devstorage.read_write")
 
-  upload_url <- paste0('https://www.googleapis.com/upload/storage/v1/b/', bucket_name, '/o?uploadType=media&name=', object_name, '&key=4e135a63f4f78814a0cd2bc04da4d80542f63e02')
+  upload_url <- paste0('https://www.googleapis.com/upload/storage/v1/b/', bucket_name,
+                       '/o?uploadType=media&name=', object_name,
+                       '&key=', service_id)
 
   response <- httr::POST(url = upload_url,
                          body = upload_file(file_path),
