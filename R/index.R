@@ -233,7 +233,14 @@ resetPassword <- function(projectAPI, email){
 #' \dontrun{
 #' TODO:
 #' }
-upload_storage <- function(bucket_name, object_name, oauth2_token, file_path){
+upload_storage <- function(bucket_name, object_name, web_client_id, web_client_secret, file_path){
+  myapp <- oauth_app("google",
+                     key = web_client_id,
+                     secret = web_client_secret)
+
+  google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
+                                 scope = "https://www.googleapis.com/auth/devstorage.read_write")
+
   upload_url <- paste0('https://www.googleapis.com/upload/storage/v1/b/', bucket_name, '/o?uploadType=media&name=', object_name, '&key=4e135a63f4f78814a0cd2bc04da4d80542f63e02')
 
   response <- httr::POST(url = upload_url,
