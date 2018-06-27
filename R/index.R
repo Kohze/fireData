@@ -220,6 +220,29 @@ resetPassword <- function(projectAPI, email){
   }
 }
 
+#' @title The upload function for firebase storage:
+#' @author Paul Spende
+#' @description fireData::upload_storage uploads a file to the firebase storage.
+#' @param bucket_name The name of your storage bucket. {string}
+#' @param object_name The name you want to give your file in the storage. {string}
+#' @param oauth2_token The OAuth2.0 idToken that you retrieve with the right scope for cloud storage. {string}
+#' @param file_path The path of the file you want to upload. {string}
+#' @return TODO: Returns the storage object informations.
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+upload_storage <- function(bucket_name, object_name, oauth2_token, file_path){
+  upload_url <- paste0('https://www.googleapis.com/upload/storage/v1/b/', bucket_name, '/o?uploadType=media&name=', object_name, '&key=4e135a63f4f78814a0cd2bc04da4d80542f63e02')
+
+  response <- httr::POST(url = upload_url,
+                         body = upload_file(file_path),
+                         add_headers("Authorization" = paste("Bearer", oauth2_token)))
+
+  httr::content(response)
+}
+
 #' @title Internal class to binary conversion:
 #' @param x is the S4 class object
 #' @description The internal conversion is needed to conserve all class information
