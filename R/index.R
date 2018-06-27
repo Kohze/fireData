@@ -249,7 +249,7 @@ upload_storage <- function(bucket_name, object_name, service_id, web_client_id, 
 
   response <- httr::POST(url = upload_url,
                          body = upload_file(file_path),
-                         add_headers("Authorization" = paste("Bearer", oauth2_token)))
+                         add_headers("Authorization" = paste("Bearer", google_token$credentials$access_token)))
 
   httr::content(response)
 }
