@@ -254,6 +254,34 @@ upload_storage <- function(bucket_name, object_name, service_id, web_client_id, 
   httr::content(response)
 }
 
+#' @title The list function for firebase storage:
+#' @author Paul Spende
+#' @description fireData::list_storage lists all files in the firebase storage bucket.
+#' @param bucket_name The name of your storage bucket. {string}
+#' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
+#' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
+#' @return TODO: Returns the storage object informations for all files in the bucket.
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+list_storage <- function(bucket_name, web_client_id, web_client_secret){
+  myapp <- oauth_app("google",
+                     key = web_client_id,
+                     secret = web_client_secret)
+
+  google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
+                                 scope = "https://www.googleapis.com/auth/devstorage.read_only")
+
+  upload_url <- paste0('https://www.googleapis.com/storage/v1/b/', bucket_name, '/o')
+
+  response <- httr::GET(url = upload_url,
+                        add_headers("Authorization" = paste("Bearer", google_token$credentials$access_token)))
+
+  httr::content(response)
+}
+
 #' @title Internal class to binary conversion:
 #' @param x is the S4 class object
 #' @description The internal conversion is needed to conserve all class information
