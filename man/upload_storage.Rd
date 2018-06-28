@@ -21,7 +21,7 @@ upload_storage(bucket_name, object_name, service_id, web_client_id,
 \item{file_path}{The path of the file you want to upload. {string}}
 }
 \value{
-TODO: Returns the storage object informations.
+Returns the storage object informations.
 }
 \description{
 fireData::upload_storage uploads a file to the firebase storage.

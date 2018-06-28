@@ -229,7 +229,7 @@ resetPassword <- function(projectAPI, email){
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
 #' @param file_path The path of the file you want to upload. {string}
-#' @return TODO: Returns the storage object informations.
+#' @return Returns the storage object informations.
 #' @export
 #' @examples
 #' \dontrun{
@@ -258,9 +258,39 @@ upload_storage <- function(bucket_name, object_name, service_id, web_client_id, 
 #' @author Paul Spende
 #' @description fireData::list_storage lists all files in the firebase storage bucket.
 #' @param bucket_name The name of your storage bucket. {string}
+#' @param object_name The name of the file that you want to delete from the bucket. {string}
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
-#' @return TODO: Returns the storage object informations for all files in the bucket.
+#' @return Returns NULL when successful.
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+delete_storage <- function(bucket_name, object_name, web_client_id, web_client_secret){
+  myapp <- oauth_app("google",
+                     key = web_client_id,
+                     secret = web_client_secret)
+
+  google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
+                                 scope = "https://www.googleapis.com/auth/devstorage.read_write")
+
+  upload_url <- paste0('https://www.googleapis.com/storage/v1/b/', bucket_name,
+                       '/o/', object_name)
+
+  response <- httr::DELETE(url = upload_url,
+                           add_headers("Authorization" = paste("Bearer", google_token$credentials$access_token)))
+
+  httr::content(response)
+}
+
+#' @title The list function for firebase storage:
+#' @author Paul Spende
+#' @description fireData::list_storage lists all files in the firebase storage bucket.
+#' @param bucket_name The name of your storage bucket. {string}
+#' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
+#' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
+#' @return Returns the storage object informations for all files in the bucket.
 #' @export
 #' @examples
 #' \dontrun{
