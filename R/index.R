@@ -254,9 +254,9 @@ upload_storage <- function(bucket_name, object_name, service_id, web_client_id, 
   httr::content(response)
 }
 
-#' @title The list function for firebase storage:
+#' @title The delete function for firebase storage:
 #' @author Paul Spende
-#' @description fireData::list_storage lists all files in the firebase storage bucket.
+#' @description fireData::delete_storage deletes the file in the firebase storage bucket.
 #' @param bucket_name The name of your storage bucket. {string}
 #' @param object_name The name of the file that you want to delete from the bucket. {string}
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
@@ -305,6 +305,36 @@ list_storage <- function(bucket_name, web_client_id, web_client_secret){
                                  scope = "https://www.googleapis.com/auth/devstorage.read_only")
 
   upload_url <- paste0('https://www.googleapis.com/storage/v1/b/', bucket_name, '/o')
+
+  response <- httr::GET(url = upload_url,
+                        add_headers("Authorization" = paste("Bearer", google_token$credentials$access_token)))
+
+  httr::content(response)
+}
+
+#' @title The get function for firebase storage:
+#' @author Paul Spende
+#' @description fireData::get_storage lists all files in the firebase storage bucket.
+#' @param bucket_name The name of your storage bucket. {string}
+#' @param object_name The name of the file that you want to get from the bucket. {string}
+#' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
+#' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
+#' @return Returns the storage object ressource for the file in the bucket.
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+get_storage <- function(bucket_name, object_name, web_client_id, web_client_secret){
+  myapp <- oauth_app("google",
+                     key = web_client_id,
+                     secret = web_client_secret)
+
+  google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
+                                 scope = "https://www.googleapis.com/auth/devstorage.read_only")
+
+  upload_url <- paste0('https://www.googleapis.com/storage/v1/b/', bucket_name,
+                       '/o/', object_name)
 
   response <- httr::GET(url = upload_url,
                         add_headers("Authorization" = paste("Bearer", google_token$credentials$access_token)))
