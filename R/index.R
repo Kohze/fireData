@@ -388,6 +388,33 @@ upload_folder <- function(bucket_name, web_client_id, web_client_secret, folder_
   responses
 }
 
+#' @title This function complies a rmarkdown file to html and uploads it to the storage bucket::
+#' @author Paul Spende
+#' @description fireData::deploy_rmarkdown deploys rmarkdown file to the firebase storage bucket.
+#' @param rmarkdown_path The path to the rmarkdown files. {string}
+#' @param bucket_name The name of your storage bucket. {string}
+#' @param object_name The name of the file that you want to get from the bucket. {string}
+#' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
+#' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
+#' @return Returns list of storage object ressources of all the files uploaded in the bucket.
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+deploy_rmarkdown <- function(rmarkdown_path, bucket_name, object_name, web_client_id, web_client_secret) {
+  html_file <-
+    render(input = rmarkdown_path, output_format = "html_document")
+
+  upload_storage(
+    bucket_name = bucket_name,
+    web_client_id = web_client_id,
+    web_client_secret = web_client_secret,
+    object_name = object_name,
+    file_path = html_file
+  )
+}
+
 #' @title Internal class to binary conversion:
 #' @param x is the S4 class object
 #' @description The internal conversion is needed to conserve all class information
