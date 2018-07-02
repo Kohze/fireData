@@ -4,21 +4,19 @@
 \alias{upload_storage}
 \title{The upload function for firebase storage:}
 \usage{
-upload_storage(bucket_name, object_name, service_id, web_client_id,
-  web_client_secret, file_path)
+upload_storage(bucket_name, object_name, web_client_id, web_client_secret,
+  file_path = NULL)
 }
 \arguments{
 \item{bucket_name}{The name of your storage bucket. {string}}
 
 \item{object_name}{The name you want to give your file in the storage. {string}}
 
-\item{service_id}{The id of the service account, that has rights for the cloud storage. {string}}
-
 \item{web_client_id}{The Web Client ID of your Google OAuth in your Firebase. {string}}
 
 \item{web_client_secret}{The Web Client Secret of your Google OAuth in your Firebase. {string}}
 
-\item{file_path}{The path of the file you want to upload. {string}}
+\item{file_path}{The path of the file you want to upload, leave this empty to create a folder. {string}}
 }
 \value{
 Returns the storage object informations.
