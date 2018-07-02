@@ -345,6 +345,49 @@ get_storage <- function(bucket_name, object_name, web_client_id, web_client_secr
   httr::content(response)
 }
 
+#' @title This function uploads a local folder to the storage bucket::
+#' @author Paul Spende
+#' @description fireData::upload_folder uploads all files in the folder to the firebase storage bucket.
+#' @param bucket_name The name of your storage bucket. {string}
+#' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
+#' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
+#' @param folder_path The path to the folder on the local machine. {string}
+#' @return Returns list of storage object ressources of all the files uploaded in the bucket.
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+upload_folder <- function(bucket_name, web_client_id, web_client_secret, folder_path) {
+  files <- list.files(path = folder_path, full.names = FALSE, recursive = TRUE)
+
+  myapp <- oauth_app("google",
+                     key = web_client_id,
+                     secret = web_client_secret)
+
+  google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
+                                 scope = "https://www.googleapis.com/auth/devstorage.read_write")
+
+  responses <- list()
+
+  for (file in files) {
+    object_name <- paste0(folder_path, "/", file)
+
+    print(object_name)
+
+    upload_url <- paste0('https://www.googleapis.com/upload/storage/v1/b/', bucket_name,
+                         '/o?uploadType=media&name=', file)
+
+    response <- httr::POST(url = upload_url,
+                           body = upload_file(paste0(folder_path, "/", file)),
+                           add_headers("Authorization" = paste("Bearer", google_token$credentials$access_token)))
+
+    list.append(responses, response)
+  }
+
+  responses
+}
+
 #' @title Internal class to binary conversion:
 #' @param x is the S4 class object
 #' @description The internal conversion is needed to conserve all class information
