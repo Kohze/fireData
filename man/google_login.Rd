@@ -4,8 +4,8 @@
 \alias{google_login}
 \title{The OAuth login function for google:}
 \usage{
-google_login(project_api, web_client_id, web_client_secret, request_uri,
-  return_idp_credential = TRUE)
+google_login(project_api, web_client_id = "prompt",
+  web_client_secret = "prompt", request_uri, return_idp_credential = TRUE)
 }
 \arguments{
 \item{project_api}{The Firebase Project API {string}}

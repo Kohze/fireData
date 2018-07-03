@@ -165,7 +165,13 @@ o_auth_login <- function(project_api, request_uri, post_body, return_idp_credent
 #' \dontrun{
 #' TODO:
 #' }
-google_login <- function(project_api, web_client_id, web_client_secret, request_uri, return_idp_credential=TRUE){
+google_login <- function(project_api, web_client_id = "prompt", web_client_secret = "prompt", request_uri, return_idp_credential=TRUE){
+  if (web_client_id == "prompt" && web_client_secret == "prompt") {
+    web_client_id <- readline(prompt = "Web Client ID: ")
+    web_client_secret <- readline(prompt = "Web Client Secret: ")
+    print(paste0("Connecting to",  project_api, ":"))
+  }
+
   myapp <- oauth_app("google",
                      key = web_client_id,
                      secret = web_client_secret)
