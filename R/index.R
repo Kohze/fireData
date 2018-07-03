@@ -184,6 +184,31 @@ google_login <- function(project_api, web_client_id = "prompt", web_client_secre
   o_auth_login(project_api = project_api, request_uri = request_uri, post_body = pbody, return_idp_credential = return_idp_credential)
 }
 
+#' @title The OAuth function to get read/write access to the storage:
+#' @author Paul Spende
+#' @description fireData::google_devstorage_read_write retrieves a token with read/write access to the storage.
+#' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
+#' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
+#' @return TODO: Returns the token data.
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+google_devstorage_read_write <- function(web_client_id = "prompt", web_client_secret = "prompt") {
+  if (web_client_id == "prompt" && web_client_secret == "prompt") {
+    web_client_id <- readline(prompt = "Web Client ID: ")
+    web_client_secret <- readline(prompt = "Web Client Secret: ")
+  }
+
+  myapp <- oauth_app("google",
+                     key = web_client_id,
+                     secret = web_client_secret)
+
+  oauth2.0_token(oauth_endpoints("google"), myapp,
+                 scope = "https://www.googleapis.com/auth/devstorage.read_write")
+}
+
 #' @title Firebase user creation function
 #' @param projectAPI The Firebase Project API {string}
 #' @param email The user email {string}
@@ -241,12 +266,7 @@ resetPassword <- function(projectAPI, email){
 #' TODO:
 #' }
 upload_storage <- function(bucket_name, object_name, web_client_id, web_client_secret, file_path = NULL){
-  myapp <- oauth_app("google",
-                     key = web_client_id,
-                     secret = web_client_secret)
-
-  google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
-                                 scope = "https://www.googleapis.com/auth/devstorage.read_write")
+  google_token <- google_devstorage_read_write(web_client_id, web_client_secret)
 
   upload_url <- paste0('https://www.googleapis.com/upload/storage/v1/b/', bucket_name,
                        '/o?uploadType=media&name=', object_name)
@@ -277,12 +297,7 @@ upload_storage <- function(bucket_name, object_name, web_client_id, web_client_s
 #' TODO:
 #' }
 delete_storage <- function(bucket_name, object_name, web_client_id, web_client_secret){
-  myapp <- oauth_app("google",
-                     key = web_client_id,
-                     secret = web_client_secret)
-
-  google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
-                                 scope = "https://www.googleapis.com/auth/devstorage.read_write")
+  google_token <- google_devstorage_read_write(web_client_id, web_client_secret)
 
   upload_url <- paste0('https://www.googleapis.com/storage/v1/b/', bucket_name,
                        '/o/', object_name)
@@ -367,12 +382,7 @@ get_storage <- function(bucket_name, object_name, web_client_id, web_client_secr
 upload_folder <- function(bucket_name, web_client_id, web_client_secret, folder_path) {
   files <- list.files(path = folder_path, full.names = FALSE, recursive = TRUE)
 
-  myapp <- oauth_app("google",
-                     key = web_client_id,
-                     secret = web_client_secret)
-
-  google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
-                                 scope = "https://www.googleapis.com/auth/devstorage.read_write")
+  google_token <- google_devstorage_read_write(web_client_id, web_client_secret)
 
   responses <- list()
 
