@@ -4,7 +4,8 @@
 \alias{delete_storage}
 \title{The delete function for firebase storage:}
 \usage{
-delete_storage(bucket_name, object_name, web_client_id, web_client_secret)
+delete_storage(bucket_name, object_name, web_client_id = "prompt",
+  web_client_secret = "prompt")
 }
 \arguments{
 \item{bucket_name}{The name of your storage bucket. {string}}

@@ -4,7 +4,8 @@
 \alias{get_storage}
 \title{The get function for firebase storage:}
 \usage{
-get_storage(bucket_name, object_name, web_client_id, web_client_secret)
+get_storage(bucket_name, object_name, web_client_id = "prompt",
+  web_client_secret = "prompt")
 }
 \arguments{
 \item{bucket_name}{The name of your storage bucket. {string}}

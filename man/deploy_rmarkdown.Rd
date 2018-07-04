@@ -4,8 +4,8 @@
 \alias{deploy_rmarkdown}
 \title{This function complies a rmarkdown file to html and uploads it to the storage bucket::}
 \usage{
-deploy_rmarkdown(rmarkdown_path, bucket_name, object_name, web_client_id,
-  web_client_secret)
+deploy_rmarkdown(rmarkdown_path, bucket_name, object_name,
+  web_client_id = "prompt", web_client_secret = "prompt")
 }
 \arguments{
 \item{rmarkdown_path}{The path to the rmarkdown files. {string}}

@@ -4,7 +4,8 @@
 \alias{upload_folder}
 \title{This function uploads a local folder to the storage bucket::}
 \usage{
-upload_folder(bucket_name, web_client_id, web_client_secret, folder_path)
+upload_folder(bucket_name, web_client_id = "prompt",
+  web_client_secret = "prompt", folder_path)
 }
 \arguments{
 \item{bucket_name}{The name of your storage bucket. {string}}

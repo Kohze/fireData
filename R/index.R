@@ -290,7 +290,7 @@ resetPassword <- function(projectAPI, email){
 #' \dontrun{
 #' TODO:
 #' }
-upload_storage <- function(bucket_name, object_name, web_client_id, web_client_secret, file_path = NULL){
+upload_storage <- function(bucket_name, object_name, web_client_id = "prompt", web_client_secret = "prompt", file_path = NULL){
   google_token <- google_devstorage_read_write(web_client_id, web_client_secret)
 
   upload_url <- paste0('https://www.googleapis.com/upload/storage/v1/b/', bucket_name,
@@ -321,7 +321,7 @@ upload_storage <- function(bucket_name, object_name, web_client_id, web_client_s
 #' \dontrun{
 #' TODO:
 #' }
-delete_storage <- function(bucket_name, object_name, web_client_id, web_client_secret){
+delete_storage <- function(bucket_name, object_name, web_client_id = "prompt", web_client_secret = "prompt"){
   google_token <- google_devstorage_read_write(web_client_id, web_client_secret)
 
   upload_url <- paste0('https://www.googleapis.com/storage/v1/b/', bucket_name,
@@ -345,7 +345,7 @@ delete_storage <- function(bucket_name, object_name, web_client_id, web_client_s
 #' \dontrun{
 #' TODO:
 #' }
-list_storage <- function(bucket_name, web_client_id, web_client_secret){
+list_storage <- function(bucket_name, web_client_id = "prompt", web_client_secret = "prompt"){
   google_token <- google_devstorage_read_only(web_client_id, web_client_secret)
 
   upload_url <- paste0('https://www.googleapis.com/storage/v1/b/', bucket_name, '/o')
@@ -369,7 +369,7 @@ list_storage <- function(bucket_name, web_client_id, web_client_secret){
 #' \dontrun{
 #' TODO:
 #' }
-get_storage <- function(bucket_name, object_name, web_client_id, web_client_secret){
+get_storage <- function(bucket_name, object_name, web_client_id = "prompt", web_client_secret = "prompt"){
   google_token <- google_devstorage_read_only(web_client_id, web_client_secret)
 
   upload_url <- paste0('https://www.googleapis.com/storage/v1/b/', bucket_name,
@@ -394,7 +394,7 @@ get_storage <- function(bucket_name, object_name, web_client_id, web_client_secr
 #' \dontrun{
 #' TODO:
 #' }
-upload_folder <- function(bucket_name, web_client_id, web_client_secret, folder_path) {
+upload_folder <- function(bucket_name, web_client_id = "prompt", web_client_secret = "prompt", folder_path) {
   files <- list.files(path = folder_path, full.names = FALSE, recursive = TRUE)
 
   google_token <- google_devstorage_read_write(web_client_id, web_client_secret)
@@ -433,7 +433,7 @@ upload_folder <- function(bucket_name, web_client_id, web_client_secret, folder_
 #' \dontrun{
 #' TODO:
 #' }
-deploy_rmarkdown <- function(rmarkdown_path, bucket_name, object_name, web_client_id, web_client_secret) {
+deploy_rmarkdown <- function(rmarkdown_path, bucket_name, object_name, web_client_id = "prompt", web_client_secret = "prompt") {
   html_file <-
     render(input = rmarkdown_path, output_format = "html_document")
 

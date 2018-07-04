@@ -4,8 +4,8 @@
 \alias{upload_storage}
 \title{The upload function for firebase storage:}
 \usage{
-upload_storage(bucket_name, object_name, web_client_id, web_client_secret,
-  file_path = NULL)
+upload_storage(bucket_name, object_name, web_client_id = "prompt",
+  web_client_secret = "prompt", file_path = NULL)
 }
 \arguments{
 \item{bucket_name}{The name of your storage bucket. {string}}

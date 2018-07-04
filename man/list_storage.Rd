@@ -4,7 +4,8 @@
 \alias{list_storage}
 \title{The list function for firebase storage:}
 \usage{
-list_storage(bucket_name, web_client_id, web_client_secret)
+list_storage(bucket_name, web_client_id = "prompt",
+  web_client_secret = "prompt")
 }
 \arguments{
 \item{bucket_name}{The name of your storage bucket. {string}}
