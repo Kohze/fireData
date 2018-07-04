@@ -84,7 +84,7 @@ download <- function(projectURL, fileName, secretKey = "none", token = "none", i
 dataBackup <- function(projectURL, secretKey="prompt", fileName){
   if (secretKey == "prompt") {
     secretKey <- readline(prompt = "secretKey: ")
-    print("Connecting to SpatialMaps:")
+    print(paste0("Connecting to",  project_api, ":"))
   }
   print("Fetching Data")
   urlPath = paste0(projectURL,"/.json?auth=",secretKey)
@@ -109,7 +109,7 @@ auth <- function(projectAPI, email="prompt", password="prompt"){
   if (password == "prompt" && email == "prompt") {
         email <- readline(prompt = "Email: ")
         password <- readline(prompt = "Password: ")
-        print("Connecting to SpatialMaps:")
+        print(paste0("Connecting to",  project_api, ":"))
   }
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=", projectAPI)
   userData = httr::POST(url = AuthUrl, body = list("email" = email, "password" = password, "returnSecureToken" = "True"), encode = "json")
@@ -249,7 +249,7 @@ createUser <- function(projectAPI, email="prompt", password="prompt"){
   if (password == "prompt" && email == "prompt") {
     email <- readline(prompt = "Email: ")
     password <- readline(prompt = "Password: ")
-    print("Connecting to SpatialMaps:")
+    print(paste0("Connecting to",  project_api, ":"))
   }
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=", projectAPI)
   userData = httr::POST(url = AuthUrl, body = list("email" = email, "password" = password), encode = "json")
