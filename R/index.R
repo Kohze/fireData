@@ -381,6 +381,32 @@ get_storage <- function(bucket_name, object_name, web_client_id = "prompt", web_
   httr::content(response)
 }
 
+#' @title The get the url for an object in storage (e.g. an htmk file):
+#' @author Paul Spende
+#' @description fireData::get_url outputs the url to access the object in storage..
+#' @param bucket_name The name of your storage bucket. {string}
+#' @param object_name The name of the file that you want to get from the bucket. {string}
+#' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
+#' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
+#' @return Returns the url for the storage object.
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+get_url <- function(bucket_name, object_name, web_client_id = "prompt", web_client_secret = "prompt"){
+  object_ressources <- get_storage(bucket_name, object_name, web_client_id, web_client_secret)
+
+  paste0(
+    "https://firebasestorage.googleapis.com/v0/b/",
+    bucket_name,
+    "/o/",
+    object_name,
+    "?alt=media&token=",
+    object_ressources$metadata$firebaseStorageDownloadTokens
+  )
+}
+
 #' @title This function uploads a local folder to the storage bucket::
 #' @author Paul Spende
 #' @description fireData::upload_folder uploads all files in the folder to the firebase storage bucket.
