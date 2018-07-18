@@ -383,7 +383,7 @@ get_storage <- function(bucket_name, object_name, web_client_id = "prompt", web_
 
 #' @title The get the url for an object in storage (e.g. an htmk file):
 #' @author Paul Spende
-#' @description fireData::get_url outputs the url to access the object in storage..
+#' @description fireData::get_url outputs the url to access the object in storage.
 #' @param bucket_name The name of your storage bucket. {string}
 #' @param object_name The name of the file that you want to get from the bucket. {string}
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
@@ -470,6 +470,22 @@ deploy_rmarkdown <- function(rmarkdown_path, bucket_name, object_name, web_clien
     object_name = object_name,
     file_path = html_file
   )
+}
+
+#' @title This function creates short dynamic links::
+#' @author Paul Spende
+#' @description fireData::get_dynamic_link creates a short link for a longer one.
+#' @return Returns json object with short url and further information.
+#' @param project_api The Firebase Project API {string}
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+get_dynamic_link <- function(project_api, long_url){
+  url <- paste0('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=', project_api)
+  response <- httr::POST(url = url, body = list("longDynamicLink" = long_url), encode = "json")
+  httr::content(response)
 }
 
 #' @title Internal class to binary conversion:
