@@ -172,7 +172,7 @@ google_login <- function(project_api, web_client_id = "prompt", web_client_secre
     print(paste0("Connecting to",  project_api, ":"))
   }
 
-  myapp <- oauth_app("google",
+  myapp <- httr::oauth_app("google",
                      key = web_client_id,
                      secret = web_client_secret)
 
@@ -477,14 +477,26 @@ deploy_rmarkdown <- function(rmarkdown_path, bucket_name, object_name, web_clien
 #' @description fireData::get_dynamic_link creates a short link for a longer one.
 #' @return Returns json object with short url and further information.
 #' @param project_api The Firebase Project API {string}
+#' @param domain The Firebase dynamic link domain {string}
+#' @param long_url The URL you want to shorten {string}
+#' @param option The url generation option ("SHORT" or "UNGUESSABLE"). {string}
 #' @export
 #' @examples
 #' \dontrun{
 #' TODO:
 #' }
-get_dynamic_link <- function(project_api, long_url){
+get_dynamic_link <- function(project_api, domain, long_url, option = "SHORT"){
   url <- paste0('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=', project_api)
-  response <- httr::POST(url = url, body = list("longDynamicLink" = long_url), encode = "json")
+  long_dynamic_link <- paste0(domain, "/?link=", long_url)
+  response <-
+    httr::POST(
+      url = url,
+      body = list(
+        "longDynamicLink" = long_dynamic_link,
+        "suffix" = list("option" = option)
+      ),
+      encode = "json"
+    )
   httr::content(response)
 }
 
