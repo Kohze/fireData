@@ -486,18 +486,24 @@ deploy_rmarkdown <- function(rmarkdown_path, bucket_name, object_name, web_clien
 #' TODO:
 #' }
 get_dynamic_link <- function(project_api, domain, long_url, option = "SHORT"){
-  url <- paste0('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=', project_api)
-  long_dynamic_link <- paste0(domain, "/?link=", long_url)
-  response <-
-    httr::POST(
-      url = url,
-      body = list(
-        "longDynamicLink" = long_dynamic_link,
-        "suffix" = list("option" = option)
-      ),
-      encode = "json"
-    )
-  httr::content(response)
+  if (is.element(option, list("SHORT", "UNGUESSABLE")))  {
+    url <-
+      paste0('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=',
+             project_api)
+    long_dynamic_link <- paste0(domain, "/?link=", long_url)
+    response <-
+      httr::POST(
+        url = url,
+        body = list(
+          "longDynamicLink" = long_dynamic_link,
+          "suffix" = list("option" = option)
+        ),
+        encode = "json"
+      )
+    return(httr::content(response))
+  } else {
+    print('Only enter "SHORT" or "UNGUESSABLE" as option parameter.', quote = FALSE)
+  }
 }
 
 #' @title Internal class to binary conversion:
