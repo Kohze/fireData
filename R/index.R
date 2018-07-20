@@ -479,14 +479,15 @@ deploy_rmarkdown <- function(rmarkdown_path, bucket_name, object_name, web_clien
 #' @param project_api The Firebase Project API {string}
 #' @param domain The Firebase dynamic link domain {string}
 #' @param long_url The URL you want to shorten {string}
-#' @param option The url generation option ("SHORT" or "UNGUESSABLE"). {string}
+#' @param option Flag to generate a short url (TRUE) or an unguessable url (FALSE). {boolean}
 #' @export
 #' @examples
 #' \dontrun{
 #' TODO:
 #' }
-get_dynamic_link <- function(project_api, domain, long_url, option = "SHORT"){
-  if (is.element(option, list("SHORT", "UNGUESSABLE")))  {
+get_dynamic_link <-
+  function(project_api, domain, long_url, short = True) {
+    option <- ifelse(short, "SHORT", "UNGUESSABLE")
     url <-
       paste0('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=',
              project_api)
@@ -500,10 +501,7 @@ get_dynamic_link <- function(project_api, domain, long_url, option = "SHORT"){
         ),
         encode = "json"
       )
-    return(httr::content(response))
-  } else {
-    print('Only enter "SHORT" or "UNGUESSABLE" as option parameter.', quote = FALSE)
-  }
+  httr::content(response)
 }
 
 #' @title Internal class to binary conversion:
