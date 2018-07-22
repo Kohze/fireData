@@ -478,31 +478,47 @@ deploy_rmarkdown <- function(rmarkdown_path, bucket_name, object_name, web_clien
 #' @return Returns json object with short url and further information.
 #' @param project_api The Firebase Project API {string}
 #' @param domain The Firebase dynamic link domain {string}
-#' @param long_url The URL you want to shorten {string}
-#' @param option Flag to generate a short url (TRUE) or an unguessable url (FALSE). {boolean}
+#' @param link The URL you want to shorten {string}
+#' @param short Flag to generate a short url (TRUE) or an unguessable url (FALSE). {boolean}
+#' @param social_title The title of the link preview. {string}
+#' @param social_description The description of the link preview. {string}
+#' @param social_image_link The URL to the image shown in the preview of the link. {string}
 #' @export
 #' @examples
 #' \dontrun{
 #' TODO:
 #' }
 get_dynamic_link <-
-  function(project_api, domain, long_url, short = True) {
+  function(project_api,
+           domain,
+           link,
+           short = TRUE,
+           social_title = "",
+           social_description = "",
+           social_image_link = "") {
     option <- ifelse(short, "SHORT", "UNGUESSABLE")
     url <-
       paste0('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=',
              project_api)
-    long_dynamic_link <- paste0(domain, "/?link=", long_url)
     response <-
       httr::POST(
         url = url,
         body = list(
-          "longDynamicLink" = long_dynamic_link,
+          "dynamicLinkInfo" = list(
+            "dynamicLinkDomain" = domain,
+            "link" = link,
+            "socialMetaTagInfo" = list(
+              "socialTitle" = social_title,
+              "socialDescription" = social_description,
+              "socialImageLink" = social_image_link
+            )
+          ),
           "suffix" = list("option" = option)
         ),
         encode = "json"
       )
-  httr::content(response)
-}
+    httr::content(response)
+  }
 
 #' @title Internal class to binary conversion:
 #' @param x is the S4 class object

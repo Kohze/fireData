@@ -4,16 +4,23 @@
 \alias{get_dynamic_link}
 \title{This function creates short dynamic links::}
 \usage{
-get_dynamic_link(project_api, domain, long_url, short = True)
+get_dynamic_link(project_api, domain, link, short = TRUE, social_title = "",
+  social_description = "", social_image_link = "")
 }
 \arguments{
 \item{project_api}{The Firebase Project API {string}}
 
 \item{domain}{The Firebase dynamic link domain {string}}
 
-\item{long_url}{The URL you want to shorten {string}}
+\item{link}{The URL you want to shorten {string}}
 
-\item{option}{Flag to generate a short url (TRUE) or an unguessable url (FALSE). {boolean}}
+\item{short}{Flag to generate a short url (TRUE) or an unguessable url (FALSE). {boolean}}
+
+\item{social_title}{The title of the link preview. {string}}
+
+\item{social_description}{The description of the link preview. {string}}
+
+\item{social_image_link}{The URL to the image shown in the preview of the link. {string}}
 }
 \value{
 Returns json object with short url and further information.
