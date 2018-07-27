@@ -309,29 +309,52 @@ resetPassword <- function(projectAPI, email){
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
 #' @param file_path The path of the file you want to upload, leave this empty to create a folder. {string}
+#' @param predefined_acl The predefined set of access controls. (authenticatedRead, bucketOwnerFullControl, bucketOwnerRead, private, projectPrivate, publicRead) {string}
 #' @return Returns the storage object informations.
 #' @export
 #' @examples
 #' \dontrun{
 #' TODO:
 #' }
-upload_storage <- function(bucket_name, object_name, web_client_id = "prompt", web_client_secret = "prompt", file_path = NULL, predefined_acl = "publicRead"){
-  google_token <- google_devstorage_read_write(web_client_id, web_client_secret)
+upload_storage <-
+  function(bucket_name,
+           object_name,
+           web_client_id = "prompt",
+           web_client_secret = "prompt",
+           file_path = NULL,
+           predefined_acl = "publicRead") {
+    google_token <-
+      google_devstorage_read_write(web_client_id, web_client_secret)
 
-  upload_url <- paste0('https://www.googleapis.com/upload/storage/v1/b/', bucket_name,
-                       '/o?uploadType=media&name=', object_name)
+    upload_url <-
+      paste0(
+        'https://www.googleapis.com/upload/storage/v1/b/',
+        bucket_name,
+        '/o?uploadType=media&name=',
+        object_name,
+        '&predefinedAcl=',
+        predefined_acl
+      )
 
-  if(is.null(file_path)){
-    response <- httr::POST(url = upload_url,
-                           add_headers("Authorization" = paste("Bearer", google_token$credentials$access_token)))
-  } else {
-    response <- httr::POST(url = upload_url,
-                           body = upload_file(file_path),
-                           add_headers("Authorization" = paste("Bearer", google_token$credentials$access_token)))
+    headers <- c("Authorization" = paste("Bearer", google_token$credentials$access_token))
+
+    if (is.null(file_path)) {
+      response <- httr::POST(url = upload_url,
+                             add_headers(
+                               headers
+                             ))
+    } else {
+      response <- httr::POST(
+        url = upload_url,
+        body = upload_file(file_path),
+        add_headers(
+          headers
+        )
+      )
+    }
+
+    httr::content(response)
   }
-
-  httr::content(response)
-}
 
 #' @title The delete function for firebase storage:
 #' @author Paul Spende

@@ -18,6 +18,8 @@ upload_storage(bucket_name, object_name, web_client_id = "prompt",
 \item{web_client_secret}{The Web Client Secret of your Google OAuth in your Firebase. {string}}
 
 \item{file_path}{The path of the file you want to upload, leave this empty to create a folder. {string}}
+
+\item{predefined_acl}{The predefined set of access controls. (authenticatedRead, bucketOwnerFullControl, bucketOwnerRead, private, projectPrivate, publicRead) {string}}
 }
 \value{
 Returns the storage object informations.
