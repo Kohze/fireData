@@ -353,7 +353,10 @@ upload_storage <-
       )
     }
 
-    httr::content(response)
+    data <- httr::content(response)
+    data['url'] <- paste('https://storage.cloud.google.com', bucket_name, object_name, sep = '/')
+
+    data
   }
 
 #' @title The delete function for firebase storage:
