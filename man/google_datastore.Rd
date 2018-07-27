@@ -12,7 +12,7 @@ google_datastore(web_client_id = "prompt", web_client_secret = "prompt")
 \item{web_client_secret}{The Web Client Secret of your Google OAuth in your Firebase. {string}}
 }
 \value{
-TODO: Returns the token data.
+Returns the token data.
 }
 \description{
 fireData::google_datastore retrieves a token with read access to the cloud firestore

@@ -13,10 +13,10 @@ google_devstorage_read_only(web_client_id = "prompt",
 \item{web_client_secret}{The Web Client Secret of your Google OAuth in your Firebase. {string}}
 }
 \value{
-TODO: Returns the token data.
+Returns the token data.
 }
 \description{
-fireData::google_devstorage_read_write retrieves a token with read access to the storage.
+fireData::google_devstorage_read_only retrieves a token with read access to the storage.
 }
 \examples{
 \dontrun{

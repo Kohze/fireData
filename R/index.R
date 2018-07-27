@@ -139,7 +139,7 @@ anonymous_login <- function(project_api) {
 #' @param request_uri The URI to which the IDP redirects the user back. {string}
 #' @param post_body Contains the OAuth credential (an ID token or access token) and provider ID which issues the credential. {string}
 #' @param return_idp_credential Whether to force the return of the OAuth credential on the following errors: FEDERATED_USER_ID_ALREADY_LINKED and EMAIL_EXISTS. {boolean}
-#' @return TODO: Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.
+#' @return Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.
 #' @export
 #' @examples
 #' \dontrun{
@@ -159,7 +159,7 @@ o_auth_login <- function(project_api, request_uri, post_body, return_idp_credent
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
 #' @param return_idp_credential Whether to force the return of the OAuth credential on the following errors: FEDERATED_USER_ID_ALREADY_LINKED and EMAIL_EXISTS. {boolean}
-#' @return TODO: Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.
+#' @return Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.
 #' @export
 #' @examples
 #' \dontrun{
@@ -189,7 +189,7 @@ google_login <- function(project_api, web_client_id = "prompt", web_client_secre
 #' @description fireData::google_devstorage_read_write retrieves a token with read/write access to the storage.
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
-#' @return TODO: Returns the token data.
+#' @return Returns the token data.
 #' @export
 #' @examples
 #' \dontrun{
@@ -214,7 +214,7 @@ google_devstorage_read_write <- function(web_client_id = "prompt", web_client_se
 #' @description fireData::google_devstorage_read_only retrieves a token with read access to the storage.
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
-#' @return TODO: Returns the token data.
+#' @return Returns the token data.
 #' @export
 #' @examples
 #' \dontrun{
@@ -239,38 +239,13 @@ google_devstorage_read_only <- function(web_client_id = "prompt", web_client_sec
 #' @description fireData::google_datastore retrieves a token with read access to the cloud firestore
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
-#' @return TODO: Returns the token data.
+#' @return Returns the token data.
 #' @export
 #' @examples
 #' \dontrun{
 #' TODO:
 #' }
 google_datastore <- function(web_client_id = "prompt", web_client_secret = "prompt") {
-  if (web_client_id == "prompt" && web_client_secret == "prompt") {
-    web_client_id <- readline(prompt = "Web Client ID: ")
-    web_client_secret <- readline(prompt = "Web Client Secret: ")
-  }
-
-  myapp <- oauth_app("google",
-                     key = web_client_id,
-                     secret = web_client_secret)
-
-  oauth2.0_token(oauth_endpoints("google"), myapp,
-                 scope = "https://www.googleapis.com/auth/datastore")
-}
-
-#' @title The OAuth function to get read access to the datastroe:
-#' @author Paul Spende
-#' @description fireData::google_devstorage_read_write retrieves a token with read access to the storage.
-#' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
-#' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
-#' @return TODO: Returns the token data.
-#' @export
-#' @examples
-#' \dontrun{
-#' TODO:
-#' }
-google_devstorage_read_only <- function(web_client_id = "prompt", web_client_secret = "prompt") {
   if (web_client_id == "prompt" && web_client_secret == "prompt") {
     web_client_id <- readline(prompt = "Web Client ID: ")
     web_client_secret <- readline(prompt = "Web Client Secret: ")
@@ -340,7 +315,7 @@ resetPassword <- function(projectAPI, email){
 #' \dontrun{
 #' TODO:
 #' }
-upload_storage <- function(bucket_name, object_name, web_client_id = "prompt", web_client_secret = "prompt", file_path = NULL){
+upload_storage <- function(bucket_name, object_name, web_client_id = "prompt", web_client_secret = "prompt", file_path = NULL, predefined_acl = "publicRead"){
   google_token <- google_devstorage_read_write(web_client_id, web_client_secret)
 
   upload_url <- paste0('https://www.googleapis.com/upload/storage/v1/b/', bucket_name,

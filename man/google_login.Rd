@@ -19,7 +19,7 @@ google_login(project_api, web_client_id = "prompt",
 \item{return_idp_credential}{Whether to force the return of the OAuth credential on the following errors: FEDERATED_USER_ID_ALREADY_LINKED and EMAIL_EXISTS. {boolean}}
 }
 \value{
-TODO: Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.
+Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.
 }
 \description{
 fireData::google_login signs in a user with OAuth credentials.

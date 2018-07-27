@@ -5,7 +5,8 @@
 \title{The upload function for firebase storage:}
 \usage{
 upload_storage(bucket_name, object_name, web_client_id = "prompt",
-  web_client_secret = "prompt", file_path = NULL)
+  web_client_secret = "prompt", file_path = NULL,
+  predefined_acl = "publicRead")
 }
 \arguments{
 \item{bucket_name}{The name of your storage bucket. {string}}
