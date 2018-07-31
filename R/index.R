@@ -236,7 +236,7 @@ google_devstorage_read_only <- function(web_client_id = "prompt", web_client_sec
 
 #' @title The OAuth function to get access to the cloud firestore:
 #' @author Paul Spende
-#' @description fireData::google_datastore retrieves a token with read access to the cloud firestore
+#' @description fireData::google_firestore retrieves a token with read access to the cloud firestore
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
 #' @return Returns the token data.
@@ -245,7 +245,7 @@ google_devstorage_read_only <- function(web_client_id = "prompt", web_client_sec
 #' \dontrun{
 #' TODO:
 #' }
-google_datastore <- function(web_client_id = "prompt", web_client_secret = "prompt") {
+google_firestore <- function(web_client_id = "prompt", web_client_secret = "prompt") {
   if (web_client_id == "prompt" && web_client_secret == "prompt") {
     web_client_id <- readline(prompt = "Web Client ID: ")
     web_client_secret <- readline(prompt = "Web Client Secret: ")
@@ -256,7 +256,8 @@ google_datastore <- function(web_client_id = "prompt", web_client_secret = "prom
                      secret = web_client_secret)
 
   oauth2.0_token(oauth_endpoints("google"), myapp,
-                 scope = "https://www.googleapis.com/auth/datastore")
+                 scope = "https://www.googleapis.com/auth/datastore",
+                         "https://www.googleapis.com/auth/cloud-platform")
 }
 
 #' @title Firebase user creation function
