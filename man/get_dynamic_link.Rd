@@ -4,8 +4,8 @@
 \alias{get_dynamic_link}
 \title{This function creates short dynamic links::}
 \usage{
-get_dynamic_link(project_api, domain, link, short = TRUE, social_title = "",
-  social_description = "", social_image_link = "")
+get_dynamic_link(project_api, domain, link, short = TRUE,
+  social_title = "", social_description = "", social_image_link = "")
 }
 \arguments{
 \item{project_api}{The Firebase Project API {string}}

@@ -572,6 +572,85 @@ get_dynamic_link <-
     httr::content(response)
   }
 
+#' @title This function creates a login overlay for a shiny application::
+#' @author Paul Spende
+#' @description fireData::shiny_auth creates a short link for a longer one.
+#' @return Returns a functional login overlay.
+#' @param user A flag if user is logged in or not. E.g.   USER <- reactiveValues(Logged = FALSE) {reactiveValues}
+#' @param input The input to the shiny server. {input}
+#' @param project_api The Firebase Project API {string}
+#' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
+#' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
+#' @param request_uri The URI to which the IDP redirects the user back. {string}
+#' @export
+#' @examples
+#' \dontrun{
+#' TODO:
+#' }
+shiny_auth_server <- function(user, input, project_api, web_client_id ,web_client_secret, request_uri) {
+  observeEvent(input$.login, {
+    token <-
+      auth(
+        projectAPI = project_api,
+        email = input$.username,
+        password = input$.password
+      )
+    if (exists("idToken", where = token)) {
+      user$Logged <- TRUE
+    } else {
+      show("message")
+      output$message = renderText("Invalid user name or password")
+      delay(2000, hide("message", anim = TRUE, animType = "fade"))
+    }
+  })
+
+  observeEvent(input$.goauth, {
+    token <-
+      google_login(
+        project_api = project_api,
+        web_client_id = web_client_id,
+        web_client_secret = web_client_secret,
+        request_uri = request_uri
+      )
+    if (exists("oauthIdToken", where = token)) {
+      user$Logged <- TRUE
+    } else {
+      show("message")
+      output$message = renderText("Invalid user name or password")
+      delay(2000, hide("message", anim = TRUE, animType = "fade"))
+    }
+  })
+
+  observeEvent(input$.anonymous, {
+    token <-
+      anonymous_login(project_api = project_api)
+    if (exists("idToken", where = token)) {
+      user$Logged <- TRUE
+    } else {
+      show("message")
+      output$message = renderText("Invalid user name or password")
+      delay(2000, hide("message", anim = TRUE, animType = "fade"))
+    }
+  })
+
+  fluidRow(column(
+    width = 4,
+    offset = 4,
+    wellPanel(
+      id = "login",
+      textInput(".username", "Username:"),
+      passwordInput(".password", "Password:"),
+      div(actionButton(".login", "Login"), style =
+            "text-align: center;"),
+      div(actionButton(".goauth", "Google login"), style =
+            "text-align: center;"),
+      div(actionButton(".anonymous", "Anonymous login"), style =
+            "text-align: center;")
+    ),
+    textOutput("message")
+  ))
+}
+
 #' @title Internal class to binary conversion:
 #' @param x is the S4 class object
 #' @description The internal conversion is needed to conserve all class information
