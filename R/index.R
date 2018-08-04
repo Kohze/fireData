@@ -156,6 +156,7 @@ o_auth_login <- function(project_api, request_uri, post_body, return_idp_credent
 #' @description fireData::google_login signs in a user with OAuth credentials.
 #' @param project_api The Firebase Project API {string}
 #' @param request_uri The URI to which the IDP redirects the user back. {string}
+#' @param redirect_uri The URI to be redirected after the authentification. {string}
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
 #' @param return_idp_credential Whether to force the return of the OAuth credential on the following errors: FEDERATED_USER_ID_ALREADY_LINKED and EMAIL_EXISTS. {boolean}
@@ -166,7 +167,7 @@ o_auth_login <- function(project_api, request_uri, post_body, return_idp_credent
 #' \dontrun{
 #' TODO:
 #' }
-google_login <- function(project_api, web_client_id = "prompt", web_client_secret = "prompt", request_uri, return_idp_credential=TRUE, cache = FALSE){
+google_login <- function(project_api, web_client_id = "prompt", web_client_secret = "prompt", request_uri, redirect_uri = oauth_callback(), return_idp_credential=TRUE, cache = FALSE){
   if (web_client_id == "prompt" && web_client_secret == "prompt") {
     web_client_id <- readline(prompt = "Web Client ID: ")
     web_client_secret <- readline(prompt = "Web Client Secret: ")
@@ -175,7 +176,8 @@ google_login <- function(project_api, web_client_id = "prompt", web_client_secre
 
   myapp <- httr::oauth_app("google",
                      key = web_client_id,
-                     secret = web_client_secret)
+                     secret = web_client_secret,
+                     redirect_uri = redirect_uri)
 
   google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
                                  scope = "https://www.googleapis.com/auth/userinfo.profile",

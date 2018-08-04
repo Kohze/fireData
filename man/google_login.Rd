@@ -6,7 +6,8 @@
 \usage{
 google_login(project_api, web_client_id = "prompt",
   web_client_secret = "prompt", request_uri,
-  return_idp_credential = TRUE, cache = FALSE)
+  redirect_uri = oauth_callback(), return_idp_credential = TRUE,
+  cache = FALSE)
 }
 \arguments{
 \item{project_api}{The Firebase Project API {string}}
@@ -16,6 +17,8 @@ google_login(project_api, web_client_id = "prompt",
 \item{web_client_secret}{The Web Client Secret of your Google OAuth in your Firebase. {string}}
 
 \item{request_uri}{The URI to which the IDP redirects the user back. {string}}
+
+\item{redirect_uri}{The URI to be redirected after the authentification. {string}}
 
 \item{return_idp_credential}{Whether to force the return of the OAuth credential on the following errors: FEDERATED_USER_ID_ALREADY_LINKED and EMAIL_EXISTS. {boolean}}
 
