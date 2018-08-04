@@ -6,7 +6,7 @@
 \usage{
 google_login(project_api, web_client_id = "prompt",
   web_client_secret = "prompt", request_uri,
-  return_idp_credential = TRUE)
+  return_idp_credential = TRUE, cache = FALSE)
 }
 \arguments{
 \item{project_api}{The Firebase Project API {string}}
@@ -18,6 +18,8 @@ google_login(project_api, web_client_id = "prompt",
 \item{request_uri}{The URI to which the IDP redirects the user back. {string}}
 
 \item{return_idp_credential}{Whether to force the return of the OAuth credential on the following errors: FEDERATED_USER_ID_ALREADY_LINKED and EMAIL_EXISTS. {boolean}}
+
+\item{cache}{Cache the tokens in the .httr-oauth file or not. {boolean}}
 }
 \value{
 Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.

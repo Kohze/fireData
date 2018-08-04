@@ -159,13 +159,14 @@ o_auth_login <- function(project_api, request_uri, post_body, return_idp_credent
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
 #' @param return_idp_credential Whether to force the return of the OAuth credential on the following errors: FEDERATED_USER_ID_ALREADY_LINKED and EMAIL_EXISTS. {boolean}
+#' @param cache Cache the tokens in the .httr-oauth file or not. {boolean}
 #' @return Returns the content of the firebase API request, such as the idToken, the refreshToken, and the localId.
 #' @export
 #' @examples
 #' \dontrun{
 #' TODO:
 #' }
-google_login <- function(project_api, web_client_id = "prompt", web_client_secret = "prompt", request_uri, return_idp_credential=TRUE){
+google_login <- function(project_api, web_client_id = "prompt", web_client_secret = "prompt", request_uri, return_idp_credential=TRUE, cache = FALSE){
   if (web_client_id == "prompt" && web_client_secret == "prompt") {
     web_client_id <- readline(prompt = "Web Client ID: ")
     web_client_secret <- readline(prompt = "Web Client Secret: ")
@@ -177,7 +178,8 @@ google_login <- function(project_api, web_client_id = "prompt", web_client_secre
                      secret = web_client_secret)
 
   google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
-                                 scope = "https://www.googleapis.com/auth/userinfo.profile")
+                                 scope = "https://www.googleapis.com/auth/userinfo.profile",
+                                 cache = cache)
 
   pbody <- paste0("id_token=", google_token$credentials$id_token, "&providerId=google.com")
 
