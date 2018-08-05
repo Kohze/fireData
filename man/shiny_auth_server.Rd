@@ -4,13 +4,20 @@
 \alias{shiny_auth_server}
 \title{This function creates a login overlay for a shiny application::}
 \usage{
-shiny_auth_server(user, input, project_api, web_client_id,
-  web_client_secret, request_uri)
+shiny_auth_server(user, input, credentials = TRUE, goauth = TRUE,
+  anonymous = TRUE, project_api = NULL, web_client_id = NULL,
+  web_client_secret = NULL, request_uri = NULL)
 }
 \arguments{
 \item{user}{A flag if user is logged in or not. E.g.   USER <- reactiveValues(Logged = FALSE) {reactiveValues}}
 
 \item{input}{The input to the shiny server. {input}}
+
+\item{credentials}{If the email and password login should be available. {boolean}}
+
+\item{goauth}{If google OAuth login should be available. {boolean}}
+
+\item{anonymous}{If the anonymous login should be available. {boolean}}
 
 \item{project_api}{The Firebase Project API {string}}
 

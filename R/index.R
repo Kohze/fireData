@@ -582,6 +582,9 @@ get_dynamic_link <-
 #' @return Returns a functional login overlay.
 #' @param user A flag if user is logged in or not. E.g.   USER <- reactiveValues(Logged = FALSE) {reactiveValues}
 #' @param input The input to the shiny server. {input}
+#' @param credentials If the email and password login should be available. {boolean}
+#' @param goauth If google OAuth login should be available. {boolean}
+#' @param anonymous If the anonymous login should be available. {boolean}
 #' @param project_api The Firebase Project API {string}
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
@@ -591,65 +594,95 @@ get_dynamic_link <-
 #' \dontrun{
 #' TODO:
 #' }
-shiny_auth_server <- function(user, input, project_api, web_client_id ,web_client_secret, request_uri) {
-  observeEvent(input$.login, {
-    token <-
-      auth(
-        projectAPI = project_api,
-        email = input$.username,
-        password = input$.password
-      )
-    if (exists("idToken", where = token)) {
-      user$Logged <- TRUE
-    } else {
-      show("message")
-      output$message = renderText("Invalid user name or password")
-      delay(2000, hide("message", anim = TRUE, animType = "fade"))
-    }
-  })
+shiny_auth_server <-
+  function(user,
+           input,
+           credentials = TRUE,
+           goauth = TRUE,
+           anonymous = TRUE,
+           project_api = NULL,
+           web_client_id= NULL,
+           web_client_secret = NULL,
+           request_uri = NULL) {
 
-  observeEvent(input$.goauth, {
-    token <-
-      google_login(
-        project_api = project_api,
-        web_client_id = web_client_id,
-        web_client_secret = web_client_secret,
-        request_uri = request_uri
+    if(anonymous) {
+      observeEvent(input$.anonymous, {
+        token <-
+          anonymous_login(project_api = project_api)
+        if (exists("idToken", where = token)) {
+          user$Logged <- TRUE
+        } else {
+          show("message")
+          output$message = renderText("Invalid user name or password")
+          delay(2000, hide("message", anim = TRUE, animType = "fade"))
+        }
+      })
+      insertUI(
+        selector = "#login",
+        where = "afterBegin",
+        ui = div(actionButton(".anonymous", "Anonymous login"), style =
+              "text-align: center;")
       )
-    if (exists("oauthIdToken", where = token)) {
-      user$Logged <- TRUE
-    } else {
-      show("message")
-      output$message = renderText("Invalid user name or password")
-      delay(2000, hide("message", anim = TRUE, animType = "fade"))
     }
-  })
 
-  observeEvent(input$.anonymous, {
-    token <-
-      anonymous_login(project_api = project_api)
-    if (exists("idToken", where = token)) {
-      user$Logged <- TRUE
-    } else {
-      show("message")
-      output$message = renderText("Invalid user name or password")
-      delay(2000, hide("message", anim = TRUE, animType = "fade"))
+    if(goauth) {
+      observeEvent(input$.goauth, {
+        token <-
+          google_login(
+            project_api = project_api,
+            web_client_id = web_client_id,
+            web_client_secret = web_client_secret,
+            request_uri = request_uri
+          )
+        if (exists("oauthIdToken", where = token)) {
+          user$Logged <- TRUE
+        } else {
+          show("message")
+          output$message = renderText("Invalid user name or password")
+          delay(2000, hide("message", anim = TRUE, animType = "fade"))
+        }
+      })
+      insertUI(
+        selector = "#login",
+        where = "afterBegin",
+        ui = div(actionButton(".goauth", "Google login"), style =
+                   "text-align: center;")
+      )
     }
-  })
+
+    if(credentials) {
+      observeEvent(input$.login, {
+        token <-
+          auth(
+            projectAPI = project_api,
+            email = input$.username,
+            password = input$.password
+          )
+        if (exists("idToken", where = token)) {
+          user$Logged <- TRUE
+        } else {
+          show("message")
+          output$message = renderText("Invalid user name or password")
+          delay(2000, hide("message", anim = TRUE, animType = "fade"))
+        }
+      })
+      insertUI(
+        selector = "#login",
+        where = "afterBegin",
+        ui = tagList(
+          textInput(".username", "Username:"),
+          passwordInput(".password", "Password:"),
+          div(actionButton(".login", "Login"), style =
+                "text-align: center;")
+        )
+      )
+    }
 
   fluidRow(column(
     width = 4,
     offset = 4,
     wellPanel(
-      id = "login",
-      textInput(".username", "Username:"),
-      passwordInput(".password", "Password:"),
-      div(actionButton(".login", "Login"), style =
-            "text-align: center;"),
-      div(actionButton(".goauth", "Google login"), style =
-            "text-align: center;"),
-      div(actionButton(".anonymous", "Anonymous login"), style =
-            "text-align: center;")
+      id = "login"
     ),
     textOutput("message")
   ))
