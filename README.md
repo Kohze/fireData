@@ -1,11 +1,10 @@
 ![fireData](http://frapbot.kohze.com/fireData/topImage6.jpg)
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Kohze/fireData/master/LICENSE.txt)
-[![Build Status](https://travis-ci.org/Kohze/fireData.svg?branch=master)](https://travis-ci.org/Kohze/fireData)
-[![codecov](https://codecov.io/gh/Kohze/fireData/branch/master/graph/badge.svg)](https://codecov.io/gh/Kohze/fireData)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/paulsp94/fireData/master/LICENSE.txt)
+[![Build Status](https://travis-ci.org/Kohze/fireData.svg?branch=master)](https://travis-ci.org/paulsp94/fireData)
+[![codecov](https://codecov.io/gh/Kohze/fireData/branch/master/graph/badge.svg)](https://codecov.io/gh/paulsp94/fireData)
 
-
-**Project Title:** FireData: Connecting R to Google Firebase
+**Adding Web Functionalities for Shiny and enabling RMarkdown and HTMLWidget hosting on firebase**
 
 --- 
 
