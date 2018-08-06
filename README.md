@@ -34,30 +34,9 @@ library(fireData)
 
 ![examples](http://frapbot.kohze.com/fireData/examples2.jpg)
 
-- uploading a data.frame:
+- using Google OAuth login
 
-```upload(x = mtcars, projectURL = "https://firedata-b0e54.firebaseio.com/",  directory = "main")```
-
-- download a data.frame:
-
-```download(projectURL = "https://firedata-b0e54.firebaseio.com/", fileName = "main/-KxwWNTVdplXFRZwGMkH")```
-
-- register a new user
-
-```createUser(projectAPI = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", email = "your@email.com", password = "12341234" )```
-
-- create token for authenticated requests (can be used for the token argument of upload/download)
-
-```auth(projectAPI = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", email = "robin@kohze.com", password = "12341234")```
-
-- reset user password
-
-```resetPassword(projectAPI = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", email = "useYourOwn@email.com")```
-
-- backup the database and save as .json
-
-```dataBackup(projectURL = "https://firedata-efa5a.firebaseio.com", secretKey = "2bYA6k72wKna90MqPGa6yuMG7jAysoDJZwJqYXsm", "test.json")```
-        
+```google_login(project_api = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", request_uri = "https://firedata-b0e54.firebaseio.com/")```
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
 
