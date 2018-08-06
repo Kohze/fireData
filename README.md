@@ -38,7 +38,7 @@ library(fireData)
 
 ```r
 google_login(project_api = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", 
-			 request_uri = "https://firedata-b0e54.firebaseio.com/")
+request_uri = "https://firedata-b0e54.firebaseio.com/")
 ```
 
 
