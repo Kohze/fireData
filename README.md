@@ -34,6 +34,14 @@ library(fireData)
 
 ![examples](http://frapbot.kohze.com/fireData/examples2.jpg)
 
+- using anonymous login
+
+```r
+token <- anonymous_login(project_api = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc")
+
+token$idToken
+```
+
 - using Google OAuth login
 
 ```r
@@ -55,10 +63,6 @@ fireData is already integrated into a several projects.
 
 
 ![fireData](http://frapbot.kohze.com/fireData/development2.jpg)
-
-We are currently applying for a Google Summer of Code grant to support a student during the summer month to develop the package further. Feel free to apply. 
-
----
 
 **Aknowledgements:**
 
