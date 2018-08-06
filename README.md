@@ -16,17 +16,18 @@ This package was created within the framework of Google Summer of Code 2017.
 
 ![fireData](http://frapbot.kohze.com/fireData/setup2.jpg)
 
-**Database Setup:**
+**Firebase Setup:**
 - visit at https://firebase.google.com/
 - login and enter the "console"
 - add new project
-- find the API keys at the "overview" page clicking on add firebase to web-app
+- find the API keys and projectID at the "overview" page clicking on add firebase to web-app
+- certain functions requires OAuth 2.0 access which needed client_id and client_secret, these can be found from https://console.developers.google.com/apis/credentials
 
 **R Package Setup:**
 
 ```
 if (!require("devtools")) install.packages("devtools")
-devtools::install_github("Kohze/fireData")
+devtools::install_github("paulsp94/fireData")
 
 library(fireData)
 ```
