@@ -260,8 +260,7 @@ google_firestore <- function(web_client_id = "prompt", web_client_secret = "prom
                      secret = web_client_secret)
 
   oauth2.0_token(oauth_endpoints("google"), myapp,
-                 scope = "https://www.googleapis.com/auth/datastore",
-                         "https://www.googleapis.com/auth/cloud-platform")
+                 scope = "https://www.googleapis.com/auth/datastore https://www.googleapis.com/auth/cloud-platform")
 }
 
 #' @title Firebase user creation function
