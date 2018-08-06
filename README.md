@@ -36,7 +36,12 @@ library(fireData)
 
 - using Google OAuth login
 
-```google_login(project_api = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", request_uri = "https://firedata-b0e54.firebaseio.com/")```
+```r
+google_login(project_api = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", 
+			 request_uri = "https://firedata-b0e54.firebaseio.com/")
+```
+
+
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
 
