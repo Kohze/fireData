@@ -51,6 +51,13 @@ token <- google_login(project_api = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc",
 token$oauthIdToken
 ```
 
+- getting access token for Google Firestore
+
+```r
+token <- google_firestore()
+
+token$credentials$access_token
+```
 
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
