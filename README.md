@@ -86,6 +86,12 @@ delete_storage(bucket_name = "firedata-b0e54.appspot.com",
                object_name = "myObject")
 ```
 
+- list all files on firebase (google) storage
+
+```r
+files <- list_storage(bucket_name = "firedata-b0e54.appspot.com")
+```
+
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
 
 fireData is already integrated into a several projects. 
