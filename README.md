@@ -34,6 +34,8 @@ library(fireData)
 
 ![examples](http://frapbot.kohze.com/fireData/examples2.jpg)
 
+**Authentification**
+
 - using anonymous login
 
 ```r
@@ -59,6 +61,23 @@ token <- google_firestore()
 token$credentials$access_token
 ```
 
+**Storage**
+
+- upload a file to firebase (google) storage
+
+```r
+upload_storage(bucket_name = "https://firedata-b0e54.firebaseio.com/",
+               object_name = "myObject", 
+               file_path =  "./index.html")
+```
+
+it is also possible to integrate a folder structure in the object_name
+
+```r
+upload_storage(bucket_name = "https://firedata-b0e54.firebaseio.com/",
+               object_name = "test/myObject", 
+               file_path =  "./index.html")
+```
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
 
