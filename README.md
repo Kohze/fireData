@@ -66,7 +66,7 @@ token$credentials$access_token
 - upload a file to firebase (google) storage
 
 ```r
-upload_storage(bucket_name = "https://firedata-b0e54.firebaseio.com/",
+upload_storage(bucket_name = "firedata-b0e54.appspot.com",
                object_name = "myObject", 
                file_path =  "./index.html")
 ```
@@ -74,9 +74,16 @@ upload_storage(bucket_name = "https://firedata-b0e54.firebaseio.com/",
 it is also possible to integrate a folder structure in the object_name
 
 ```r
-upload_storage(bucket_name = "https://firedata-b0e54.firebaseio.com/",
+upload_storage(bucket_name = "firedata-b0e54.appspot.com",
                object_name = "test/myObject", 
                file_path =  "./index.html")
+```
+
+- delete a file from firebase (google) storage
+
+```r
+delete_storage(bucket_name = "firedata-b0e54.appspot.com",
+               object_name = "myObject")
 ```
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
