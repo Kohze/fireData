@@ -119,4 +119,4 @@ fireData is already integrated into a several projects.
 
 **Acknowledgements:**
 
-I hereby want to thank my GSOC mentors S. Schmidt, L. Gatto, B. Jehoul for their project support and especially Robin Kohze for his continuous guidance and insights into the problems and possible solutions to make this package a reality. 
+I hereby want to thank my GSOC mentors S. Schmidt, L. Gatto, B. Jehoul for their project support and especially Robin Kohze for his continuous guidance and insights into the problems and possible solutions to make this project a reality. I also want to thank my collegue Jiasheng Zhu for the good teamwork. 
