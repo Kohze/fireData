@@ -494,7 +494,7 @@ upload_folder <- function(bucket_name, web_client_id = "prompt", web_client_secr
                            body = upload_file(paste0(folder_path, "/", file)),
                            add_headers("Authorization" = paste("Bearer", google_token$credentials$access_token)))
 
-    list.append(responses, response)
+    responses <- append(responses, httr::content(response))
   }
 
   responses
