@@ -117,6 +117,6 @@ fireData is already integrated into a several projects.
 
 ![fireData](http://frapbot.kohze.com/fireData/development2.jpg)
 
-**Aknowledgements:**
+**Acknowledgements:**
 
-I hereby want to thank my GSOC mentors L. Pedraza, S. Schmidt for their project support and especially L. Gatto for his insights and experience to make this package a reality. 
+I hereby want to thank my GSOC mentors S. Schmidt, L. Gatto, B. Jehoul for their project support and especially Robin Kohze for his continuous guidance and insights into the problems and possible solutions to make this package a reality. 
