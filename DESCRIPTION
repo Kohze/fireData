@@ -14,8 +14,9 @@ LazyData: true
 RoxygenNote: 6.1.0
 Imports:
   httr (>= 1.2.1),
-  jsonlite (>= 	1.4),
-  curl (>= 2.3)
+  jsonlite (>= 1.4),
+  curl (>= 2.3),
+  rmarkdown (>= 1.10)
 Suggests:
   testthat (>= 1.0),
   covr (>= 2.2.2)
