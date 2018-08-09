@@ -138,6 +138,8 @@ setting the flag *short* to FALSE in the parameters will result in an UNGUESSABL
 
 Additionally it is possible to define the social media meta tags using *social_title*, *social_description* and *social_image_link*.
 
+Before you can use this function you have to configure firebase for dynamic links. Have a look at https://firebase.google.com/docs/dynamic-links/rest#create_a_short_link_from_parameters on the section **Before you begin**.
+
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
 
