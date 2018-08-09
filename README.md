@@ -132,9 +132,7 @@ return the URL to the html page on firebase.
 get_dynamic_link(project_api = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", 
                  link = "https://firebasestorage.googleapis.com/v0/b/fir-abf00.appspot.com/o/interactive?alt=media&token=74c8f4cf-6299-4d92-9179-e778f0c40b1b", 
                  domain = "rdashboard.page.link")
-```social_title = "",
-           social_description = "",
-           social_image_link = ""
+```
 
 setting the flag short to FALSE in the parameters will result in an UNGUESSABLE , which consists out of the domain and a 17 characters path component. By default this functions returns a short link, where the path components only contains 4 characters.
 
