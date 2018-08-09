@@ -6,7 +6,7 @@ Description: Provides API access to common features of the Google Firebase realt
     Usecases of firebase are creating user logins with persistent data storage for mobile apps, shiny applications
     or IOT applications. See the fireData github repository for more information.
 Depends: R (>= 3.3.3)
-License: MIT + file LICENCE
+License: MIT + file LICENSE
 URL: https://github.com/Kohze/fireData
 BugReports: https://github.com/Kohze/fireData/issues
 Encoding: UTF-8
