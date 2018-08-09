@@ -134,9 +134,9 @@ get_dynamic_link(project_api = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc",
                  domain = "rdashboard.page.link")
 ```
 
-setting the flag short to FALSE in the parameters will result in an UNGUESSABLE , which consists out of the domain and a 17 characters path component. By default this functions returns a short link, where the path components only contains 4 characters.
+setting the flag *short* to FALSE in the parameters will result in an UNGUESSABLE , which consists out of the domain and a 17 characters path component. By default this functions returns a short link, where the path components only contains 4 characters.
 
-Additionally it is possible to define the social media meta tags using social_title, social_description and social_image_link.
+Additionally it is possible to define the social media meta tags using *social_title*, *social_description* and *social_image_link*.
 
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
