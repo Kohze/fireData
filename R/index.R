@@ -515,8 +515,7 @@ upload_folder <- function(bucket_name, web_client_id = "prompt", web_client_secr
 #' TODO:
 #' }
 deploy_rmarkdown <- function(rmarkdown_path, bucket_name, object_name, web_client_id = "prompt", web_client_secret = "prompt") {
-  html_file <-
-    rmarkdown::render(input = rmarkdown_path, output_format = "html_document")
+  html_file <- rmarkdown::render(input = rmarkdown_path, output_format = "html_document")
 
   upload_storage(
     bucket_name = bucket_name,

@@ -112,6 +112,22 @@ upload_folder(bucket_name = "firedata-b0e54.appspot.com",
               folder_path =  "./myPage/")
 ```
 
+**Hosting**
+
+- deploy an RMarkdown file to firebase
+
+```r
+metadata <- deploy_rmarkdown(rmarkdown_path = "./index.Rmd",
+                             bucket_name = "firedata-b0e54.appspot.com",
+                             object_name = "rmarkdown")
+
+metadata$url
+```
+
+return the URL to the html page on firebase.
+
+
+
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
 
 fireData is already integrated into a several projects. 
