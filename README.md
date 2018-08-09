@@ -126,6 +126,17 @@ metadata$url
 
 return the URL to the html page on firebase.
 
+- get a dynamic link for a given link
+
+```r
+get_dynamic_link(project_api = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc", 
+                 link = "https://firebasestorage.googleapis.com/v0/b/fir-abf00.appspot.com/o/interactive?alt=media&token=74c8f4cf-6299-4d92-9179-e778f0c40b1b", 
+                 domain = "rdashboard.page.link")
+```
+
+setting the flag short to FALSE in the parameters will result in an UNGUESSABLE link.
+
+Additionally it is possible to define the social media meta tags using social_title, social_description and a social_image_link.
 
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
