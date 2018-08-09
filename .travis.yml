@@ -17,10 +17,7 @@ r_github_packages:
   - r-lib/covr
 
 after_success:
-
-  - Rscript \
-    --default-packages='httr,curl,testthat,jsonlite' \
-    -e 'library(covr); covr::codecov(token="1a2512eb-7044-4d30-9496-787465c38e37")'
+  - Rscript -e 'covr::codecov()'
 
 notifications:
   email:
