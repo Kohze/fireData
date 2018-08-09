@@ -99,6 +99,13 @@ object_metadata <- get_storage(bucket_name = "firedata-b0e54.appspot.com",
                                object_name = "myObject")
 ```
 
+- upload a folder structure with all files to firebase (google) storage
+
+```r
+upload_folder(bucket_name = "firedata-b0e54.appspot.com",
+              folder_path =  "./myPage/")
+```
+
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
 
 fireData is already integrated into a several projects. 
