@@ -12,7 +12,9 @@ FireData integrates R Datascience with the abilities and possibilities of the Go
 
 Firebase makes it possible to exchange in real-time information in the Cloud and thereby opening the R language to IoT hardware/data processing. Other than that it is also immensely useful for shiny application to integrate Social Authentications and persistent data & uploads.
 
-This package was created within the framework of Google Summer of Code 2017. 
+This project implements various authentification methods, multiple methods to handle files in the firebase (google) storage, a function to deploy an RMarkdown file and a shiny integration for the authentification methods.
+
+These improvements were created within the framework of Google Summer of Code 2018. 
 
 ![fireData](http://frapbot.kohze.com/fireData/setup2.jpg)
 
@@ -66,12 +68,16 @@ token$credentials$access_token
 - upload a file to firebase (google) storage
 
 ```r
-upload_storage(bucket_name = "firedata-b0e54.appspot.com",
-               object_name = "myObject", 
-               file_path =  "./index.html")
+metadata <- upload_storage(bucket_name = "firedata-b0e54.appspot.com",
+                           object_name = "myObject", 
+                           file_path =  "./index.html")
+                           
+metadata$url
 ```
 
-it is also possible to integrate a folder structure in the object_name
+holds the URL of the uploaded file, to view it in the browser.
+
+It is also possible to integrate a folder structure in the object_name:
 
 ```r
 upload_storage(bucket_name = "firedata-b0e54.appspot.com",
