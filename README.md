@@ -16,6 +16,10 @@ This project implements various authentification methods, multiple methods to ha
 
 These improvements were created within the framework of Google Summer of Code 2018. 
 
+**Things to be done in the future**
+
+- test coverage for OAuth based methods
+
 ![fireData](http://frapbot.kohze.com/fireData/setup2.jpg)
 
 **Firebase Setup:**
@@ -140,6 +144,11 @@ Additionally it is possible to define the social media meta tags using *social_t
 
 Before you can use this function you have to configure firebase for dynamic links. Have a look at https://firebase.google.com/docs/dynamic-links/rest#create_a_short_link_from_parameters on the section **Before you begin**.
 
+**Shiny integration**
+
+```r  
+shiny_auth_server
+```
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
 
