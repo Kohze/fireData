@@ -147,7 +147,46 @@ Before you can use this function you have to configure firebase for dynamic link
 **Shiny integration**
 
 ```r  
-shiny_auth_server
+library(shiny)
+library(fireData)
+
+## app.R ##
+server <- function(input, output) {
+  USER <- reactiveValues(Logged = FALSE)
+
+  output$app = renderUI(if (!isTRUE(USER$Logged)) {
+    shiny_auth_server(
+      USER,
+      input,
+      output,
+      project_api = "AIzaSyAjZLO9-CRV3gObpwdFz-k8AiTOxHSBmdc",
+      web_client_id = WEBCLIENTID,
+      web_client_secret = WEBCLIENTSECRET,
+      request_uri = "https://firedata-b0e54.firebaseapp.com/"
+    )
+  } else {
+    fluidPage(
+      sidebarLayout(
+        sidebarPanel(
+          sliderInput("obs", "Number of observations:", min = 10, max = 500, value = 100)
+        ),
+        mainPanel(plotOutput("distPlot"))
+      )
+    )
+  })
+
+  output$distPlot <- renderPlot({
+    hist(rnorm(input$obs), col = 'darkgray', border = 'white')
+  })
+}
+
+ui <- fluidPage(
+    titlePanel("Password protected Shiny app"),
+
+    uiOutput("app")
+)
+
+shinyApp(ui = ui, server = server)
 ```
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
