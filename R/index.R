@@ -614,7 +614,7 @@ shiny_auth_server <-
         } else {
           show("message")
           output$message = renderText("Invalid user name or password")
-          delay(2000, hide("message", anim = TRUE, animType = "fade"))
+          shinyjs::delay(2000, hide("message", anim = TRUE, animType = "fade"))
         }
       })
       insertUI(
@@ -663,7 +663,7 @@ shiny_auth_server <-
         } else {
           show("message")
           output$message = renderText("Invalid user name or password")
-          delay(2000, hide("message", anim = TRUE, animType = "fade"))
+          shinyjs::delay(2000, hide("message", anim = TRUE, animType = "fade"))
         }
       })
       insertUI(

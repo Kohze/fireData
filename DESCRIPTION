@@ -16,7 +16,8 @@ Imports:
   httr (>= 1.2.1),
   jsonlite (>= 1.4),
   curl (>= 2.3),
-  rmarkdown (>= 1.10)
+  rmarkdown (>= 1.10),
+  shinyjs (>= 1.0)
 Suggests:
   testthat (>= 1.0),
   covr (>= 2.2.2)
