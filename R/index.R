@@ -205,12 +205,12 @@ google_devstorage_read_write <- function(web_client_id = "prompt", web_client_se
     web_client_secret <- readline(prompt = "Web Client Secret: ")
   }
 
-  myapp <- oauth_app("google",
-                     key = web_client_id,
-                     secret = web_client_secret)
+  myapp <- httr::oauth_app("google",
+                           key = web_client_id,
+                           secret = web_client_secret)
 
-  oauth2.0_token(oauth_endpoints("google"), myapp,
-                 scope = "https://www.googleapis.com/auth/devstorage.read_write")
+  httr::oauth2.0_token(httr::oauth_endpoints("google"), myapp,
+                       scope = "https://www.googleapis.com/auth/devstorage.read_write")
 }
 
 #' @title The OAuth function to get read access to the storage:
@@ -230,12 +230,12 @@ google_devstorage_read_only <- function(web_client_id = "prompt", web_client_sec
     web_client_secret <- readline(prompt = "Web Client Secret: ")
   }
 
-  myapp <- oauth_app("google",
-                     key = web_client_id,
-                     secret = web_client_secret)
+  myapp <- httr::oauth_app("google",
+                           key = web_client_id,
+                           secret = web_client_secret)
 
-  oauth2.0_token(oauth_endpoints("google"), myapp,
-                 scope = "https://www.googleapis.com/auth/devstorage.read_only")
+  httr::oauth2.0_token(httr::oauth_endpoints("google"), myapp,
+                       scope = "https://www.googleapis.com/auth/devstorage.read_only")
 }
 
 #' @title The OAuth function to get access to the cloud firestore:
@@ -243,24 +243,26 @@ google_devstorage_read_only <- function(web_client_id = "prompt", web_client_sec
 #' @description fireData::google_firestore retrieves a token with read access to the cloud firestore
 #' @param web_client_id The Web Client ID of your Google OAuth in your Firebase. {string}
 #' @param web_client_secret The Web Client Secret of your Google OAuth in your Firebase. {string}
+#' @param cache Cache the tokens in the .httr-oauth file or not. {boolean}
 #' @return Returns the token data.
 #' @export
 #' @examples
 #' \dontrun{
 #' TODO:
 #' }
-google_firestore <- function(web_client_id = "prompt", web_client_secret = "prompt") {
+google_firestore <- function(web_client_id = "prompt", web_client_secret = "prompt", cache = FALSE) {
   if (web_client_id == "prompt" && web_client_secret == "prompt") {
     web_client_id <- readline(prompt = "Web Client ID: ")
     web_client_secret <- readline(prompt = "Web Client Secret: ")
   }
 
-  myapp <- oauth_app("google",
-                     key = web_client_id,
-                     secret = web_client_secret)
+  myapp <- httr::oauth_app("google",
+                           key = web_client_id,
+                           secret = web_client_secret)
 
-  oauth2.0_token(oauth_endpoints("google"), myapp,
-                 scope = "https://www.googleapis.com/auth/datastore https://www.googleapis.com/auth/cloud-platform")
+  httr::oauth2.0_token(httr::oauth_endpoints("google"), myapp,
+                       scope = "https://www.googleapis.com/auth/datastore https://www.googleapis.com/auth/cloud-platform",
+                       cache = cache)
 }
 
 #' @title Firebase user creation function
