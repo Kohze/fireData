@@ -146,6 +146,8 @@ Before you can use this function you have to configure firebase for dynamic link
 
 **Shiny integration**
 
+With the shiny_auth_server function it is possible to secure a shiny app with various authentification methods like username/password combination, Google OAuth or anonymous login. The following example shows how to implement a authentification process for your shiny app.
+
 ```r  
 library(shiny)
 library(fireData)
