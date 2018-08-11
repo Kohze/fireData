@@ -4,14 +4,16 @@
 \alias{shiny_auth_server}
 \title{This function creates a login overlay for a shiny application::}
 \usage{
-shiny_auth_server(user, input, credentials = TRUE, goauth = TRUE,
-  anonymous = TRUE, project_api = NULL, web_client_id = NULL,
-  web_client_secret = NULL, request_uri = NULL)
+shiny_auth_server(user, input, output, credentials = TRUE,
+  goauth = TRUE, anonymous = TRUE, project_api = NULL,
+  web_client_id = NULL, web_client_secret = NULL, request_uri = NULL)
 }
 \arguments{
 \item{user}{A flag if user is logged in or not. E.g.   USER <- reactiveValues(Logged = FALSE) {reactiveValues}}
 
-\item{input}{The input to the shiny server. {input}}
+\item{input}{The input to the shiny server. (shinyServer(function(input, output) ...) {input}}
+
+\item{output}{The output to the shiny server. (shinyServer(function(input, output) ...) {input}}
 
 \item{credentials}{If the email and password login should be available. {boolean}}
 

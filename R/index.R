@@ -579,7 +579,8 @@ get_dynamic_link <-
 #' @description fireData::shiny_auth creates a short link for a longer one.
 #' @return Returns a functional login overlay.
 #' @param user A flag if user is logged in or not. E.g.   USER <- reactiveValues(Logged = FALSE) {reactiveValues}
-#' @param input The input to the shiny server. {input}
+#' @param input The input to the shiny server. (shinyServer(function(input, output) ...) {input}
+#' @param output The output to the shiny server. (shinyServer(function(input, output) ...) {input}
 #' @param credentials If the email and password login should be available. {boolean}
 #' @param goauth If google OAuth login should be available. {boolean}
 #' @param anonymous If the anonymous login should be available. {boolean}
@@ -595,6 +596,7 @@ get_dynamic_link <-
 shiny_auth_server <-
   function(user,
            input,
+           output,
            credentials = TRUE,
            goauth = TRUE,
            anonymous = TRUE,
@@ -637,7 +639,7 @@ shiny_auth_server <-
         } else {
           show("message")
           output$message = renderText("Invalid user name or password")
-          delay(2000, hide("message", anim = TRUE, animType = "fade"))
+          shinyjs::delay(1500, hide("message", anim = TRUE, animType = "fade"))
         }
       })
       insertUI(
