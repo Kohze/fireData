@@ -167,7 +167,7 @@ o_auth_login <- function(project_api, request_uri, post_body, return_idp_credent
 #' \dontrun{
 #' TODO:
 #' }
-google_login <- function(project_api, web_client_id = "prompt", web_client_secret = "prompt", request_uri, redirect_uri = oauth_callback(), return_idp_credential=TRUE, cache = FALSE){
+google_login <- function(project_api, web_client_id = "prompt", web_client_secret = "prompt", request_uri, redirect_uri = httr::oauth_callback(), return_idp_credential=TRUE, cache = FALSE){
   if (web_client_id == "prompt" && web_client_secret == "prompt") {
     web_client_id <- readline(prompt = "Web Client ID: ")
     web_client_secret <- readline(prompt = "Web Client Secret: ")
@@ -179,9 +179,9 @@ google_login <- function(project_api, web_client_id = "prompt", web_client_secre
                      secret = web_client_secret,
                      redirect_uri = redirect_uri)
 
-  google_token <- oauth2.0_token(oauth_endpoints("google"), myapp,
-                                 scope = "https://www.googleapis.com/auth/userinfo.profile",
-                                 cache = cache)
+  google_token <- httr::oauth2.0_token(httr::oauth_endpoints("google"), myapp,
+                                       scope = "https://www.googleapis.com/auth/userinfo.profile",
+                                       cache = cache)
 
   pbody <- paste0("id_token=", google_token$credentials$id_token, "&providerId=google.com")
 

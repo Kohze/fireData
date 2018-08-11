@@ -6,7 +6,7 @@
 \usage{
 google_login(project_api, web_client_id = "prompt",
   web_client_secret = "prompt", request_uri,
-  redirect_uri = oauth_callback(), return_idp_credential = TRUE,
+  redirect_uri = httr::oauth_callback(), return_idp_credential = TRUE,
   cache = FALSE)
 }
 \arguments{
