@@ -12,7 +12,7 @@ FireData integrates R Datascience with the abilities and possibilities of the Go
 
 Firebase makes it possible to exchange in real-time information in the Cloud and thereby opening the R language to IoT hardware/data processing. Other than that it is also immensely useful for shiny application to integrate Social Authentications and persistent data & uploads.
 
-This project implements various authentification methods, multiple methods to handle files in the firebase (google) storage, a function to deploy an RMarkdown file and a shiny integration for the authentification methods.
+This project implements various authentification methods, multiple methods to handle files in the firebase (google) storage, a function to deploy an RMarkdown file and a shiny integration for the authentification methods. All commits made during this project can be found [here](https://github.com/paulsp94/fireData/commits?author=paulsp94).
 
 These improvements were created within the framework of Google Summer of Code 2018. 
 
