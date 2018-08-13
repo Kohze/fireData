@@ -20,14 +20,16 @@ These improvements were created within the framework of Google Summer of Code 20
 
 - test coverage for OAuth based methods
 
+- improve shiny_auth_server UI with CSS/HTML
+
 ![fireData](http://frapbot.kohze.com/fireData/setup2.jpg)
 
 **Firebase Setup:**
-- visit at https://firebase.google.com/
+- visit at [https://firebase.google.com/](https://firebase.google.com/)
 - login and enter the "console"
 - add new project
 - find the API keys and projectID at the "overview" page clicking on add firebase to web-app
-- certain functions requires OAuth 2.0 access which needed client_id and client_secret, these can be found from https://console.developers.google.com/apis/credentials
+- certain functions requires OAuth 2.0 access which needed client_id and client_secret, these can be found from the [google developer console](https://console.developers.google.com/apis/credentials)
 
 **R Package Setup:**
 
