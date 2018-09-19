@@ -1,3 +1,72 @@
+#' @title The firebase data delete function:
+#' @author Kevin McGinley
+#' @description The function allows to delete data objects, such as variables, lists and data.frames
+#' @param x A list, data.frame or data.table {object}
+#' @param projectURL The Firebase project URL {string}
+#' @param directory The optimal Firebase subdirectory {string}
+#' @param token The user access token that can be retrieved with the auth() function. Required when if the database rules specify the need for user authentications. {string}
+#' @return returns http request answer.
+#' @export
+#' @examples
+#' \dontrun{
+#' delete(x = mtcars, projectURL = "https://firedata-b0e54.firebaseio.com/", directory = "main")
+#' }
+delete <- function(x, projectURL, directory = "main", token = "none"){
+  output = fileConversion(x)
+  if (token == "none") {
+    Response = httr::DELETE(paste0(projectURL,"/",directory,".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+  } else {
+    Response = httr::DELETE(paste0(projectURL,"/",directory,".json?auth=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+  }
+  return(paste0(directory,"/",httr::content(Response)$name))
+}
+
+#' @title The firebase data patch function:
+#' @author Kevin McGinley
+#' @description The function allows to update data objects, such as variables, lists and data.frames
+#' @param x A list, data.frame or data.table {object}
+#' @param projectURL The Firebase project URL {string}
+#' @param directory The optimal Firebase subdirectory {string}
+#' @param token The user access token that can be retrieved with the auth() function. Required when if the database rules specify the need for user authentications. {string}
+#' @return returns http request answer.
+#' @export
+#' @examples
+#' \dontrun{
+#' patch(x = mtcars, projectURL = "https://firedata-b0e54.firebaseio.com/", directory = "main")
+#' }
+patch <- function(x, projectURL, directory = "main", token = "none"){
+  output = fileConversion(x)
+  if (token == "none") {
+    Response = httr::PATCH(paste0(projectURL,"/",directory,".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+  } else {
+    Response = httr::PATCH(paste0(projectURL,"/",directory,".json?auth=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+  }
+  return(paste0(directory,"/",httr::content(Response)$name))
+}
+
+#' @title The firebase data put function:
+#' @author Kevin McGinley
+#' @description The function allows to update data objects, such as variables, lists and data.frames
+#' @param x A list, data.frame or data.table {object}
+#' @param projectURL The Firebase project URL {string}
+#' @param directory The optimal Firebase subdirectory {string}
+#' @param token The user access token that can be retrieved with the auth() function. Required when if the database rules specify the need for user authentications. {string}
+#' @return returns http request answer.
+#' @export
+#' @examples
+#' \dontrun{
+#' patch(x = mtcars, projectURL = "https://firedata-b0e54.firebaseio.com/", directory = "main")
+#' }
+put <- function(x, projectURL, directory = "main", token = "none"){
+  output = fileConversion(x)
+  if (token == "none") {
+    Response = httr::PUT(paste0(projectURL,"/",directory,".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+  } else {
+    Response = httr::PUT(paste0(projectURL,"/",directory,".json?auth=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+  }
+  return(paste0(directory,"/",httr::content(Response)$name))
+}
+
 #' @title The firebase data upload function:
 #' @author Robin Kohze
 #' @description The function allows to upload data objects, such as variables,lists and data.frames
@@ -12,12 +81,12 @@
 #' upload(x = mtcars, projectURL = "https://firedata-b0e54.firebaseio.com/", directory = "main")
 #' }
 upload <- function(x, projectURL, directory = "main", token = "none"){
- output = fileConversion(x)
- if (token == "none") {
-  Response = httr::POST(paste0(projectURL,"/",directory,".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
- } else {
-   Response = httr::POST(paste0(projectURL,"/",directory,".json?auth=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
- }
+  output = fileConversion(x)
+  if (token == "none") {
+    Response = httr::POST(paste0(projectURL,"/",directory,".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+  } else {
+    Response = httr::POST(paste0(projectURL,"/",directory,".json?auth=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+  }
   return(paste0(directory,"/",httr::content(Response)$name))
 }
 
@@ -48,25 +117,25 @@ fileConversion <- function(x){
 #' }
 download <- function(projectURL, fileName, secretKey = "none", token = "none", isClass = FALSE) {
 
-   if (secretKey == "none" && token == "none") {
-     urlPath = paste0(projectURL,"/",fileName,".json")
-   } else if (token != "none") {
-     urlPath = paste0(projectURL,"/",fileName,".json?auth=",token)
-   } else {
-     urlPath = paste0(projectURL,"/",fileName,".json?auth=",secretKey)
-   }
+  if (secretKey == "none" && token == "none") {
+    urlPath = paste0(projectURL,"/",fileName,".json")
+  } else if (token != "none") {
+    urlPath = paste0(projectURL,"/",fileName,".json?auth=",token)
+  } else {
+    urlPath = paste0(projectURL,"/",fileName,".json?auth=",secretKey)
+  }
 
-   data = httr::GET(urlPath)
+  data = httr::GET(urlPath)
 
-   if (is.null(jsonlite::fromJSON(httr::content(data,"text")))) warning("No data found at database location.")
-   if (isClass) {
-     retrievedData = httr::content(data,"text")
-     tempPath = tempfile()
-     writeBin(jsonlite::base64_dec(jsonlite::fromJSON(retrievedData)), tempPath)
-     return(readRDS(tempPath))
-   } else {
-     return(jsonlite::fromJSON(httr::content(data,"text")))
-   }
+  if (is.null(jsonlite::fromJSON(httr::content(data,"text")))) warning("No data found at database location.")
+  if (isClass) {
+    retrievedData = httr::content(data,"text")
+    tempPath = tempfile()
+    writeBin(jsonlite::base64_dec(jsonlite::fromJSON(retrievedData)), tempPath)
+    return(readRDS(tempPath))
+  } else {
+    return(jsonlite::fromJSON(httr::content(data,"text")))
+  }
 }
 
 #' @title The firebase database backup function:
@@ -89,8 +158,8 @@ dataBackup <- function(projectURL, secretKey="prompt", fileName){
   print("Fetching Data")
   urlPath = paste0(projectURL,"/.json?auth=",secretKey)
   curl::curl_download(url = urlPath,
-                destfile = fileName,
-                quiet = FALSE)
+                      destfile = fileName,
+                      quiet = FALSE)
   print(paste0("Backup created in ", fileName))
 }
 
@@ -107,9 +176,9 @@ dataBackup <- function(projectURL, secretKey="prompt", fileName){
 #' }
 auth <- function(projectAPI, email="prompt", password="prompt"){
   if (password == "prompt" && email == "prompt") {
-        email <- readline(prompt = "Email: ")
-        password <- readline(prompt = "Password: ")
-        print("Connecting to SpatialMaps:")
+    email <- readline(prompt = "Email: ")
+    password <- readline(prompt = "Password: ")
+    print("Connecting to SpatialMaps:")
   }
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=", projectAPI)
   userData = httr::POST(url = AuthUrl, body = list("email" = email, "password" = password, "returnSecureToken" = "True"), encode = "json")
@@ -188,4 +257,3 @@ path_check <- function(path){
   if (path_replaced != path) warning(paste0("path changed to ", path_replaced))
   return(path)
 }
-
