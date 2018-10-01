@@ -7,13 +7,13 @@
 
 **Project Title:** FireData: Connecting R to Google Firebase
 
---- 
+---
 
 FireData integrates R Datascience with the abilities and possibilities of the Google Firebase Framework.
 
 Firebase makes it possible to exchange in real-time information in the Cloud and thereby opening the R language to IoT hardware/data processing. Other than that it is also immensely useful for shiny application to integrate Social Authentications and persistent data & uploads.
 
-This package was created within the framework of Google Summer of Code 2017. 
+This package was created within the framework of Google Summer of Code 2017.
 
 ![fireData](http://frapbot.kohze.com/fireData/setup2.jpg)
 
@@ -38,6 +38,14 @@ library(fireData)
 
 ```upload(x = mtcars, projectURL = "https://firedata-b0e54.firebaseio.com/",  directory = "main")```
 
+- patching a data.frame:
+
+```patch(x = mtcars, projectURL = "https://firedata-b0e54.firebaseio.com/",  directory = "main/-KxwWNTVdplXFRZwGMkH")```
+
+- putting a data.frame:
+
+```put(x = mtcars, projectURL = "https://firedata-b0e54.firebaseio.com/",  directory = "main/-KxwWNTVdplXFRZwGMkH")```
+
 - download a data.frame:
 
 ```download(projectURL = "https://firedata-b0e54.firebaseio.com/", fileName = "main/-KxwWNTVdplXFRZwGMkH")```
@@ -57,11 +65,11 @@ library(fireData)
 - backup the database and save as .json
 
 ```dataBackup(projectURL = "https://firedata-efa5a.firebaseio.com", secretKey = "2bYA6k72wKna90MqPGa6yuMG7jAysoDJZwJqYXsm", "test.json")```
-        
+
 
 ![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
 
-fireData is already integrated into a several projects. 
+fireData is already integrated into a several projects.
 
 - SpatialMaps: A spatial proteomics platform that utilizes firebase as cross platform database.
 
@@ -70,10 +78,10 @@ fireData is already integrated into a several projects.
 
 ![fireData](http://frapbot.kohze.com/fireData/development2.jpg)
 
-We are currently planning to add the new Cloud Firebase database and enhance the integration into R web applications. 
+We are currently planning to add the new Cloud Firebase database and enhance the integration into R web applications.
 
 ---
 
 **Aknowledgements:**
 
-I hereby want to thank my GSOC mentors L. Pedraza, S. Schmidt for their project support and especially L. Gatto for his insights and experience to make this package a reality. 
+I hereby want to thank my GSOC mentors L. Pedraza, S. Schmidt for their project support and especially L. Gatto for his insights and experience to make this package a reality.
