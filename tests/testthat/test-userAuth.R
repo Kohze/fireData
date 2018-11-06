@@ -35,5 +35,3 @@ test_that("Test the firebase anonymous login", {
   expect_identical(response$expiresIn, "3600")
   expect_identical((response$localId != ""), TRUE)
 })
-
-
