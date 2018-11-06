@@ -12,12 +12,12 @@
 #' upload(x = mtcars, projectURL = "https://firedata-b0e54.firebaseio.com/", directory = "main")
 #' }
 upload <- function(x, projectURL, directory = "main", token = "none"){
- output = fileConversion(x)
- if (token == "none") {
-  Response = httr::POST(paste0(projectURL,"/",directory,".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
- } else {
-   Response = httr::POST(paste0(projectURL,"/",directory,".json?auth=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
- }
+  output = fileConversion(x)
+  if (token == "none") {
+    Response = httr::POST(paste0(projectURL,"/",directory,".json"), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+  } else {
+    Response = httr::POST(paste0(projectURL,"/",directory,".json?auth=",token), body = jsonlite::toJSON(output, auto_unbox = TRUE))
+  }
   return(paste0(directory,"/",httr::content(Response)$name))
 }
 
@@ -48,25 +48,25 @@ fileConversion <- function(x){
 #' }
 download <- function(projectURL, fileName, secretKey = "none", token = "none", isClass = FALSE) {
 
-   if (secretKey == "none" && token == "none") {
-     urlPath = paste0(projectURL,"/",fileName,".json")
-   } else if (token != "none") {
-     urlPath = paste0(projectURL,"/",fileName,".json?auth=",token)
-   } else {
-     urlPath = paste0(projectURL,"/",fileName,".json?auth=",secretKey)
-   }
+  if (secretKey == "none" && token == "none") {
+    urlPath = paste0(projectURL,"/",fileName,".json")
+  } else if (token != "none") {
+    urlPath = paste0(projectURL,"/",fileName,".json?auth=",token)
+  } else {
+    urlPath = paste0(projectURL,"/",fileName,".json?auth=",secretKey)
+  }
 
-   data = httr::GET(urlPath)
+  data = httr::GET(urlPath)
 
-   if (is.null(jsonlite::fromJSON(httr::content(data,"text")))) warning("No data found at database location.")
-   if (isClass) {
-     retrievedData = httr::content(data,"text")
-     tempPath = tempfile()
-     writeBin(jsonlite::base64_dec(jsonlite::fromJSON(retrievedData)), tempPath)
-     return(readRDS(tempPath))
-   } else {
-     return(jsonlite::fromJSON(httr::content(data,"text")))
-   }
+  if (is.null(jsonlite::fromJSON(httr::content(data,"text")))) warning("No data found at database location.")
+  if (isClass) {
+    retrievedData = httr::content(data,"text")
+    tempPath = tempfile()
+    writeBin(jsonlite::base64_dec(jsonlite::fromJSON(retrievedData)), tempPath)
+    return(readRDS(tempPath))
+  } else {
+    return(jsonlite::fromJSON(httr::content(data,"text")))
+  }
 }
 
 #' @title The firebase database backup function:
@@ -89,8 +89,8 @@ dataBackup <- function(projectURL, secretKey="prompt", fileName){
   print("Fetching Data")
   urlPath = paste0(projectURL,"/.json?auth=",secretKey)
   curl::curl_download(url = urlPath,
-                destfile = fileName,
-                quiet = FALSE)
+                      destfile = fileName,
+                      quiet = FALSE)
   print(paste0("Backup created in ", fileName))
 }
 
@@ -107,9 +107,9 @@ dataBackup <- function(projectURL, secretKey="prompt", fileName){
 #' }
 auth <- function(projectAPI, email="prompt", password="prompt"){
   if (password == "prompt" && email == "prompt") {
-        email <- readline(prompt = "Email: ")
-        password <- readline(prompt = "Password: ")
-        print(paste0("Connecting to",  project_api, ":"))
+    email <- readline(prompt = "Email: ")
+    password <- readline(prompt = "Password: ")
+    print(paste0("Connecting to",  project_api, ":"))
   }
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=", projectAPI)
   userData = httr::POST(url = AuthUrl, body = list("email" = email, "password" = password, "returnSecureToken" = "True"), encode = "json")
@@ -175,9 +175,9 @@ google_login <- function(project_api, web_client_id = "prompt", web_client_secre
   }
 
   myapp <- httr::oauth_app("google",
-                     key = web_client_id,
-                     secret = web_client_secret,
-                     redirect_uri = redirect_uri)
+                           key = web_client_id,
+                           secret = web_client_secret,
+                           redirect_uri = redirect_uri)
 
   google_token <- httr::oauth2.0_token(httr::oauth_endpoints("google"), myapp,
                                        scope = "https://www.googleapis.com/auth/userinfo.profile",
@@ -623,7 +623,7 @@ shiny_auth_server <-
         selector = "#login",
         where = "afterBegin",
         ui = div(actionButton(".anonymous", "Anonymous login"), style =
-              "text-align: center;")
+                   "text-align: center;")
       )
     }
 
@@ -680,15 +680,15 @@ shiny_auth_server <-
       )
     }
 
-  fluidRow(column(
-    width = 4,
-    offset = 4,
-    wellPanel(
-      id = "login"
-    ),
-    textOutput("message")
-  ))
-}
+    fluidRow(column(
+      width = 4,
+      offset = 4,
+      wellPanel(
+        id = "login"
+      ),
+      textOutput("message")
+    ))
+  }
 
 #' @title Internal class to binary conversion:
 #' @param x is the S4 class object
