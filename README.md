@@ -22,6 +22,7 @@ This package was created within the framework of Google Summer of Code 2017 and 
 - login and enter the "console"
 - add new project
 - find the API keys at the "overview" page clicking on add firebase to web-app
+- certain functions requires OAuth 2.0 access which needed client_id and client_secret, these can be found from the [google developer console](https://console.developers.google.com/apis/credentials)
 
 **R Package Setup:**
 
