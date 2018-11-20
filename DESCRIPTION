@@ -1,6 +1,6 @@
 Package: fireData
 Title: Connecting R to Google Firebase
-Version: 1.15
+Version: 1.16
 Authors@R: person("Robin", "Kohze", email = "Robin@Kohze.com", role = c("aut", "cre"))
 Description: Provides API access to common features of the Google Firebase realtime database.
     Usecases of firebase are creating user logins with persistent data storage for mobile apps, shiny applications
