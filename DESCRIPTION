@@ -1,6 +1,6 @@
 Package: fireData
 Title: Connecting R to Google Firebase
-Version: 1.15
+Version: 1.16
 Authors@R: c(person("Robin", "Kohze", email = "Robin@Kohze.com", role = c("aut", "cre")), 
              person("Paul", "Spende", email = "paul.spende@gmail.com", role = c("aut")))
 Author: Robin Kohze [aut, cre],
@@ -9,7 +9,7 @@ Description: Provides API access to common features of the Google Firebase realt
     Usecases of firebase are creating user logins with persistent data storage for mobile apps, shiny applications
     or IOT applications. See the fireData github repository for more information.
 Depends: R (>= 3.3.3)
-License: MIT + file LICENSE
+License: MIT + file LICENCE
 URL: https://github.com/Kohze/fireData
 BugReports: https://github.com/Kohze/fireData/issues
 Encoding: UTF-8
