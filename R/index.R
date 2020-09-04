@@ -178,7 +178,7 @@ auth <- function(projectAPI, email="prompt", password="prompt"){
   if (password == "prompt" && email == "prompt") {
     email <- readline(prompt = "Email: ")
     password <- readline(prompt = "Password: ")
-    print(paste0("Connecting to",  project_api, ":"))
+    print(paste0("Connecting to",  projectApi, ":"))
   }
   AuthUrl = paste0("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=", projectAPI)
   userData = httr::POST(url = AuthUrl, body = list("email" = email, "password" = password, "returnSecureToken" = "True"), encode = "json")
