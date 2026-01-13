@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"/c/Program Files/R/R-4.4.0/bin/Rscript.exe\" -e \"setwd\\(''C:/Users/robin/fireData''\\); Sys.setenv\\(RSTUDIO_PANDOC=''C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools''\\); pkg <- devtools::build\\(\\); cat\\(''\\\\nPackage built:'', pkg, ''\\\\n''\\)\")",
+      "Bash(\"/c/Program Files/R/R-4.4.0/bin/Rscript.exe\" -e \"setwd\\(''C:/Users/robin/fireData''\\); devtools::check_win_devel\\(\\)\")",
+      "Bash(\"/c/Program Files/R/R-4.4.0/bin/Rscript.exe\" -e \"Sys.setenv\\(RSTUDIO_PANDOC=''C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools''\\); setwd\\(''C:/Users/robin/fireData''\\); devtools::check_win_devel\\(\\)\")",
+      "Bash(\"/c/Program Files/R/R-4.4.0/bin/Rscript.exe\" -e \"setwd\\(''C:/Users/robin/fireData''\\); Sys.setenv\\(RSTUDIO_PANDOC=''C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools''\\); devtools::check\\(\\)\")",
+      "Bash(\"/c/Program Files/R/R-4.4.0/bin/Rscript.exe\" -e \"setwd\\(''C:/Users/robin/fireData''\\); Sys.setenv\\(RSTUDIO_PANDOC=''C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools''\\); devtools::submit_cran\\(\\)\")",
+      "Bash(\"/c/Program Files/R/R-4.4.0/bin/Rscript.exe\" -e \"\nsetwd\\(''C:/Users/robin/fireData''\\)\nSys.setenv\\(RSTUDIO_PANDOC=''C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools''\\)\n\n# Build the package first\npkg_path <- devtools::build\\(\\)\ncat\\(''Package built at:'', pkg_path, ''\\\\n''\\)\n\n# Get package info\ndesc <- read.dcf\\(''DESCRIPTION''\\)\npkg_name <- desc[1, ''Package'']\npkg_version <- desc[1, ''Version'']\nmaintainer <- desc[1, ''Maintainer'']\n\ncat\\(''\\\\n=== CRAN Submission Info ===\\\\n''\\)\ncat\\(''Package:'', pkg_name, ''\\\\n''\\)\ncat\\(''Version:'', pkg_version, ''\\\\n''\\)\ncat\\(''Maintainer:'', maintainer, ''\\\\n''\\)\ncat\\(''Tarball:'', pkg_path, ''\\\\n''\\)\ncat\\(''\\\\nTo submit manually, go to:\\\\n''\\)\ncat\\(''https://cran.r-project.org/submit.html\\\\n''\\)\ncat\\(''\\\\nAnd upload:'', pkg_path, ''\\\\n''\\)\n\")",
+      "Bash(\"/c/Program Files/R/R-4.4.0/bin/Rscript.exe\" -e \"Sys.setenv\\(RSTUDIO_PANDOC=''C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools''\\); setwd\\(''C:/Users/robin/fireData''\\); devtools::build\\(\\)\")"
+    ]
+  }
+}

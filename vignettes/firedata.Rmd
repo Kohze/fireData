@@ -1,0 +1,233 @@
+---
+title: "Getting Started with fireData"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with fireData}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+## Introduction
+fireData provides a comprehensive R interface to Google Firebase services, enabling you to:
+
+- Store and retrieve data from Firebase Realtime Database
+- Authenticate users with email/password, Google OAuth, or anonymous login
+- Upload and download files from Cloud Storage
+- Create short URLs with Dynamic Links
+
+## Installation
+
+```{r install}
+# Install from CRAN (when available)
+install.packages("fireData")
+# Or install development version from GitHub
+# install.packages("pak")
+pak::pak("Kohze/fireData")
+```
+
+## Setup
+
+### 1. Create a Firebase Project
+
+1. Go to [Firebase Console](https://console.firebase.google.com)
+2. Click "Add project" and follow the setup wizard
+3. Once created, go to Project Settings (gear icon)
+
+### 2. Get Your Credentials
+
+From the Firebase Console, you'll need:
+
+- **Project ID**: Found in Project Settings > General
+- **API Key**: Found in Project Settings > General > Web API Key
+- **Database URL**: Found in Realtime Database section
+
+### 3. Configure fireData
+There are several ways to configure fireData:
+
+**Option A: Environment Variables (Recommended for production)**
+
+```{r env-vars}
+Sys.setenv(FIREBASE_PROJECT_ID = "your-project-id")
+Sys.setenv(FIREBASE_API_KEY = "your-api-key")
+Sys.setenv(FIREBASE_DATABASE_URL = "https://your-project.firebaseio.com")
+```
+
+**Option B: Configuration File**
+
+Create `~/.firedata/config.yml`:
+
+```yaml
+default:
+  project_id: your-project-id
+  api_key: your-api-key
+  database_url: https://your-project.firebaseio.com
+```
+
+**Option C: Interactive Wizard**
+
+```{r wizard}
+library(fireData)
+firebase_config_wizard()
+```
+
+## Quick Start
+
+### Create a Connection
+
+```{r connection}
+library(fireData)
+
+# Create connection (uses config from environment/file)
+conn <- firebase_connect()
+
+# Or with explicit values
+conn <- firebase_connect(
+  project_id = "my-project",
+  api_key = "AIzaSy...",
+  database_url = "https://my-project.firebaseio.com"
+)
+
+print(conn)
+```
+
+### Store Data
+
+```{r store-data}
+# Push data with auto-generated key
+path <- rtdb_push(conn, "messages", list(
+  text = "Hello from R!",
+  author = "R User",
+  timestamp = as.character(Sys.time())
+))
+print(path)
+# "messages/-NxYz123..."
+
+# Set data at specific path (overwrites)
+rtdb_set(conn, "users/user123", list(
+  name = "John Doe",
+  email = "john@example.com"
+))
+
+# Update specific fields (merge)
+rtdb_update(conn, "users/user123", list(
+  lastLogin = as.character(Sys.time())
+))
+```
+
+### Retrieve Data
+
+```{r retrieve-data}
+# Get data from path
+user <- rtdb_get(conn, "users/user123")
+print(user$name)
+
+# Get all messages
+messages <- rtdb_get(conn, "messages")
+
+# Query with filtering
+results <- rtdb_query(conn, "users") |>
+  query_order_by("name") |>
+  query_limit_to_first(10) |>
+  query_execute()
+```
+
+### Delete Data
+
+```{r delete-data}
+rtdb_delete(conn, "messages/-NxYz123")
+```
+
+## Authentication
+
+### Email/Password Login
+
+```{r auth-email}
+# Sign in
+result <- auth_sign_in(conn,
+  email = "user@example.com",
+  password = "password123"
+)
+
+# Update connection with token
+conn <- firebase_set_token(conn, result)
+
+# Now authenticated requests work
+rtdb_get(conn, "protected/data")
+```
+
+### Create New User
+
+```{r auth-create}
+result <- auth_create_user(conn,
+  email = "newuser@example.com",
+  password = "securepassword"
+)
+```
+
+### Anonymous Login
+
+```{r auth-anon}
+result <- auth_anonymous(conn)
+conn <- firebase_set_token(conn, result)
+```
+
+## Cloud Storage
+
+```{r storage}
+# Upload file
+result <- storage_upload(conn,
+  file_path = "local/image.jpg",
+  object_name = "images/photo.jpg"
+)
+print(result$url)
+
+# Download file
+storage_download(conn, "images/photo.jpg", "downloaded.jpg")
+
+# List files
+files <- storage_list(conn, prefix = "images/")
+
+# Get download URL
+url <- storage_get_url(conn, "images/photo.jpg")
+```
+## Working with Data Frames
+
+fireData seamlessly handles R data frames:
+
+```{r dataframes}
+# Upload mtcars dataset
+rtdb_push(conn, "datasets", mtcars)
+
+# Download as data frame
+data <- rtdb_get(conn, "datasets/-KeyHere")
+
+# It's still a data frame!
+head(data)
+```
+
+## Error Handling
+
+fireData provides informative error messages:
+
+```{r errors}
+tryCatch({
+  auth_sign_in(conn, "wrong@email.com", "badpassword")
+}, error = function(e) {
+  message("Authentication failed: ", e$message)
+})
+```
+
+## Next Steps
+
+- See `vignette("authentication")` for detailed auth options
+- See `vignette("realtime-database")` for advanced database operations
+- See `vignette("storage")` for file management
+- Visit the [GitHub repository](https://github.com/Kohze/fireData) for more examples

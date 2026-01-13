@@ -1,4 +1,15 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
-^LICENSE.txt
+^LICENSE\.txt$
+^\.github$
+^codecov\.yml$
+^cran-comments\.md$
+^_pkgdown\.yml$
+^pkgdown$
+^docs$
+^\.lintr$
+^\.editorconfig$
+^README\.Rmd$
+^\.claude$
+^tmpclaude-.*$

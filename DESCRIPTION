@@ -1,21 +1,41 @@
 Package: fireData
 Title: Connecting R to Google Firebase
-Version: 1.16
-Authors@R: person("Robin", "Kohze", email = "Robin@Kohze.com", role = c("aut", "cre"))
-Description: Provides API access to common features of the Google Firebase realtime database.
-    Usecases of firebase are creating user logins with persistent data storage for mobile apps, shiny applications
-    or IOT applications. See the fireData github repository for more information.
-Depends: R (>= 3.3.3)
-License: MIT + file LICENCE
-URL: https://github.com/Kohze/fireData
+Version: 2.0.0
+Authors@R: c(
+    person("Robin", "Kohze", email = "Robin@Kohze.com", role = c("aut", "cre")),
+    person("Paul", "Spende", role = "aut"),
+    person("Kevin", "McGinley", role = "ctb")
+  )
+Description: Provides comprehensive API access to Google Firebase services including
+    Realtime Database, Cloud Firestore, Authentication, Cloud Storage, Dynamic Links,
+    and Remote Config. Supports both interactive (Shiny apps, R console) and automated
+    (CI/CD, server-side) workflows. Use cases include creating user logins with
+    persistent data storage for mobile apps, Shiny applications, or IoT applications.
+    See the fireData GitHub repository for more information.
+Depends: R (>= 4.1.0)
+License: MIT + file LICENSE
+URL: https://github.com/Kohze/fireData, https://kohze.github.io/fireData/
 BugReports: https://github.com/Kohze/fireData/issues
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 7.3.2
 Imports:
-  httr (>= 1.2.1),
-  jsonlite (>= 	1.4),
-  curl (>= 2.3)
+    httr (>= 1.4.0),
+    jsonlite (>= 1.8.0),
+    curl (>= 5.0.0),
+    R6 (>= 2.5.0),
+    openssl (>= 2.0.0),
+    yaml (>= 2.3.0)
 Suggests:
-  testthat (>= 1.0),
-  covr (>= 2.2.2)
+    testthat (>= 3.0.0),
+    httptest2,
+    withr (>= 2.5.0),
+    shiny (>= 1.7.0),
+    shinyjs,
+    knitr,
+    rmarkdown,
+    pkgdown (>= 2.0.0),
+    covr (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
