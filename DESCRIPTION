@@ -14,7 +14,7 @@ Description: Provides comprehensive API access to Google Firebase services inclu
     See the fireData GitHub repository for more information.
 Depends: R (>= 4.1.0)
 License: MIT + file LICENSE
-URL: https://github.com/Kohze/fireData, https://kohze.github.io/fireData/
+URL: https://github.com/Kohze/fireData
 BugReports: https://github.com/Kohze/fireData/issues
 Encoding: UTF-8
 LazyData: true

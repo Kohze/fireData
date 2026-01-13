@@ -123,13 +123,12 @@ conn <- firebase_connect(credentials = "service-account.json")
 Useful links:
 \itemize{
   \item \url{https://github.com/Kohze/fireData}
-  \item \url{https://kohze.github.io/fireData/}
   \item Report bugs at \url{https://github.com/Kohze/fireData/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Robin Kohze \email{Robin@Kohze.com}
+\strong{Maintainer}: Robin Gounder \email{Robin@Kohze.com}
 
 Authors:
 \itemize{

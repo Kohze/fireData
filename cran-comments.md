@@ -4,77 +4,36 @@
 
 0 errors | 0 warnings | 2 notes
 
-The NOTEs are:
+### Notes
 
-1. `Packages suggested but not available for checking: 'httptest2', 'covr'`
-   - These are optional packages for HTTP mocking tests and code coverage reporting
-   - Not required for package functionality
+1. **New submission**
 
-2. `unable to verify current time`
-   - Transient network/system issue during check
-   - Not a package issue
+   This is a major version update (v2.0.0) of the fireData package with significant
+   improvements including:
+   - Complete package modernization with modular architecture
+   - New Cloud Firestore support
+   - Modern snake_case API (old functions deprecated but still work)
+   - Connection object pattern for easier configuration
+   - Comprehensive test suite
+
+2. **Packages suggested but not available for checking: 'httptest2', 'covr'**
+
+   These are optional development dependencies used for HTTP mocking in tests
+   and code coverage reporting. They are not required for package functionality.
 
 ## Test environments
 
 * Local: Windows 11 x64, R 4.4.0
-* GitHub Actions (configured):
-  - Ubuntu 22.04 (release)
-  - Windows latest (release)
-  - macOS latest (release)
+* GitHub Actions: ubuntu-latest, R release
+* GitHub Actions: windows-latest, R release
+* GitHub Actions: macos-latest, R release
 
-## Package Dependencies
+## Downstream dependencies
 
-* All dependencies are available on CRAN
-* No system requirements beyond R >= 4.1.0
+This package has no reverse dependencies on CRAN.
 
-## This is a major release (2.0.0)
+## Additional notes
 
-### Summary of Changes
-
-This is a major version release that modernizes the package with:
-
-1. **Modular Architecture**: Split single 792-line file into 12 focused modules
-2. **Modern API**: New consistent snake_case function naming
-3. **Connection Objects**: New `firebase_connect()` pattern for managing configuration
-4. **Configuration Management**: Support for environment variables, config files, and interactive setup
-5. **Service Account Support**: Full server-side authentication via Google service accounts
-6. **Improved Error Handling**: Custom error classes with detailed messages
-7. **Query Builder**: New `rtdb_query()` with fluent interface for filtering/sorting
-
-### Backward Compatibility
-
-All previous functions remain available with deprecation warnings pointing to their new equivalents:
-- `auth()` -> `auth_sign_in()`
-- `upload()` -> `rtdb_push()`
-- `download()` -> `rtdb_get()`
-- `put()` -> `rtdb_set()`
-- `patch()` -> `rtdb_update()`
-- `delete()` -> `rtdb_delete()`
-- etc.
-
-### API Access
-
-This package accesses Google Firebase REST APIs:
-- Firebase Auth API (identitytoolkit.googleapis.com)
-- Firebase Realtime Database API (*.firebaseio.com)
-- Google Cloud Storage API (storage.googleapis.com)
-- Firebase Dynamic Links API (firebasedynamiclinks.googleapis.com)
-
-All API access requires user-provided credentials (API keys, service accounts, or OAuth tokens).
-
-### Test Coverage
-
-* Unit tests run without external dependencies (67 tests pass)
-* Integration tests require Firebase credentials and are skipped by default (12 tests skipped)
-* Integration tests can be enabled via environment variable: `FIREDATA_RUN_INTEGRATION_TESTS=true`
-
-## Previous CRAN Submission
-
-Last CRAN version: 1.16
-
-## Maintainer Notes
-
-* Package has been used in production for several years
-* Major version bump due to API changes (backward compatible with deprecation warnings)
-* No compiled code
-* No native code
+- All tests pass (124 tests, 18 skipped integration tests that require Firebase credentials)
+- Package includes comprehensive documentation and vignette
+- Backward compatibility maintained with deprecated function wrappers
