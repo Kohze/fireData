@@ -2,7 +2,7 @@ Package: fireData
 Title: Connecting R to Google Firebase
 Version: 2.0.0
 Authors@R: c(
-    person("Robin", "Kohze", email = "Robin@Kohze.com", role = c("aut", "cre")),
+    person("Robin", "Gounder", email = "Robin@Kohze.com", role = c("aut", "cre")),
     person("Paul", "Spende", role = "aut"),
     person("Kevin", "McGinley", role = "ctb")
   )

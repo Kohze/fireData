@@ -11,6 +11,7 @@ fireData integrates R with the Google Firebase platform, enabling real-time data
 
 **Key Features:**
 - **Realtime Database**: Store and sync data in real-time across clients
+- **Cloud Firestore**: Flexible, scalable NoSQL document database with powerful queries
 - **Authentication**: Email/password, Google OAuth, and anonymous sign-in
 - **Cloud Storage**: Upload and download files to Firebase Storage
 - **Shiny Integration**: Built-in authentication UI for Shiny applications
@@ -136,6 +137,48 @@ rtdb_delete(conn, "messages/-NxYz123")
 
 # Backup entire database
 rtdb_backup(conn, filename = "backup.json")
+```
+
+### Cloud Firestore
+
+Cloud Firestore is a flexible, scalable NoSQL document database. It stores data in **documents** organized into **collections**, making it ideal for complex, structured data with powerful querying.
+
+```r
+# Authenticate (Firestore requires authentication)
+result <- auth_sign_in(conn, "user@example.com", "password")
+conn <- firebase_set_token(conn, result)
+
+# Create/overwrite a document
+firestore_set(conn, "users", "user123", list(
+  name = "John Doe",
+  email = "john@example.com",
+  age = 30
+))
+
+# Add document with auto-generated ID
+result <- firestore_add(conn, "messages", list(
+  text = "Hello Firestore!",
+  timestamp = Sys.time()
+))
+
+# Get a document
+user <- firestore_get(conn, "users", "user123")
+
+# Update specific fields
+firestore_update(conn, "users", "user123", list(
+  lastLogin = Sys.time()
+))
+
+# Query with filters
+results <- firestore_query(conn, "products") |>
+  fs_where("price", "<", 100) |>
+  fs_where("inStock", "==", TRUE) |>
+  fs_order_by("price", "asc") |>
+  fs_limit(20) |>
+  fs_execute()
+
+# Delete a document
+firestore_delete(conn, "users", "user123")
 ```
 
 ### Cloud Storage

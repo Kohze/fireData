@@ -35,6 +35,17 @@
 * `rtdb_backup()` - Full database backup (replaces `dataBackup()`)
 * `rtdb_query()` - Query builder with filtering/sorting (NEW)
 
+### Cloud Firestore (NEW)
+* `firestore_get()` - Get a document from a collection
+* `firestore_set()` - Create/overwrite a document
+* `firestore_add()` - Add document with auto-generated ID
+* `firestore_update()` - Update specific fields in a document
+* `firestore_delete()` - Delete a document
+* `firestore_list()` - List documents in a collection with pagination
+* `firestore_query()` - Query builder for complex queries
+* Query helpers: `fs_where()`, `fs_order_by()`, `fs_limit()`, `fs_offset()`, `fs_select()`, `fs_execute()`
+* Full support for Firestore data types (strings, numbers, booleans, timestamps, arrays, maps)
+
 ### Cloud Storage
 * `storage_upload()` - Upload files (replaces `upload_storage()`)
 * `storage_download()` - Download files (NEW)

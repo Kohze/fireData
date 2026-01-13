@@ -16,11 +16,12 @@ knitr::opts_chunk$set(
 ```
 
 ## Introduction
-fireData provides a comprehensive R interface to Google Firebase services, enabling you to:
 
-- Store and retrieve data from Firebase Realtime Database
+fireData provides a comprehensive R interface to Google Firebase services, enabling you to:
+- Store and retrieve data from **Firebase Realtime Database**
+- Store and query documents in **Cloud Firestore**
 - Authenticate users with email/password, Google OAuth, or anonymous login
-- Upload and download files from Cloud Storage
+- Upload and download files from **Cloud Storage**
 - Create short URLs with Dynamic Links
 
 ## Installation
@@ -47,9 +48,10 @@ From the Firebase Console, you'll need:
 
 - **Project ID**: Found in Project Settings > General
 - **API Key**: Found in Project Settings > General > Web API Key
-- **Database URL**: Found in Realtime Database section
+- **Database URL**: Found in Realtime Database section (for RTDB)
 
 ### 3. Configure fireData
+
 There are several ways to configure fireData:
 
 **Option A: Environment Variables (Recommended for production)**
@@ -98,6 +100,10 @@ conn <- firebase_connect(
 print(conn)
 ```
 
+## Realtime Database
+
+The Realtime Database stores data as one large JSON tree. It's great for simple data structures and real-time sync.
+
 ### Store Data
 
 ```{r store-data}
@@ -145,6 +151,120 @@ results <- rtdb_query(conn, "users") |>
 rtdb_delete(conn, "messages/-NxYz123")
 ```
 
+## Cloud Firestore
+
+Cloud Firestore is a flexible, scalable NoSQL database. Unlike the Realtime Database, Firestore stores data in **documents** organized into **collections**, making it better for complex, structured data.
+
+### When to Use Firestore vs Realtime Database
+
+| Feature | Realtime Database | Cloud Firestore |
+|---------|------------------|-----------------|
+| Data model | Large JSON tree | Documents in collections |
+| Queries | Limited filtering | Rich queries with multiple filters |
+| Scaling | Limited | Automatic, global |
+| Offline support | Basic | Advanced |
+| Best for | Simple data, real-time sync | Complex data, advanced queries |
+
+### Basic Operations
+
+```{r firestore-basic}
+# Authenticate first (Firestore requires auth)
+result <- auth_sign_in(conn, "user@example.com", "password")
+conn <- firebase_set_token(conn, result)
+
+# Create/overwrite a document
+firestore_set(conn, "users", "user123", list(
+  name = "John Doe",
+  email = "john@example.com",
+  age = 30,
+  active = TRUE
+))
+
+# Add document with auto-generated ID
+result <- firestore_add(conn, "messages", list(
+  text = "Hello Firestore!",
+  timestamp = Sys.time()
+))
+print(result$.id)  # Auto-generated document ID
+
+# Get a document
+user <- firestore_get(conn, "users", "user123")
+print(user$name)
+
+# Update specific fields (without overwriting entire document)
+firestore_update(conn, "users", "user123", list(
+  lastLogin = Sys.time(),
+  loginCount = 42
+))
+
+# Delete a document
+firestore_delete(conn, "users", "user123")
+```
+
+### Listing Documents
+
+```{r firestore-list}
+# List all documents in a collection
+result <- firestore_list(conn, "users", page_size = 50)
+
+for (user in result$documents) {
+  print(paste(user$name, "-", user$email))
+}
+
+# Paginate through large collections
+result <- firestore_list(conn, "users", page_size = 10)
+while (!is.null(result$nextPageToken)) {
+  # Process result$documents
+  result <- firestore_list(conn, "users", page_size = 10,
+                           page_token = result$nextPageToken)
+}
+```
+
+### Querying Documents
+
+Firestore supports powerful queries with multiple filters:
+```{r firestore-query}
+# Query with filters
+results <- firestore_query(conn, "products") |>
+  fs_where("price", "<", 100) |>
+  fs_where("inStock", "==", TRUE) |>
+  fs_order_by("price", "asc") |>
+  fs_limit(20) |>
+  fs_execute()
+
+for (product in results) {
+  print(paste(product$name, "- $", product$price))
+}
+
+# Available filter operators:
+# "==" (equal), "!=" (not equal)
+# "<", "<=", ">", ">=" (comparisons)
+# "array-contains", "array-contains-any"
+# "in", "not-in"
+
+# Select specific fields only
+results <- firestore_query(conn, "users") |>
+  fs_select("name", "email") |>
+  fs_limit(100) |>
+  fs_execute()
+```
+
+### Subcollections
+
+Firestore supports nested data with subcollections:
+
+```{r firestore-subcollections}
+# Add a post to a user's posts subcollection
+firestore_add(conn, "users/user123/posts", list(
+  title = "My First Post",
+  content = "Hello world!",
+  created = Sys.time()
+))
+
+# List posts in subcollection
+posts <- firestore_list(conn, "users/user123/posts")
+```
+
 ## Authentication
 
 ### Email/Password Login
@@ -161,6 +281,7 @@ conn <- firebase_set_token(conn, result)
 
 # Now authenticated requests work
 rtdb_get(conn, "protected/data")
+firestore_get(conn, "private", "doc1")
 ```
 
 ### Create New User
@@ -198,12 +319,13 @@ files <- storage_list(conn, prefix = "images/")
 # Get download URL
 url <- storage_get_url(conn, "images/photo.jpg")
 ```
+
 ## Working with Data Frames
 
 fireData seamlessly handles R data frames:
 
 ```{r dataframes}
-# Upload mtcars dataset
+# Upload mtcars dataset to Realtime Database
 rtdb_push(conn, "datasets", mtcars)
 
 # Download as data frame
@@ -227,7 +349,6 @@ tryCatch({
 
 ## Next Steps
 
-- See `vignette("authentication")` for detailed auth options
-- See `vignette("realtime-database")` for advanced database operations
-- See `vignette("storage")` for file management
 - Visit the [GitHub repository](https://github.com/Kohze/fireData) for more examples
+- Check out the [Firebase Documentation](https://firebase.google.com/docs) for detailed API information
+- See the package help: `?fireData` for a complete function reference

@@ -21,6 +21,16 @@ get_test_project_url <- function() {
   url
 }
 
+#' Get test project ID from environment
+#' @return Project ID or skips test if not set
+get_test_project_id <- function() {
+  project_id <- Sys.getenv("FIREDATA_TEST_PROJECT_ID", unset = NA)
+  if (is.na(project_id)) {
+    testthat::skip("FIREDATA_TEST_PROJECT_ID not set - skipping test requiring Firebase credentials")
+  }
+  project_id
+}
+
 #' Get test email from environment
 #' @return Email or skips test if not set
 get_test_email <- function() {
@@ -60,8 +70,12 @@ get_test_connection <- function() {
   api_key <- get_test_api_key()
   project_url <- get_test_project_url()
 
+  # Try to get project ID for Firestore support
+  project_id <- Sys.getenv("FIREDATA_TEST_PROJECT_ID", unset = NA)
+
   firebase_connect(
     api_key = api_key,
-    database_url = project_url
+    database_url = project_url,
+    project_id = if (is.na(project_id)) NULL else project_id
   )
 }
