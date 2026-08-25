@@ -30,7 +30,8 @@ get_dynamic_link(
 \item{social_image_link}{Social preview image}
 }
 \value{
-Response with short link
+This function always raises an error because the upstream service has
+been shut down.
 }
 \description{
 Legacy function. Use dynlink_create() instead.

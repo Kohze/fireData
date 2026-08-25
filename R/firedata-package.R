@@ -3,9 +3,9 @@
 
 #' fireData: Connecting R to Google Firebase
 #'
-#' The fireData package provides comprehensive API access to Google Firebase
-#' services from R, including Realtime Database, Authentication, Cloud Storage,
-#' Dynamic Links, and Shiny integration.
+#' The fireData package provides access to common operations in selected Google
+#' Firebase services from R, including Realtime Database, Authentication, Cloud
+#' Storage, Cloud Firestore, and Shiny integration.
 #'
 #' @section Main Functions:
 #'
@@ -36,9 +36,6 @@
 #' * [storage_delete()] - Delete file from storage
 #' * [storage_list()] - List files in bucket
 #' * [storage_get_url()] - Get download URL
-#'
-#' **Dynamic Links:**
-#' * [dynlink_create()] - Create shortened dynamic link
 #'
 #' @section Getting Started:
 #'
@@ -113,7 +110,8 @@ NULL
 #' @keywords internal
 .onAttach <- function(libname, pkgname) {
   packageStartupMessage(
-    "fireData 2.0.0 - Connecting R to Google Firebase\n",
+    "fireData ", as.character(utils::packageVersion(pkgname)),
+    " - Connecting R to Google Firebase\n",
     "See ?fireData for documentation or visit: https://github.com/Kohze/fireData"
   )
 }

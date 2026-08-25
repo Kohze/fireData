@@ -18,9 +18,14 @@ firebase_connect(
 
 \item{api_key}{Firebase Web API key}
 
-\item{database_url}{Realtime Database URL. If NULL, constructed from project_id.}
+\item{database_url}{Realtime Database URL. Supply the exact URL shown in the
+Firebase console for regional or non-default databases. If NULL, a
+US Central default URL is constructed from \code{project_id}.}
 
-\item{storage_bucket}{Cloud Storage bucket name. If NULL, defaults to \code{project_id.appspot.com}}
+\item{storage_bucket}{Cloud Storage bucket name. If NULL, defaults to the
+current \code{project_id.firebasestorage.app} format. Projects whose default
+bucket was created before September 2024 should pass their existing
+\code{project_id.appspot.com} bucket explicitly.}
 
 \item{credentials}{Service account credentials (path to JSON file or ServiceAccountCredentials object)}
 

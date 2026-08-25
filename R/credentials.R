@@ -199,6 +199,8 @@ ServiceAccountCredentials <- R6::R6Class(
     access_token = NULL,
     #' @field token_expires_at Access token expiration time
     token_expires_at = NULL,
+    #' @field token_cache Access tokens cached by their requested OAuth scopes
+    token_cache = NULL,
 
     #' Create from service account JSON file
     #'
@@ -227,6 +229,7 @@ ServiceAccountCredentials <- R6::R6Class(
       self$project_id <- sa$project_id
       self$client_email <- sa$client_email
       self$private_key <- sa$private_key
+      self$token_cache <- list()
     },
 
     #' Get an access token
@@ -238,11 +241,17 @@ ServiceAccountCredentials <- R6::R6Class(
       "https://www.googleapis.com/auth/datastore",
       "https://www.googleapis.com/auth/devstorage.read_write"
     )) {
-      # Check if current token is still valid
-      if (!is.null(self$access_token) && !is.null(self$token_expires_at)) {
-        if (Sys.time() < self$token_expires_at - 60) {
-          return(self$access_token)
-        }
+      scopes <- sort(unique(as.character(scopes)))
+      cache_key <- paste(scopes, collapse = " ")
+
+      # OAuth access tokens are only valid for the scopes requested when they
+      # were minted. Cache each scope set separately so switching between
+      # Firebase services cannot accidentally reuse an under-scoped token.
+      cached <- self$token_cache[[cache_key]]
+      if (!is.null(cached) && Sys.time() < cached$expires_at - 60) {
+        self$access_token <- cached$access_token
+        self$token_expires_at <- cached$expires_at
+        return(cached$access_token)
       }
 
       # Create JWT
@@ -265,6 +274,10 @@ ServiceAccountCredentials <- R6::R6Class(
       content <- httr::content(response)
       self$access_token <- content$access_token
       self$token_expires_at <- Sys.time() + as.numeric(content$expires_in %||% 3600)
+      self$token_cache[[cache_key]] <- list(
+        access_token = self$access_token,
+        expires_at = self$token_expires_at
+      )
 
       self$access_token
     },
@@ -276,7 +289,7 @@ ServiceAccountCredentials <- R6::R6Class(
     #' @return Signed JWT string
     #' @keywords internal
     create_jwt = function(scopes, lifetime = 3600) {
-      now <- as.numeric(Sys.time())
+      now <- floor(as.numeric(Sys.time()))
 
       header <- list(alg = "RS256", typ = "JWT")
       claims <- list(

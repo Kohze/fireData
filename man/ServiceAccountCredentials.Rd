@@ -21,7 +21,9 @@ Represents credentials from a Google service account.
 
 \item{\code{access_token}}{Current OAuth access token}
 
-\item{\code{token_expires_at}}{Access token expiration time
+\item{\code{token_expires_at}}{Access token expiration time}
+
+\item{\code{token_cache}}{Access tokens cached by their requested OAuth scopes
 Create from service account JSON file}
 }
 \if{html}{\out{</div>}}

@@ -1,3 +1,23 @@
+# fireData 2.0.1
+
+## Compatibility and release maintenance
+
+* Updated the maintainer email and added the maintainer ORCID.
+* Updated deprecated authentication wrappers to use the current Identity Toolkit
+  v1 REST endpoints instead of the obsolete v3 endpoints.
+* Updated the inferred Cloud Storage bucket for newly created Firebase projects
+  to the current `PROJECT_ID.firebasestorage.app` format. Legacy projects can pass
+  their existing `PROJECT_ID.appspot.com` bucket explicitly.
+* Made Cloud Storage uploads compatible with uniform bucket-level access by
+  applying object ACLs only when explicitly requested, and cached service-account
+  access tokens separately for each OAuth scope set.
+* Documented Realtime Database regional URLs and the package's supported Firebase
+  feature scope.
+* Marked Firebase Dynamic Links helpers as unavailable following the service's
+  shutdown on August 25, 2025.
+* Removed stale CRAN availability claims, broken external artwork, temporary
+  repository files, and unused suggested dependencies.
+
 # fireData 2.0.0
 
 ## Breaking Changes
@@ -44,7 +64,7 @@
 * `firestore_list()` - List documents in a collection with pagination
 * `firestore_query()` - Query builder for complex queries
 * Query helpers: `fs_where()`, `fs_order_by()`, `fs_limit()`, `fs_offset()`, `fs_select()`, `fs_execute()`
-* Full support for Firestore data types (strings, numbers, booleans, timestamps, arrays, maps)
+* Support for common Firestore data types (strings, numbers, booleans, timestamps, arrays, maps)
 
 ### Cloud Storage
 * `storage_upload()` - Upload files (replaces `upload_storage()`)
@@ -57,7 +77,8 @@
 
 ### Dynamic Links
 * `dynlink_create()` - Create short links (replaces `get_dynamic_link()`)
-* Note: Firebase Dynamic Links is deprecated and will shut down August 2025
+* Legacy Dynamic Links helpers are retained for compatibility. Firebase Dynamic
+  Links shut down on August 25, 2025, so these helpers no longer make API requests.
 
 ### Configuration
 * `firebase_connect()` - Create connection object (NEW)

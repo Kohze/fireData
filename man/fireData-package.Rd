@@ -4,13 +4,13 @@
 \name{fireData-package}
 \alias{fireData-package}
 \alias{fireData}
-\title{fireData: Connecting R to Google Firebase}
+\title{fireData: Connect R to 'Google Firebase'}
 \description{
-Provides comprehensive API access to Google Firebase services including Realtime Database, Cloud Firestore, Authentication, Cloud Storage, Dynamic Links, and Remote Config. Supports both interactive (Shiny apps, R console) and automated (CI/CD, server-side) workflows. Use cases include creating user logins with persistent data storage for mobile apps, Shiny applications, or IoT applications. See the fireData GitHub repository for more information.
+Provides an R interface to 'Google Firebase' services, including Realtime Database, Cloud Firestore, Authentication, and Cloud Storage. Supports interactive use in R and 'Shiny' applications as well as automated server-side workflows. Data frames and R objects can be stored and retrieved, users can be authenticated, and files can be managed through service APIs.
 
-The fireData package provides comprehensive API access to Google Firebase
-services from R, including Realtime Database, Authentication, Cloud Storage,
-Dynamic Links, and Shiny integration.
+The fireData package provides access to common operations in selected Google
+Firebase services from R, including Realtime Database, Authentication, Cloud
+Storage, Cloud Firestore, and Shiny integration.
 }
 \section{Main Functions}{
 
@@ -49,11 +49,6 @@ Dynamic Links, and Shiny integration.
 \item \code{\link[=storage_delete]{storage_delete()}} - Delete file from storage
 \item \code{\link[=storage_list]{storage_list()}} - List files in bucket
 \item \code{\link[=storage_get_url]{storage_get_url()}} - Get download URL
-}
-
-\strong{Dynamic Links:}
-\itemize{
-\item \code{\link[=dynlink_create]{dynlink_create()}} - Create shortened dynamic link
 }
 }
 
@@ -128,7 +123,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Robin Gounder \email{Robin@Kohze.com}
+\strong{Maintainer}: Robin Gounder \email{robin@gounder.com} (\href{https://orcid.org/0009-0008-7755-7081}{ORCID})
 
 Authors:
 \itemize{

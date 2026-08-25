@@ -45,11 +45,12 @@ dynlink_create(
 \item{api_key}{Firebase API key (used if conn is NULL)}
 }
 \value{
-Response containing the short link
+This function always raises an error because the upstream service has
+been shut down.
 }
 \description{
-Creates a short dynamic link that can route users to specific content
-in your app or website.
+Legacy interface for the discontinued Firebase Dynamic Links service.
+Requests to the upstream service no longer succeed.
 }
 \examples{
 \dontrun{

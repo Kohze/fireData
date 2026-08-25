@@ -3,14 +3,15 @@
 #' @name firebase_dynamic_links
 #'
 #' @section Note:
-#' Firebase Dynamic Links is deprecated and will be shut down in August 2025.
-#' Consider using alternative URL shortening services for new projects.
+#' Firebase Dynamic Links shut down on August 25, 2025. These functions are
+#' retained for compatibility, but the upstream service no longer creates or
+#' serves links. Use another deep-linking provider for new projects.
 NULL
 
 #' Create Dynamic Link
 #'
-#' Creates a short dynamic link that can route users to specific content
-#' in your app or website.
+#' Legacy interface for the discontinued Firebase Dynamic Links service.
+#' Requests to the upstream service no longer succeed.
 #'
 #' @param conn Firebase connection object (or NULL to use config)
 #' @param link The URL you want to shorten/wrap
@@ -24,7 +25,8 @@ NULL
 #' @param ios_bundle_id iOS app bundle ID
 #' @param ios_fallback_link Fallback URL for iOS
 #' @param api_key Firebase API key (used if conn is NULL)
-#' @return Response containing the short link
+#' @return This function always raises an error because the upstream service has
+#'   been shut down.
 #' @export
 #' @examples
 #' \dontrun{
@@ -52,58 +54,14 @@ dynlink_create <- function(conn = NULL,
                            ios_bundle_id = NULL,
                            ios_fallback_link = NULL,
                            api_key = NULL) {
-  # Resolve API key
-  if (!is.null(conn) && is_firebase_connection(conn)) {
-    api_key <- conn$api_key
-  }
-  api_key <- firebase_config_get("api_key", value = api_key)
-
-  if (is.null(api_key)) {
-    stop_firebase("validation", "API key is required for Dynamic Links")
-  }
-
-  # Build URL
-  url <- paste0(FIREBASE_DYNAMIC_LINKS_URL, "/shortLinks?key=", api_key)
-
-  # Build dynamic link info
-  dynamic_link_info <- list(
-    domainUriPrefix = domain_uri_prefix,
-    link = link
+  stop_firebase(
+    "validation",
+    paste(
+      "Firebase Dynamic Links shut down on August 25, 2025;",
+      "new short links can no longer be created."
+    )
   )
 
-  # Add social metadata if provided
-  if (!is.null(social_title) || !is.null(social_description) || !is.null(social_image_link)) {
-    dynamic_link_info$socialMetaTagInfo <- list(
-      socialTitle = social_title %||% "",
-      socialDescription = social_description %||% "",
-      socialImageLink = social_image_link %||% ""
-    )
-  }
-
-  # Add Android info if provided
-  if (!is.null(android_package_name)) {
-    dynamic_link_info$androidInfo <- list(
-      androidPackageName = android_package_name,
-      androidFallbackLink = android_fallback_link
-    )
-  }
-
-  # Add iOS info if provided
-  if (!is.null(ios_bundle_id)) {
-    dynamic_link_info$iosInfo <- list(
-      iosBundleId = ios_bundle_id,
-      iosFallbackLink = ios_fallback_link
-    )
-  }
-
-  # Build request body
-  body <- list(
-    dynamicLinkInfo = dynamic_link_info,
-    suffix = list(option = if (short) "SHORT" else "UNGUESSABLE")
-  )
-
-  # Make request
-  firebase_post(url = url, body = body)
 }
 
 # ============================================================================
@@ -119,7 +77,8 @@ dynlink_create <- function(conn = NULL,
 #' @param social_title Social preview title
 #' @param social_description Social preview description
 #' @param social_image_link Social preview image
-#' @return Response with short link
+#' @return This function always raises an error because the upstream service has
+#'   been shut down.
 #' @export
 get_dynamic_link <- function(project_api,
                              domain,
@@ -129,30 +88,13 @@ get_dynamic_link <- function(project_api,
                              social_description = "",
                              social_image_link = "") {
   .Deprecated("dynlink_create")
-
-  option <- ifelse(short, "SHORT", "UNGUESSABLE")
-
-  url <- paste0(
-    "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=",
-    project_api
+  dynlink_create(
+    link = link,
+    domain_uri_prefix = domain,
+    short = short,
+    social_title = social_title,
+    social_description = social_description,
+    social_image_link = social_image_link,
+    api_key = project_api
   )
-
-  response <- httr::POST(
-    url = url,
-    body = list(
-      dynamicLinkInfo = list(
-        dynamicLinkDomain = domain,  # Note: Legacy parameter name
-        link = link,
-        socialMetaTagInfo = list(
-          socialTitle = social_title,
-          socialDescription = social_description,
-          socialImageLink = social_image_link
-        )
-      ),
-      suffix = list(option = option)
-    ),
-    encode = "json"
-  )
-
-  httr::content(response)
 }

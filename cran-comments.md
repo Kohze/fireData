@@ -1,32 +1,42 @@
-# CRAN Submission Comments - fireData 2.0.0
+# CRAN Submission Comments - fireData 2.0.1
+
+## Submission context
+
+This is a new CRAN submission. Earlier fireData versions, including 2.0.0, were
+distributed through GitHub but were not published on CRAN.
+
+Version 2.0.1 prepares the package for CRAN by:
+
+- correcting package and maintainer metadata;
+- removing stale CRAN availability claims and repository artifacts;
+- updating legacy authentication calls to the current Firebase REST API;
+- documenting Firebase Dynamic Links' shutdown and current Storage bucket names;
+- clarifying the package's supported Firebase feature scope; and
+- removing unused suggested dependencies.
+
+The repository history used the maintainer name Robin Kohze and email address
+Robin@Kohze.com. The current maintainer record is Robin Gounder
+<robin@gounder.com>, ORCID 0009-0008-7755-7081; this is the same maintainer.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+Local standard check:
 
-### Notes
+0 errors | 0 warnings | 0 notes
 
-1. **New submission**
+Local `R CMD check --as-cran`:
 
-   This is a major version update (v2.0.0) of the fireData package with significant
-   improvements including:
-   - Complete package modernization with modular architecture
-   - New Cloud Firestore support
-   - Modern snake_case API (old functions deprecated but still work)
-   - Connection object pattern for easier configuration
-   - Comprehensive test suite
+0 errors | 0 warnings | 1 note
 
-2. **Packages suggested but not available for checking: 'httptest2', 'covr'**
-
-   These are optional development dependencies used for HTTP mocking in tests
-   and code coverage reporting. They are not required for package functionality.
+The single NOTE was `unable to verify current time`. The check ran in a
+network-restricted sandbox that cannot reach an external time service; it is not
+caused by package code or metadata.
 
 ## Test environments
 
-* Local: Windows 11 x64, R 4.4.0
-* GitHub Actions: ubuntu-latest, R release
-* GitHub Actions: windows-latest, R release
-* GitHub Actions: macos-latest, R release
+- Local: Windows 11 x64, R 4.4.0
+- GitHub Actions is configured for R release on Linux, Windows, and macOS,
+  R-devel on Linux, and R-oldrel on Linux.
 
 ## Downstream dependencies
 
@@ -34,6 +44,6 @@ This package has no reverse dependencies on CRAN.
 
 ## Additional notes
 
-- All tests pass (124 tests, 18 skipped integration tests that require Firebase credentials)
-- Package includes comprehensive documentation and vignette
-- Backward compatibility maintained with deprecated function wrappers
+Integration tests that require private Firebase credentials are skipped when
+those credentials are unavailable. Unit tests and package examples do not make
+authenticated Firebase requests during CRAN checks.

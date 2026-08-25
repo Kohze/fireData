@@ -9,13 +9,11 @@ FIREBASE_AUTH_URL <- "https://identitytoolkit.googleapis.com/v1"
 FIREBASE_TOKEN_URL <- "https://securetoken.googleapis.com/v1"
 FIREBASE_STORAGE_URL <- "https://storage.googleapis.com"
 FIREBASE_FIRESTORE_URL <- "https://firestore.googleapis.com/v1"
-FIREBASE_DYNAMIC_LINKS_URL <- "https://firebasedynamiclinks.googleapis.com/v1"
-FIREBASE_REMOTE_CONFIG_URL <- "https://firebaseremoteconfig.googleapis.com/v1"
 
 #' Build Firebase Realtime Database URL
 #'
 #' @param project_id Firebase project ID
-#' @param database_url Custom database URL (optional)
+#' @param database_url Exact database URL (recommended for regional databases)
 #' @return The database base URL
 #' @keywords internal
 build_rtdb_url <- function(project_id = NULL, database_url = NULL) {
@@ -311,6 +309,34 @@ build_storage_url <- function(bucket, object = NULL, upload = FALSE) {
   } else {
     base
   }
+}
+
+#' Build a Cloud Storage Media Upload URL
+#'
+#' @param bucket Storage bucket name
+#' @param object Object path
+#' @param predefined_acl Optional predefined object ACL. Leave NULL for buckets
+#'   that use uniform bucket-level access.
+#' @return Complete media upload URL
+#' @keywords internal
+build_storage_upload_url <- function(bucket, object, predefined_acl = NULL) {
+  url <- paste0(
+    FIREBASE_STORAGE_URL,
+    "/upload/storage/v1/b/",
+    utils::URLencode(bucket, reserved = TRUE),
+    "/o?uploadType=media&name=",
+    utils::URLencode(object, reserved = TRUE)
+  )
+
+  if (!is.null(predefined_acl) && nzchar(predefined_acl)) {
+    url <- paste0(
+      url,
+      "&predefinedAcl=",
+      utils::URLencode(predefined_acl, reserved = TRUE)
+    )
+  }
+
+  url
 }
 
 #' Check if Response Indicates Success

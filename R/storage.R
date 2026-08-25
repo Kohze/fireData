@@ -11,7 +11,9 @@ NULL
 #' @param file_path Local path to the file to upload
 #' @param object_name Name/path for the object in storage (e.g., "images/photo.jpg")
 #' @param content_type MIME type (auto-detected if NULL)
-#' @param predefined_acl Access control ("publicRead", "private", etc.)
+#' @param predefined_acl Optional predefined object ACL (for example,
+#'   "publicRead" or "private"). The default NULL uses bucket IAM and is
+#'   compatible with uniform bucket-level access.
 #' @param client_id OAuth client ID (for user auth)
 #' @param client_secret OAuth client secret (for user auth)
 #' @return Storage object metadata including URL
@@ -30,7 +32,7 @@ storage_upload <- function(conn,
                            file_path,
                            object_name,
                            content_type = NULL,
-                           predefined_acl = "publicRead",
+                           predefined_acl = NULL,
                            client_id = NULL,
                            client_secret = NULL) {
   # Validate connection and file
@@ -50,13 +52,10 @@ storage_upload <- function(conn,
   token <- get_storage_token(conn, client_id, client_secret)
 
   # Build upload URL
-  upload_url <- paste0(
-    "https://www.googleapis.com/upload/storage/v1/b/",
-    conn$storage_bucket,
-    "/o?uploadType=media&name=",
-    utils::URLencode(object_name, reserved = TRUE),
-    "&predefinedAcl=",
-    predefined_acl
+  upload_url <- build_storage_upload_url(
+    bucket = conn$storage_bucket,
+    object = object_name,
+    predefined_acl = predefined_acl
   )
 
   # Prepare headers
@@ -73,7 +72,7 @@ storage_upload <- function(conn,
     # Upload file
     response <- httr::POST(
       url = upload_url,
-      body = httr::upload_file(file_path),
+      body = httr::upload_file(file_path, type = content_type),
       httr::add_headers(.headers = unlist(headers))
     )
   }
@@ -392,11 +391,9 @@ storage_upload_folder <- function(conn,
 
     message("Uploading: ", object_name)
 
-    upload_url <- paste0(
-      "https://www.googleapis.com/upload/storage/v1/b/",
-      conn$storage_bucket,
-      "/o?uploadType=media&name=",
-      utils::URLencode(object_name, reserved = TRUE)
+    upload_url <- build_storage_upload_url(
+      bucket = conn$storage_bucket,
+      object = object_name
     )
 
     response <- httr::POST(
@@ -404,6 +401,10 @@ storage_upload_folder <- function(conn,
       body = httr::upload_file(local_path),
       httr::add_headers(Authorization = paste("Bearer", token))
     )
+
+    if (httr::http_error(response)) {
+      stop(parse_firebase_error(response))
+    }
 
     results[[file]] <- httr::content(response)
   }

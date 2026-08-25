@@ -1,13 +1,11 @@
-![fireData](http://frapbot.kohze.com/fireData/topImage6.jpg)
-
-[![CRAN status](https://www.r-pkg.org/badges/version/fireData)](https://CRAN.R-project.org/package=fireData)
+[![GitHub tag](https://img.shields.io/github/v/tag/Kohze/fireData?label=version)](https://github.com/Kohze/fireData/tags)
 [![R-CMD-check](https://github.com/Kohze/fireData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Kohze/fireData/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/Kohze/fireData/branch/master/graph/badge.svg)](https://codecov.io/gh/Kohze/fireData)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Kohze/fireData/master/LICENSE)
 
 # fireData: Connecting R to Google Firebase
 
-fireData integrates R with the Google Firebase platform, enabling real-time data exchange, user authentication, and cloud storage directly from R.
+fireData integrates R with selected Google Firebase services, enabling data exchange, user authentication, and cloud storage directly from R.
 
 **Key Features:**
 - **Realtime Database**: Store and sync data in real-time across clients
@@ -15,21 +13,21 @@ fireData integrates R with the Google Firebase platform, enabling real-time data
 - **Authentication**: Email/password, Google OAuth, and anonymous sign-in
 - **Cloud Storage**: Upload and download files to Firebase Storage
 - **Shiny Integration**: Built-in authentication UI for Shiny applications
-- **Service Accounts**: Full support for server-side automation
+- **Service Accounts**: Server-side authentication and automation
 
-> **Version 2.0** introduces a modern API with consistent naming, connection objects, and improved error handling. All v1.x functions remain available with deprecation warnings.
+> **Version 2.0.1** introduces a modern API with consistent naming, connection objects, and improved error handling. All v1.x functions remain available with deprecation warnings.
+
+fireData covers the common REST operations for Realtime Database, Cloud Firestore,
+Authentication, and Cloud Storage. It is not a client for every Firebase product or
+every advanced endpoint. See [Firebase feature support](inst/FIREBASE-SUPPORT.md) for the
+audited support matrix.
 
 ---
-
-![fireData](http://frapbot.kohze.com/fireData/setup2.jpg)
 
 ## Installation
 
 ```r
-# Install from CRAN
-install.packages("fireData")
-
-# Or install development version from GitHub
+# Install from GitHub
 # install.packages("pak")
 pak::pak("Kohze/fireData")
 ```
@@ -40,8 +38,9 @@ pak::pak("Kohze/fireData")
 2. Create a new project (or select existing)
 3. Navigate to **Project Settings** (gear icon)
 4. Find your **Web API Key** and **Project ID**
-5. Enable **Realtime Database** in the Build section
-6. For OAuth features, configure credentials in [Google Cloud Console](https://console.developers.google.com/apis/credentials)
+5. Enable the Firebase services you plan to use
+6. Copy the exact **Realtime Database URL** and **Storage bucket** from the console
+7. For OAuth features, configure credentials in [Google Cloud Console](https://console.developers.google.com/apis/credentials)
 
 ## Configuration
 
@@ -53,13 +52,15 @@ library(fireData)
 # Option 1: Environment variables (recommended for production)
 Sys.setenv(FIREBASE_PROJECT_ID = "your-project-id")
 Sys.setenv(FIREBASE_API_KEY = "your-api-key")
-Sys.setenv(FIREBASE_DATABASE_URL = "https://your-project.firebaseio.com")
+Sys.setenv(FIREBASE_DATABASE_URL = "https://your-database-url")
+Sys.setenv(FIREBASE_STORAGE_BUCKET = "your-project-id.firebasestorage.app")
 
 # Option 2: Create a connection with explicit values
 conn <- firebase_connect(
   project_id = "your-project-id",
   api_key = "your-api-key",
-  database_url = "https://your-project.firebaseio.com"
+  database_url = "https://your-database-url",
+  storage_bucket = "your-project-id.firebasestorage.app"
 )
 
 # Option 3: Interactive setup wizard
@@ -67,8 +68,6 @@ firebase_config_wizard()
 ```
 
 ---
-
-![examples](http://frapbot.kohze.com/fireData/examples2.jpg)
 
 ## Quick Start
 
@@ -102,7 +101,7 @@ conn <- firebase_set_token(conn, result)
 # Create connection
 conn <- firebase_connect(
   api_key = "your-api-key",
-  database_url = "https://your-project.firebaseio.com"
+  database_url = "https://your-database-url"
 )
 
 # Push data (auto-generated key)
@@ -235,8 +234,6 @@ See `vignette("firedata")` for complete documentation.
 
 ---
 
-![fireData](http://frapbot.kohze.com/fireData/related2.jpg)
-
 ## Projects Using fireData
 
 - **SpatialMaps**: A spatial proteomics platform using Firebase as a cross-platform database
@@ -245,11 +242,10 @@ See `vignette("firedata")` for complete documentation.
 
 ---
 
-![fireData](http://frapbot.kohze.com/fireData/development2.jpg)
-
 ## Documentation
 
 - `vignette("firedata")` - Getting started guide
+- [Firebase feature support](inst/FIREBASE-SUPPORT.md) - Audited support matrix
 - [GitHub Issues](https://github.com/Kohze/fireData/issues) - Bug reports and feature requests
 - [Firebase Documentation](https://firebase.google.com/docs) - Official Firebase docs
 

@@ -3,3 +3,8 @@
 .RData
 LICENCE
 inst/doc
+*.Rcheck/
+*.tar.gz
+tmpclaude-*-cwd
+.cran-stage-*
+push-to-github.cmd

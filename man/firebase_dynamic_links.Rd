@@ -8,7 +8,8 @@ Functions for creating Firebase Dynamic Links (short URLs)
 }
 \section{Note}{
 
-Firebase Dynamic Links is deprecated and will be shut down in August 2025.
-Consider using alternative URL shortening services for new projects.
+Firebase Dynamic Links shut down on August 25, 2025. These functions are
+retained for compatibility, but the upstream service no longer creates or
+serves links. Use another deep-linking provider for new projects.
 }
 

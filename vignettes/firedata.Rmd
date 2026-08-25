@@ -17,12 +17,15 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-fireData provides a comprehensive R interface to Google Firebase services, enabling you to:
+fireData provides an R interface to common operations in selected Google Firebase services, enabling you to:
 - Store and retrieve data from **Firebase Realtime Database**
 - Store and query documents in **Cloud Firestore**
 - Authenticate users with email/password, Google OAuth, or anonymous login
 - Upload and download files from **Cloud Storage**
-- Create short URLs with Dynamic Links
+
+The package focuses on common REST operations for these four services. It does
+not cover every Firebase product or every advanced endpoint; see
+[Firebase feature support](https://github.com/Kohze/fireData/blob/master/inst/FIREBASE-SUPPORT.md).
 
 ## Installation
 
@@ -59,7 +62,8 @@ There are several ways to configure fireData:
 ```{r env-vars}
 Sys.setenv(FIREBASE_PROJECT_ID = "your-project-id")
 Sys.setenv(FIREBASE_API_KEY = "your-api-key")
-Sys.setenv(FIREBASE_DATABASE_URL = "https://your-project.firebaseio.com")
+Sys.setenv(FIREBASE_DATABASE_URL = "https://your-database-url")
+Sys.setenv(FIREBASE_STORAGE_BUCKET = "your-project-id.firebasestorage.app")
 ```
 
 **Option B: Configuration File**
@@ -70,7 +74,8 @@ Create `~/.firedata/config.yml`:
 default:
   project_id: your-project-id
   api_key: your-api-key
-  database_url: https://your-project.firebaseio.com
+  database_url: https://your-database-url
+  storage_bucket: your-project-id.firebasestorage.app
 ```
 
 **Option C: Interactive Wizard**
@@ -94,7 +99,8 @@ conn <- firebase_connect()
 conn <- firebase_connect(
   project_id = "my-project",
   api_key = "AIzaSy...",
-  database_url = "https://my-project.firebaseio.com"
+  database_url = "https://your-database-url",
+  storage_bucket = "my-project.firebasestorage.app"
 )
 
 print(conn)

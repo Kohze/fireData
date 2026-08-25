@@ -12,8 +12,13 @@ NULL
 #'
 #' @param project_id Firebase project ID (e.g., "my-project-12345")
 #' @param api_key Firebase Web API key
-#' @param database_url Realtime Database URL. If NULL, constructed from project_id.
-#' @param storage_bucket Cloud Storage bucket name. If NULL, defaults to \code{project_id.appspot.com}
+#' @param database_url Realtime Database URL. Supply the exact URL shown in the
+#'   Firebase console for regional or non-default databases. If NULL, a
+#'   US Central default URL is constructed from \code{project_id}.
+#' @param storage_bucket Cloud Storage bucket name. If NULL, defaults to the
+#'   current \code{project_id.firebasestorage.app} format. Projects whose default
+#'   bucket was created before September 2024 should pass their existing
+#'   \code{project_id.appspot.com} bucket explicitly.
 #' @param credentials Service account credentials (path to JSON file or ServiceAccountCredentials object)
 #' @param token User authentication token (FirebaseToken object or token string)
 #' @return A firebase_connection S3 object
@@ -62,9 +67,10 @@ firebase_connect <- function(project_id = NULL,
     database_url <- build_rtdb_url(project_id = project_id)
   }
 
-  # Build storage bucket if not provided
+  # New default buckets created since September 2024 use firebasestorage.app.
+  # Existing appspot.com buckets keep their names and should be passed explicitly.
   if (is.null(storage_bucket) && !is.null(project_id)) {
-    storage_bucket <- paste0(project_id, ".appspot.com")
+    storage_bucket <- paste0(project_id, ".firebasestorage.app")
   }
 
   # Handle credentials

@@ -530,23 +530,7 @@ auth <- function(projectAPI, email = "prompt", password = "prompt") {
     print(paste0("Connecting to ", projectAPI, ":"))
   }
 
-  # Use legacy endpoint for full backward compatibility
-  auth_url <- paste0(
-    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=",
-    projectAPI
-  )
-
-  response <- httr::POST(
-    url = auth_url,
-    body = list(
-      email = email,
-      password = password,
-      returnSecureToken = "True"
-    ),
-    encode = "json"
-  )
-
-  httr::content(response)
+  auth_sign_in(api_key = projectAPI, email = email, password = password)
 }
 
 #' @title Anonymous Login (Legacy)
@@ -557,18 +541,7 @@ auth <- function(projectAPI, email = "prompt", password = "prompt") {
 anonymous_login <- function(project_api) {
   .Deprecated("auth_anonymous")
 
-  auth_url <- paste0(
-    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=",
-    project_api
-  )
-
-  response <- httr::POST(
-    url = auth_url,
-    body = list(returnSecureToken = "True"),
-    encode = "json"
-  )
-
-  httr::content(response)
+  auth_anonymous(api_key = project_api)
 }
 
 #' @title Create User (Legacy)
@@ -587,18 +560,7 @@ createUser <- function(projectAPI, email = "prompt", password = "prompt") {
     print(paste0("Connecting to ", projectAPI, ":"))
   }
 
-  auth_url <- paste0(
-    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=",
-    projectAPI
-  )
-
-  response <- httr::POST(
-    url = auth_url,
-    body = list(email = email, password = password),
-    encode = "json"
-  )
-
-  httr::content(response)
+  auth_create_user(api_key = projectAPI, email = email, password = password)
 }
 
 #' @title Reset Password (Legacy)
@@ -610,26 +572,7 @@ createUser <- function(projectAPI, email = "prompt", password = "prompt") {
 resetPassword <- function(projectAPI, email) {
   .Deprecated("auth_reset_password")
 
-  auth_url <- paste0(
-    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=",
-    projectAPI
-  )
-
-  response <- httr::POST(
-    url = auth_url,
-    body = list(email = email, requestType = "PASSWORD_RESET"),
-    encode = "json"
-  )
-
-  content <- httr::content(response)
-
-  if ("error" %in% names(content)) {
-    warning(paste0("User email ", email, " was not found in the database"))
-  } else {
-    print(paste0("Password reset email was send to ", email))
-  }
-
-  invisible(content)
+  auth_reset_password(api_key = projectAPI, email = email)
 }
 
 #' @title OAuth Login (Legacy)
@@ -643,23 +586,12 @@ resetPassword <- function(projectAPI, email) {
 o_auth_login <- function(project_api, request_uri, post_body, return_idp_credential) {
   .Deprecated("auth_oauth")
 
-  auth_url <- paste0(
-    "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyAssertion?key=",
-    project_api
+  auth_oauth(
+    request_uri = request_uri,
+    post_body = post_body,
+    return_idp_credential = return_idp_credential,
+    api_key = project_api
   )
-
-  response <- httr::POST(
-    url = auth_url,
-    body = list(
-      requestUri = request_uri,
-      postBody = post_body,
-      returnSecureToken = "True",
-      returnIdpCredential = return_idp_credential
-    ),
-    encode = "json"
-  )
-
-  httr::content(response)
 }
 
 #' @title Google Login (Legacy)

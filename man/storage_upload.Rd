@@ -9,7 +9,7 @@ storage_upload(
   file_path,
   object_name,
   content_type = NULL,
-  predefined_acl = "publicRead",
+  predefined_acl = NULL,
   client_id = NULL,
   client_secret = NULL
 )
@@ -23,7 +23,9 @@ storage_upload(
 
 \item{content_type}{MIME type (auto-detected if NULL)}
 
-\item{predefined_acl}{Access control ("publicRead", "private", etc.)}
+\item{predefined_acl}{Optional predefined object ACL (for example,
+"publicRead" or "private"). The default NULL uses bucket IAM and is
+compatible with uniform bucket-level access.}
 
 \item{client_id}{OAuth client ID (for user auth)}
 

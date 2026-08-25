@@ -9,7 +9,7 @@ build_rtdb_url(project_id = NULL, database_url = NULL)
 \arguments{
 \item{project_id}{Firebase project ID}
 
-\item{database_url}{Custom database URL (optional)}
+\item{database_url}{Exact database URL (recommended for regional databases)}
 }
 \value{
 The database base URL
