@@ -58,10 +58,10 @@
 #'
 #' @section Migration from v1.x:
 #'
-#' Version 2.0 introduces a new API with consistent naming. The old functions
-#' are deprecated but still work:
+#' Version 2.0.1 uses the modern API introduced in the 2.x series, with
+#' consistent naming. The old functions are deprecated but still work:
 #'
-#' | Old (v1.x) | New (v2.0) |
+#' | Old (v1.x) | New (v2.0.1) |
 #' |------------|------------|
 #' | `auth()` | `auth_sign_in()` |
 #' | `upload()` | `rtdb_push()` |

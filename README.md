@@ -216,9 +216,10 @@ head(data)
 
 ## Migration from v1.x
 
-Version 2.0 uses a new naming convention. The old functions still work but show deprecation warnings:
+Version 2.0.1 uses the modern naming convention introduced in the 2.x series.
+The old functions still work but show deprecation warnings:
 
-| v1.x (deprecated) | v2.0 (recommended) |
+| v1.x (deprecated) | v2.0.1 (recommended) |
 |-------------------|-------------------|
 | `auth()` | `auth_sign_in()` |
 | `anonymous_login()` | `auth_anonymous()` |

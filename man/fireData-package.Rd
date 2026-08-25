@@ -76,9 +76,9 @@ rtdb_push(conn, "messages", list(text = "Hello from R!"))
 \section{Migration from v1.x}{
 
 
-Version 2.0 introduces a new API with consistent naming. The old functions
-are deprecated but still work:\tabular{ll}{
-   Old (v1.x) \tab New (v2.0) \cr
+Version 2.0.1 uses the modern API introduced in the 2.x series, with
+consistent naming. The old functions are deprecated but still work:\tabular{ll}{
+   Old (v1.x) \tab New (v2.0.1) \cr
    \code{auth()} \tab \code{auth_sign_in()} \cr
    \code{upload()} \tab \code{rtdb_push()} \cr
    \code{download()} \tab \code{rtdb_get()} \cr
