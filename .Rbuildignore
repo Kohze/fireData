@@ -3,7 +3,6 @@
 ^\.travis\.yml$
 ^LICENSE\.txt$
 ^\.github$
-^codecov\.yml$
 ^cran-comments\.md$
 ^_pkgdown\.yml$
 ^pkgdown$

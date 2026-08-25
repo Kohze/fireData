@@ -1,6 +1,5 @@
 [![GitHub tag](https://img.shields.io/github/v/tag/Kohze/fireData?label=version)](https://github.com/Kohze/fireData/tags)
 [![R-CMD-check](https://github.com/Kohze/fireData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Kohze/fireData/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/Kohze/fireData/branch/master/graph/badge.svg)](https://codecov.io/gh/Kohze/fireData)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Kohze/fireData/master/LICENSE)
 
 # fireData: Connecting R to Google Firebase
@@ -44,7 +43,8 @@ pak::pak("Kohze/fireData")
 
 ## Configuration
 
-fireData supports multiple configuration methods:
+fireData supports multiple configuration methods. Choose one approach; each
+example below produces a `firebase_conn` connection object.
 
 ```r
 library(fireData)
@@ -54,9 +54,10 @@ Sys.setenv(FIREBASE_PROJECT_ID = "your-project-id")
 Sys.setenv(FIREBASE_API_KEY = "your-api-key")
 Sys.setenv(FIREBASE_DATABASE_URL = "https://your-database-url")
 Sys.setenv(FIREBASE_STORAGE_BUCKET = "your-project-id.firebasestorage.app")
+firebase_conn <- firebase_connect()
 
 # Option 2: Create a connection with explicit values
-conn <- firebase_connect(
+firebase_conn <- firebase_connect(
   project_id = "your-project-id",
   api_key = "your-api-key",
   database_url = "https://your-database-url",
@@ -65,111 +66,128 @@ conn <- firebase_connect(
 
 # Option 3: Interactive setup wizard
 firebase_config_wizard()
+firebase_conn <- firebase_connect()
 ```
 
 ---
 
 ## Quick Start
 
-### Authentication
+### Connect and authenticate a Firebase user
+
+Create one connection, sign in, and then store the returned Firebase ID token in
+that connection. The authenticated `firebase_conn` is reused by the Realtime
+Database and Firestore examples below.
 
 ```r
-# Anonymous login
-result <- auth_anonymous(api_key = "your-api-key")
-
-# Email/password login
-result <- auth_sign_in(
-  api_key = "your-api-key",
-  email = "user@example.com",
-  password = "password123"
-)
-
-# Create new user
-result <- auth_create_user(
-  api_key = "your-api-key",
-  email = "newuser@example.com",
-  password = "securepassword"
-)
-
-# Update connection with authentication
-conn <- firebase_set_token(conn, result)
-```
-
-### Realtime Database Operations
-
-```r
-# Create connection
-conn <- firebase_connect(
+firebase_conn <- firebase_connect(
+  project_id = "your-project-id",
   api_key = "your-api-key",
   database_url = "https://your-database-url"
 )
 
+auth_response <- auth_sign_in(
+  conn = firebase_conn,
+  email = "user@example.com",
+  password = "password123"
+)
+
+firebase_conn <- firebase_set_token(firebase_conn, auth_response)
+user_id <- auth_response$localId
+```
+
+Account creation and anonymous sign-in are alternatives to email/password
+sign-in. If you use one of them, pass its response to `firebase_set_token()` in
+the same way:
+
+```r
+new_user_auth <- auth_create_user(
+  conn = firebase_conn,
+  email = "newuser@example.com",
+  password = "securepassword"
+)
+
+anonymous_auth <- auth_anonymous(conn = firebase_conn)
+
+# Each alternative response can create its own authenticated connection
+new_user_conn <- firebase_set_token(firebase_conn, new_user_auth)
+anonymous_conn <- firebase_set_token(firebase_conn, anonymous_auth)
+```
+
+### Realtime Database Operations
+
+These examples use the authenticated `firebase_conn` created above. An
+unauthenticated request works only when your Realtime Database Security Rules
+explicitly allow public access.
+
+```r
 # Push data (auto-generated key)
-path <- rtdb_push(conn, "messages", list(
+message_path <- rtdb_push(firebase_conn, "messages", list(
   text = "Hello from R!",
-  author = "R User",
+  authorId = user_id,
   timestamp = Sys.time()
 ))
 
-# Set data at specific path (overwrites)
-rtdb_set(conn, "users/user123", list(
+# Store data below the authenticated user's ID
+user_path <- paste0("users/", user_id)
+rtdb_set(firebase_conn, user_path, list(
   name = "John Doe",
   email = "john@example.com"
 ))
 
 # Update specific fields (merge)
-rtdb_update(conn, "users/user123", list(
+rtdb_update(firebase_conn, user_path, list(
   lastLogin = Sys.time()
 ))
 
 # Read data
-user <- rtdb_get(conn, "users/user123")
+user_profile <- rtdb_get(firebase_conn, user_path)
 
 # Query with filtering
-results <- rtdb_query(conn, "users") |>
+user_query_results <- rtdb_query(firebase_conn, "users") |>
   query_order_by("name") |>
   query_limit_to_first(10) |>
   query_execute()
 
-# Delete data
-rtdb_delete(conn, "messages/-NxYz123")
+# Delete the message created above
+rtdb_delete(firebase_conn, message_path)
 
-# Backup entire database
-rtdb_backup(conn, filename = "backup.json")
+# Backup requires permission to read the database root
+rtdb_backup(firebase_conn, file_name = "backup.json")
 ```
 
 ### Cloud Firestore
 
 Cloud Firestore is a flexible, scalable NoSQL document database. It stores data in **documents** organized into **collections**, making it ideal for complex, structured data with powerful querying.
 
-```r
-# Authenticate (Firestore requires authentication)
-result <- auth_sign_in(conn, "user@example.com", "password")
-conn <- firebase_set_token(conn, result)
+The calls below reuse the authenticated `firebase_conn`. Firestore evaluates the
+Firebase ID token against your Firestore Security Rules.
 
+```r
 # Create/overwrite a document
-firestore_set(conn, "users", "user123", list(
+firestore_set(firebase_conn, "users", user_id, list(
   name = "John Doe",
   email = "john@example.com",
   age = 30
 ))
 
 # Add document with auto-generated ID
-result <- firestore_add(conn, "messages", list(
+created_message <- firestore_add(firebase_conn, "messages", list(
   text = "Hello Firestore!",
+  authorId = user_id,
   timestamp = Sys.time()
 ))
 
 # Get a document
-user <- firestore_get(conn, "users", "user123")
+firestore_user <- firestore_get(firebase_conn, "users", user_id)
 
 # Update specific fields
-firestore_update(conn, "users", "user123", list(
+firestore_update(firebase_conn, "users", user_id, list(
   lastLogin = Sys.time()
 ))
 
 # Query with filters
-results <- firestore_query(conn, "products") |>
+product_matches <- firestore_query(firebase_conn, "products") |>
   fs_where("price", "<", 100) |>
   fs_where("inStock", "==", TRUE) |>
   fs_order_by("price", "asc") |>
@@ -177,26 +195,46 @@ results <- firestore_query(conn, "products") |>
   fs_execute()
 
 # Delete a document
-firestore_delete(conn, "users", "user123")
+firestore_delete(firebase_conn, "users", user_id)
 ```
 
 ### Cloud Storage
 
+fireData accesses Storage through the Google Cloud Storage JSON API. These
+server-side calls use Google Cloud IAM credentials, not the Firebase user ID
+token stored in `firebase_conn`. The following example uses a service account
+whose IAM role permits access to the bucket.
+
 ```r
+storage_conn <- firebase_connect(
+  project_id = "your-project-id",
+  storage_bucket = "your-project-id.firebasestorage.app",
+  credentials = "path/to/service-account.json"
+)
+
 # Upload a file
-result <- storage_upload(conn,
+uploaded_object <- storage_upload(
+  storage_conn,
   file_path = "local/image.jpg",
   object_name = "images/photo.jpg"
 )
 
 # Download a file
-storage_download(conn, "images/photo.jpg", "downloaded.jpg")
+downloaded_file <- storage_download(
+  storage_conn,
+  object_name = "images/photo.jpg",
+  dest_file = "downloaded.jpg"
+)
 
-# Get download URL
-url <- storage_get_url(conn, "images/photo.jpg")
+# Existing objects created by a Firebase SDK may have download-token metadata.
+# Google Cloud Storage API uploads do not add that metadata automatically.
+download_url <- storage_get_url(
+  storage_conn,
+  "images/existing-firebase-object.jpg"
+)
 
 # List files
-files <- storage_list(conn, prefix = "images/")
+stored_objects <- storage_list(storage_conn, prefix = "images/")
 ```
 
 ### Data Frames
@@ -205,11 +243,11 @@ fireData seamlessly handles R data frames:
 
 ```r
 # Upload data frame
-rtdb_push(conn, "datasets", mtcars)
+dataset_path <- rtdb_push(firebase_conn, "datasets", mtcars)
 
-# Download returns a data frame
-data <- rtdb_get(conn, "datasets/-KeyHere")
-head(data)
+# Read the same data frame using the returned path
+downloaded_data <- rtdb_get(firebase_conn, dataset_path)
+head(downloaded_data)
 ```
 
 ---
