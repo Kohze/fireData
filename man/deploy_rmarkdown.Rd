@@ -28,4 +28,7 @@ Upload result
 }
 \description{
 Legacy function to deploy R Markdown to storage.
+Rendering uses a temporary directory for output, intermediate files, and
+the knitting working directory. Use absolute paths for input resources in
+the document. Temporary render files are removed after the upload attempt.
 }

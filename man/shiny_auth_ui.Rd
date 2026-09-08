@@ -17,9 +17,9 @@ Creates a styled login panel for Shiny apps.
 Use with shiny_auth_server() for complete authentication.
 }
 \examples{
-\dontrun{
-ui <- fluidPage(
-  useShinyjs(),
+if (interactive()) {
+ui <- shiny::fluidPage(
+  shinyjs::useShinyjs(),
   shiny_auth_ui("Sign In")
 )
 }

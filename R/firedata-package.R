@@ -49,7 +49,9 @@
 #' Sys.setenv(FIREBASE_API_KEY = "AIzaSy...")
 #'
 #' # Option 2: Use the configuration wizard
-#' firebase_config_wizard()
+#' if (interactive()) {
+#'   firebase_config_wizard()
+#' }
 #'
 #' # Create connection and start using Firebase
 #' conn <- firebase_connect()

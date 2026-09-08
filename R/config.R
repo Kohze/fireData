@@ -35,13 +35,11 @@ ENV_VARS <- list(
 #' @return The configuration value or default
 #' @export
 #' @examples
-#' \dontrun{
 #' # Get API key from environment or config
 #' api_key <- firebase_config_get("api_key")
 #'
 #' # Get with explicit value override
 #' api_key <- firebase_config_get("api_key", value = "my-api-key")
-#' }
 firebase_config_get <- function(key, value = NULL, default = NULL, profile = "default") {
   # 1. Explicit value
  if (!is.null(value) && !identical(value, "prompt") && nzchar(as.character(value))) {
@@ -81,12 +79,12 @@ firebase_config_get <- function(key, value = NULL, default = NULL, profile = "de
 #' @return Invisibly returns the previous values
 #' @export
 #' @examples
-#' \dontrun{
 #' firebase_config_set(
 #'   project_id = "my-project",
 #'   api_key = "AIzaSy..."
 #' )
-#' }
+#' # Clear the example's session settings when finished
+#' firebase_config_clear(c("project_id", "api_key"))
 firebase_config_set <- function(...) {
   args <- list(...)
   valid_keys <- c("project_id", "api_key", "database_url", "storage_bucket",
@@ -113,13 +111,11 @@ firebase_config_set <- function(...) {
 #' @return Invisibly returns NULL
 #' @export
 #' @examples
-#' \dontrun{
 #' # Clear specific keys
 #' firebase_config_clear(c("api_key", "project_id"))
 #'
 #' # Clear all
 #' firebase_config_clear()
-#' }
 firebase_config_clear <- function(keys = NULL) {
   if (is.null(keys)) {
     rm(list = ls(.firedata_env), envir = .firedata_env)
@@ -244,16 +240,30 @@ get_config_file_value <- function(key, profile = "default") {
 #'
 #' Guides the user through setting up Firebase configuration interactively.
 #'
-#' @param save Whether to save configuration to file
-#' @param path Path to save config file (default: ~/.firedata/config.yml)
+#' @param save Whether to offer to save configuration to a file. Defaults to
+#'   FALSE, which only configures the current session.
+#' @param path Explicit output file path, required when `save = TRUE`.
+#'   The parent directory must already exist. No default file path is used.
 #' @return Invisibly returns the configuration list
 #' @export
 #' @examples
-#' \dontrun{
+#' if (interactive()) {
 #' # Run interactive setup
 #' firebase_config_wizard()
+#'
+#' # Optionally save to an explicitly chosen file
+#' config_file <- tempfile(fileext = ".yml")
+#' firebase_config_wizard(save = TRUE, path = config_file)
+#' unlink(config_file)
 #' }
-firebase_config_wizard <- function(save = TRUE, path = NULL) {
+firebase_config_wizard <- function(save = FALSE, path = NULL) {
+  if (!is.logical(save) || length(save) != 1L || is.na(save)) {
+    stop_firebase("validation", "save must be TRUE or FALSE")
+  }
+  if (save && (is.null(path) || !is.character(path) || length(path) != 1L ||
+               is.na(path) || !nzchar(trimws(path)))) {
+    stop_firebase("validation", "An explicit file path is required when save = TRUE")
+  }
   if (!interactive()) {
     stop_firebase("validation", "Configuration wizard requires an interactive session")
   }
@@ -291,14 +301,6 @@ firebase_config_wizard <- function(save = TRUE, path = NULL) {
   if (save && length(config) > 0) {
     save_config <- readline("Save to config file? (y/n): ")
     if (tolower(save_config) == "y") {
-      if (is.null(path)) {
-        config_dir <- file.path(Sys.getenv("HOME"), ".firedata")
-        if (!dir.exists(config_dir)) {
-          dir.create(config_dir, recursive = TRUE)
-        }
-        path <- file.path(config_dir, "config.yml")
-      }
-
       yaml_content <- list(default = config)
       yaml::write_yaml(yaml_content, path)
       cat(sprintf("Configuration saved to: %s\n", path))
@@ -310,16 +312,16 @@ firebase_config_wizard <- function(save = TRUE, path = NULL) {
 
 #' Get All Current Configuration
 #'
-#' Returns all currently set configuration values from all sources.
+#' Returns all currently set configuration values from all sources, with
+#' sensitive values masked. Use `print()` to display the returned list.
 #'
 #' @param profile Configuration profile for file lookup
 #' @return Named list of all configuration values
 #' @export
 #' @examples
-#' \dontrun{
 #' # View current configuration
-#' firebase_config_show()
-#' }
+#' config <- firebase_config_show()
+#' print(config)
 firebase_config_show <- function(profile = "default") {
   keys <- c("project_id", "api_key", "database_url", "storage_bucket",
             "client_id", "client_secret")
@@ -335,19 +337,7 @@ firebase_config_show <- function(profile = "default") {
   })
   names(config) <- keys
 
-  # Print nicely
-  cat("Firebase Configuration:\n")
-  cat("=======================\n")
-  for (key in keys) {
-    val <- config[[key]]
-    if (is.null(val)) {
-      cat(sprintf("  %s: (not set)\n", key))
-    } else {
-      cat(sprintf("  %s: %s\n", key, val))
-    }
-  }
-
-  invisible(config)
+  config
 }
 
 #' Prompt for Value if Not Set

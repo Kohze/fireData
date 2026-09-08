@@ -258,7 +258,9 @@ rtdb_delete <- function(conn, path, token = NULL) {
 #'   project_id = "my-project",
 #'   credentials = "service-account.json"
 #' )
-#' rtdb_backup(conn, "backup.json")
+#' backup_file <- tempfile(fileext = ".json")
+#' rtdb_backup(conn, backup_file)
+#' unlink(backup_file)
 #' }
 rtdb_backup <- function(conn, file_name, token = NULL) {
   # Validate connection
@@ -287,7 +289,7 @@ rtdb_backup <- function(conn, file_name, token = NULL) {
   curl::curl_download(
     url = url,
     destfile = file_name,
-    quiet = FALSE
+    quiet = TRUE
   )
 
   message(paste0("Backup created: ", file_name))
@@ -512,6 +514,7 @@ download <- function(projectURL, fileName, secretKey = "none", token = "none", i
   if (isClass) {
     retrievedData <- httr::content(data, "text")
     tempPath <- tempfile()
+    on.exit(unlink(tempPath), add = TRUE)
     writeBin(jsonlite::base64_dec(jsonlite::fromJSON(retrievedData)), tempPath)
     return(readRDS(tempPath))
   } else {
@@ -600,13 +603,13 @@ dataBackup <- function(projectURL, secretKey = "prompt", fileName) {
 
   if (secretKey == "prompt" && interactive()) {
     secretKey <- readline(prompt = "secretKey: ")
-    print(paste0("Connecting to ", projectURL, ":"))
+    message("Connecting to ", projectURL, ":")
   }
 
-  print("Fetching Data")
+  message("Fetching Data")
   urlPath <- paste0(projectURL, "/.json?auth=", secretKey)
-  curl::curl_download(url = urlPath, destfile = fileName, quiet = FALSE)
-  print(paste0("Backup created in ", fileName))
+  curl::curl_download(url = urlPath, destfile = fileName, quiet = TRUE)
+  message("Backup created in ", fileName)
 
   fileName
 }

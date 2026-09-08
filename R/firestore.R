@@ -426,11 +426,10 @@ firestore_query <- function(conn = NULL,
 #' @return Updated firestore_query object
 #' @export
 #' @examples
-#' \dontrun{
+#' conn <- firebase_connect(project_id = "my-project")
 #' query <- firestore_query(conn, "users") |>
 #'   fs_where("age", ">=", 21) |>
 #'   fs_where("status", "==", "active")
-#' }
 fs_where <- function(query, field, op, value) {
  if (!inherits(query, "firestore_query")) {
    stop_firebase("validation", "query must be a firestore_query object")

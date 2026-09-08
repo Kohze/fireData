@@ -2,9 +2,12 @@
 # These tests don't require Firebase credentials
 
 test_that("path_check warns on invalid characters (legacy)", {
-  expect_warning(path_check("abc./d}e"))
-  expect_warning(path_check("path/with/slash"))
-  expect_warning(path_check("path.with.dots"))
+  expect_warning(expect_warning(path_check("abc./d}e"), "path changed"),
+                 class = "deprecatedWarning")
+  expect_warning(expect_warning(path_check("path/with/slash"), "path changed"),
+                 class = "deprecatedWarning")
+  expect_warning(expect_warning(path_check("path.with.dots"), "path changed"),
+                 class = "deprecatedWarning")
 })
 
 test_that("path_sanitize replaces invalid characters", {

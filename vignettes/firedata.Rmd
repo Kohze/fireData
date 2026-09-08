@@ -68,7 +68,7 @@ Sys.setenv(FIREBASE_STORAGE_BUCKET = "your-project-id.firebasestorage.app")
 
 **Option B: Configuration File**
 
-Create `~/.firedata/config.yml`:
+Configuration files use the following format:
 
 ```yaml
 default:
@@ -80,9 +80,18 @@ default:
 
 **Option C: Interactive Wizard**
 
+The wizard configures the current session by default. Saving requires
+`save = TRUE` and an explicit file path; the parent directory must exist.
+
 ```{r wizard}
 library(fireData)
-firebase_config_wizard()
+if (interactive()) {
+  firebase_config_wizard()
+  # Optional: save a configuration file in the temporary directory
+  config_file <- tempfile(fileext = ".yml")
+  firebase_config_wizard(save = TRUE, path = config_file)
+  unlink(config_file)
+}
 ```
 
 ## Quick Start
@@ -317,7 +326,9 @@ result <- storage_upload(conn,
 print(result$url)
 
 # Download file
-storage_download(conn, "images/photo.jpg", "downloaded.jpg")
+dest_file <- tempfile(fileext = ".jpg")
+storage_download(conn, "images/photo.jpg", dest_file)
+unlink(dest_file)
 
 # List files
 files <- storage_list(conn, prefix = "images/")

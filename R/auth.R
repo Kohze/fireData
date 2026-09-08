@@ -443,7 +443,8 @@ auth_oauth <- function(conn = NULL,
 #' @return Authentication response
 #' @export
 #' @examples
-#' \dontrun{
+#' if (interactive()) {
+#' # Requires a configured Firebase project and OAuth client credentials.
 #' result <- auth_google(
 #'   conn,
 #'   client_id = "your-client-id.apps.googleusercontent.com",
@@ -527,7 +528,7 @@ auth <- function(projectAPI, email = "prompt", password = "prompt") {
   if (identical(email, "prompt") && identical(password, "prompt") && interactive()) {
     email <- readline(prompt = "Email: ")
     password <- readline(prompt = "Password: ")
-    print(paste0("Connecting to ", projectAPI, ":"))
+    message("Connecting to ", projectAPI, ":")
   }
 
   auth_sign_in(api_key = projectAPI, email = email, password = password)
@@ -557,7 +558,7 @@ createUser <- function(projectAPI, email = "prompt", password = "prompt") {
   if (identical(email, "prompt") && identical(password, "prompt") && interactive()) {
     email <- readline(prompt = "Email: ")
     password <- readline(prompt = "Password: ")
-    print(paste0("Connecting to ", projectAPI, ":"))
+    message("Connecting to ", projectAPI, ":")
   }
 
   auth_create_user(api_key = projectAPI, email = email, password = password)
@@ -617,7 +618,7 @@ google_login <- function(project_api,
   if (identical(web_client_id, "prompt") && identical(web_client_secret, "prompt") && interactive()) {
     web_client_id <- readline(prompt = "Web Client ID: ")
     web_client_secret <- readline(prompt = "Web Client Secret: ")
-    print(paste0("Connecting to ", project_api, ":"))
+    message("Connecting to ", project_api, ":")
   }
 
   app <- httr::oauth_app(

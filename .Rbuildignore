@@ -12,3 +12,6 @@
 ^README\.Rmd$
 ^\.claude$
 ^tmpclaude-.*$
+^\.cran-stage-.*$
+^.*\.cmd$
+^resubmission-reply\.md$

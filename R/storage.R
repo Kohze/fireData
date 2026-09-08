@@ -102,7 +102,9 @@ storage_upload <- function(conn,
 #' @examples
 #' \dontrun{
 #' # Download to file
-#' storage_download(conn, "images/photo.jpg", "local/photo.jpg")
+#' dest_file <- tempfile(fileext = ".jpg")
+#' storage_download(conn, "images/photo.jpg", dest_file)
+#' unlink(dest_file)
 #'
 #' # Download to memory
 #' content <- storage_download(conn, "data/config.json")
@@ -325,7 +327,9 @@ storage_get_metadata <- function(conn,
 #' @examples
 #' \dontrun{
 #' url <- storage_get_url(conn, "images/photo.jpg")
-#' browseURL(url)
+#' if (interactive()) {
+#'   utils::browseURL(url)
+#' }
 #' }
 storage_get_url <- function(conn,
                             object_name,
@@ -613,7 +617,7 @@ upload_folder <- function(bucket_name, web_client_id = "prompt", web_client_secr
 
   for (file in files) {
     object_name <- paste0(folder_path, "/", file)
-    print(object_name)
+    message(object_name)
 
     upload_url <- paste0(
       "https://www.googleapis.com/upload/storage/v1/b/",
@@ -648,7 +652,8 @@ google_devstorage_read_write <- function(web_client_id = "prompt", web_client_se
   httr::oauth2.0_token(
     httr::oauth_endpoints("google"),
     app,
-    scope = "https://www.googleapis.com/auth/devstorage.read_write"
+    scope = "https://www.googleapis.com/auth/devstorage.read_write",
+    cache = FALSE
   )
 }
 
@@ -666,7 +671,8 @@ google_devstorage_read_only <- function(web_client_id = "prompt", web_client_sec
   httr::oauth2.0_token(
     httr::oauth_endpoints("google"),
     app,
-    scope = "https://www.googleapis.com/auth/devstorage.read_only"
+    scope = "https://www.googleapis.com/auth/devstorage.read_only",
+    cache = FALSE
   )
 }
 
@@ -692,6 +698,9 @@ google_firestore <- function(web_client_id = "prompt", web_client_secret = "prom
 
 #' @title Deploy R Markdown (Legacy)
 #' @description Legacy function to deploy R Markdown to storage.
+#'   Rendering uses a temporary directory for output, intermediate files, and
+#'   the knitting working directory. Use absolute paths for input resources in
+#'   the document. Temporary render files are removed after the upload attempt.
 #' @param rmarkdown_path Path to R Markdown file
 #' @param bucket_name Storage bucket
 #' @param object_name Output object name
@@ -705,7 +714,17 @@ deploy_rmarkdown <- function(rmarkdown_path, bucket_name, object_name,
     stop_firebase("validation", "Package 'rmarkdown' is required for this function")
   }
 
-  html_file <- rmarkdown::render(input = rmarkdown_path, output_format = "html_document")
+  render_dir <- tempfile("firedata-render-")
+  dir.create(render_dir)
+  on.exit(unlink(render_dir, recursive = TRUE), add = TRUE)
+  html_file <- rmarkdown::render(
+    input = rmarkdown_path,
+    output_format = "html_document",
+    output_dir = render_dir,
+    intermediates_dir = render_dir,
+    knit_root_dir = render_dir,
+    quiet = TRUE
+  )
 
   upload_storage(
     bucket_name = bucket_name,

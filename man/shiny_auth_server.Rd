@@ -46,12 +46,12 @@ Creates a login overlay for Shiny applications with support for
 email/password, Google OAuth, and anonymous authentication.
 }
 \examples{
-\dontrun{
+if (interactive()) {
 library(shiny)
 library(fireData)
 
 ui <- fluidPage(
-  useShinyjs(),
+  shinyjs::useShinyjs(),
   uiOutput("app")
 )
 

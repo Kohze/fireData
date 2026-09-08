@@ -24,6 +24,8 @@ Generates a download URL for a storage object.
 \examples{
 \dontrun{
 url <- storage_get_url(conn, "images/photo.jpg")
-browseURL(url)
+if (interactive()) {
+  utils::browseURL(url)
+}
 }
 }

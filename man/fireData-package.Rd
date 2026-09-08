@@ -4,9 +4,9 @@
 \name{fireData-package}
 \alias{fireData-package}
 \alias{fireData}
-\title{fireData: Connect R to 'Google Firebase'}
+\title{fireData: Connect to 'Google Firebase'}
 \description{
-Provides an R interface to 'Google Firebase' services, including Realtime Database, Cloud Firestore, Authentication, and Cloud Storage. Supports interactive use in R and 'Shiny' applications as well as automated server-side workflows. Data frames and R objects can be stored and retrieved, users can be authenticated, and files can be managed through service APIs.
+Provides an interface to 'Google Firebase' services \url{https://firebase.google.com/}, including 'Firebase Realtime Database', 'Cloud Firestore', 'Firebase Authentication', and 'Cloud Storage for Firebase'. Supports interactive use and 'shiny' applications as well as automated server-side workflows. Data frames and objects can be stored and retrieved, users can be authenticated, and files can be managed through the services' application programming interfaces.
 
 The fireData package provides access to common operations in selected Google
 Firebase services from R, including Realtime Database, Authentication, Cloud
@@ -65,7 +65,9 @@ Sys.setenv(FIREBASE_PROJECT_ID = "my-project")
 Sys.setenv(FIREBASE_API_KEY = "AIzaSy...")
 
 # Option 2: Use the configuration wizard
-firebase_config_wizard()
+if (interactive()) \{
+  firebase_config_wizard()
+\}
 
 # Create connection and start using Firebase
 conn <- firebase_connect()

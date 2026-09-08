@@ -65,7 +65,9 @@ firebase_conn <- firebase_connect(
 )
 
 # Option 3: Interactive setup wizard
-firebase_config_wizard()
+if (interactive()) {
+  firebase_config_wizard() # Configures this session without writing a file
+}
 firebase_conn <- firebase_connect()
 ```
 
@@ -153,7 +155,9 @@ user_query_results <- rtdb_query(firebase_conn, "users") |>
 rtdb_delete(firebase_conn, message_path)
 
 # Backup requires permission to read the database root
-rtdb_backup(firebase_conn, file_name = "backup.json")
+backup_file <- tempfile(fileext = ".json")
+rtdb_backup(firebase_conn, file_name = backup_file)
+unlink(backup_file)
 ```
 
 ### Cloud Firestore
@@ -223,8 +227,9 @@ uploaded_object <- storage_upload(
 downloaded_file <- storage_download(
   storage_conn,
   object_name = "images/photo.jpg",
-  dest_file = "downloaded.jpg"
+  dest_file = tempfile(fileext = ".jpg")
 )
+unlink(downloaded_file)
 
 # Existing objects created by a Firebase SDK may have download-token metadata.
 # Google Cloud Storage API uploads do not add that metadata automatically.

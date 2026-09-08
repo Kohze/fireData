@@ -24,13 +24,14 @@ NULL
 #' @return A firebase_connection S3 object
 #' @export
 #' @examples
-#' \dontrun{
 #' # Create connection with explicit values
 #' conn <- firebase_connect(
 #'   project_id = "my-project",
 #'   api_key = "AIzaSy..."
 #' )
 #'
+#' \dontrun{
+#' # These alternatives require your own configuration or credentials.
 #' # Create connection from environment variables
 #' # (Set FIREBASE_PROJECT_ID, FIREBASE_API_KEY, etc.)
 #' conn <- firebase_connect()

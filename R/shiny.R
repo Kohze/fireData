@@ -21,12 +21,12 @@ NULL
 #' @return A Shiny UI element containing the login form
 #' @export
 #' @examples
-#' \dontrun{
+#' if (interactive()) {
 #' library(shiny)
 #' library(fireData)
 #'
 #' ui <- fluidPage(
-#'   useShinyjs(),
+#'   shinyjs::useShinyjs(),
 #'   uiOutput("app")
 #' )
 #'
@@ -209,9 +209,9 @@ shiny_auth_server <- function(user,
 #' @return A Shiny UI element
 #' @export
 #' @examples
-#' \dontrun{
-#' ui <- fluidPage(
-#'   useShinyjs(),
+#' if (interactive()) {
+#' ui <- shiny::fluidPage(
+#'   shinyjs::useShinyjs(),
 #'   shiny_auth_ui("Sign In")
 #' )
 #' }

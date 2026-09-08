@@ -25,6 +25,8 @@ conn <- firebase_connect(
   project_id = "my-project",
   credentials = "service-account.json"
 )
-rtdb_backup(conn, "backup.json")
+backup_file <- tempfile(fileext = ".json")
+rtdb_backup(conn, backup_file)
+unlink(backup_file)
 }
 }

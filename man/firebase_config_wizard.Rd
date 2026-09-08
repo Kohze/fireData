@@ -4,12 +4,14 @@
 \alias{firebase_config_wizard}
 \title{Interactive Configuration Wizard}
 \usage{
-firebase_config_wizard(save = TRUE, path = NULL)
+firebase_config_wizard(save = FALSE, path = NULL)
 }
 \arguments{
-\item{save}{Whether to save configuration to file}
+\item{save}{Whether to offer to save configuration to a file. Defaults to
+FALSE, which only configures the current session.}
 
-\item{path}{Path to save config file (default: ~/.firedata/config.yml)}
+\item{path}{Explicit output file path, required when \code{save = TRUE}.
+The parent directory must already exist. No default file path is used.}
 }
 \value{
 Invisibly returns the configuration list
@@ -18,8 +20,13 @@ Invisibly returns the configuration list
 Guides the user through setting up Firebase configuration interactively.
 }
 \examples{
-\dontrun{
+if (interactive()) {
 # Run interactive setup
 firebase_config_wizard()
+
+# Optionally save to an explicitly chosen file
+config_file <- tempfile(fileext = ".yml")
+firebase_config_wizard(save = TRUE, path = config_file)
+unlink(config_file)
 }
 }

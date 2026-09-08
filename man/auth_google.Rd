@@ -39,7 +39,8 @@ Authentication response
 Initiates Google OAuth flow and signs in to Firebase.
 }
 \examples{
-\dontrun{
+if (interactive()) {
+# Requires a configured Firebase project and OAuth client credentials.
 result <- auth_google(
   conn,
   client_id = "your-client-id.apps.googleusercontent.com",

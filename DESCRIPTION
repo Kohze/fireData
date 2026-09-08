@@ -1,5 +1,5 @@
 Package: fireData
-Title: Connect R to 'Google Firebase'
+Title: Connect to 'Google Firebase'
 Version: 2.0.1
 Authors@R: c(
     person("Robin", "Gounder", email = "robin@gounder.com", role = c("aut", "cre"),
@@ -7,11 +7,13 @@ Authors@R: c(
     person("Paul", "Spende", role = "aut"),
     person("Kevin", "McGinley", role = "ctb")
   )
-Description: Provides an R interface to 'Google Firebase' services, including
-    Realtime Database, Cloud Firestore, Authentication, and Cloud Storage.
-    Supports interactive use in R and 'Shiny' applications as well as automated
-    server-side workflows. Data frames and R objects can be stored and retrieved,
-    users can be authenticated, and files can be managed through service APIs.
+Description: Provides an interface to 'Google Firebase' services
+    <https://firebase.google.com/>, including 'Firebase Realtime Database',
+    'Cloud Firestore', 'Firebase Authentication', and 'Cloud Storage for Firebase'.
+    Supports interactive use and 'shiny' applications as well as automated
+    server-side workflows. Data frames and objects can be stored and retrieved,
+    users can be authenticated, and files can be managed through the services'
+    application programming interfaces.
 Depends: R (>= 4.1.0)
 License: MIT + file LICENSE
 URL: https://github.com/Kohze/fireData
@@ -26,7 +28,7 @@ Imports:
     openssl (>= 2.0.0),
     yaml (>= 2.3.0)
 Suggests:
-    testthat (>= 3.0.0),
+    testthat (>= 3.2.0),
     shiny (>= 1.7.0),
     shinyjs,
     knitr,

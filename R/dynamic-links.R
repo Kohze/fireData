@@ -29,19 +29,11 @@ NULL
 #'   been shut down.
 #' @export
 #' @examples
-#' \dontrun{
-#' conn <- firebase_connect(project_id = "my-project", api_key = "...")
-#'
-#' result <- dynlink_create(
-#'   conn,
+#' # The retired service is unavailable; this reports an error without a request.
+#' try(dynlink_create(
 #'   link = "https://example.com/page",
-#'   domain_uri_prefix = "https://example.page.link",
-#'   social_title = "Check this out!",
-#'   social_description = "An amazing page"
-#' )
-#'
-#' print(result$shortLink)
-#' }
+#'   domain_uri_prefix = "https://example.page.link"
+#' ))
 dynlink_create <- function(conn = NULL,
                            link,
                            domain_uri_prefix,

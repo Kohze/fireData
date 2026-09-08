@@ -29,11 +29,9 @@ Retrieves a configuration value using the following priority:
 }
 }
 \examples{
-\dontrun{
 # Get API key from environment or config
 api_key <- firebase_config_get("api_key")
 
 # Get with explicit value override
 api_key <- firebase_config_get("api_key", value = "my-api-key")
-}
 }

@@ -16,11 +16,9 @@ Invisibly returns NULL
 Clears session configuration values.
 }
 \examples{
-\dontrun{
 # Clear specific keys
 firebase_config_clear(c("api_key", "project_id"))
 
 # Clear all
 firebase_config_clear()
-}
 }

@@ -32,7 +32,9 @@ Downloads a file from Firebase Cloud Storage.
 \examples{
 \dontrun{
 # Download to file
-storage_download(conn, "images/photo.jpg", "local/photo.jpg")
+dest_file <- tempfile(fileext = ".jpg")
+storage_download(conn, "images/photo.jpg", dest_file)
+unlink(dest_file)
 
 # Download to memory
 content <- storage_download(conn, "data/config.json")

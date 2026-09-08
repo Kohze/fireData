@@ -13,11 +13,11 @@ firebase_config_show(profile = "default")
 Named list of all configuration values
 }
 \description{
-Returns all currently set configuration values from all sources.
+Returns all currently set configuration values from all sources, with
+sensitive values masked. Use \code{print()} to display the returned list.
 }
 \examples{
-\dontrun{
 # View current configuration
-firebase_config_show()
-}
+config <- firebase_config_show()
+print(config)
 }

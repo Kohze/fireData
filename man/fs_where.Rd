@@ -23,9 +23,8 @@ Updated firestore_query object
 Adds a field filter to a Firestore query.
 }
 \examples{
-\dontrun{
+conn <- firebase_connect(project_id = "my-project")
 query <- firestore_query(conn, "users") |>
   fs_where("age", ">=", 21) |>
   fs_where("status", "==", "active")
-}
 }

@@ -16,10 +16,10 @@ Invisibly returns the previous values
 Sets configuration values that persist for the current R session.
 }
 \examples{
-\dontrun{
 firebase_config_set(
   project_id = "my-project",
   api_key = "AIzaSy..."
 )
-}
+# Clear the example's session settings when finished
+firebase_config_clear(c("project_id", "api_key"))
 }

@@ -1,5 +1,24 @@
 # fireData 2.0.1
 
+## CRAN resubmission
+
+* Audited remaining examples: enabled local examples, guarded browser launching,
+  demonstrated the Dynamic Links shutdown with `try()`, and added temporary-file
+  cleanup to file-writing examples and legacy S4 downloads.
+* Required 'testthat' 3.2.0 or later for the mocking helpers used by the tests.
+* Revised the title and description, quoted service and package names, and added
+  the Firebase web service URL.
+* Guarded interactive setup, Google sign-in, and Shiny examples with
+  `if (interactive())` and corrected Shiny example namespaces.
+* Replaced legacy progress printing with suppressible messages and disabled
+  download progress bars. `firebase_config_show()` now returns its masked list
+  without printing; use `print()` to display it explicitly.
+* Made the configuration wizard session-only by default. Saving now requires
+  `save = TRUE` and an explicit output path; it never creates a home directory.
+* Used temporary paths for example downloads and backups, disabled implicit
+  legacy OAuth disk caching, and rendered legacy R Markdown deployments in a
+  temporary directory that is removed after upload.
+
 ## Compatibility and release maintenance
 
 * Updated the maintainer email and added the maintainer ORCID.
