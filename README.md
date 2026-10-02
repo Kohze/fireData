@@ -1,3 +1,5 @@
+[![CRAN status](https://www.r-pkg.org/badges/version/fireData)](https://CRAN.R-project.org/package=fireData)
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/fireData)](https://CRAN.R-project.org/package=fireData)
 [![GitHub tag](https://img.shields.io/github/v/tag/Kohze/fireData?label=version)](https://github.com/Kohze/fireData/tags)
 [![R-CMD-check](https://github.com/Kohze/fireData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Kohze/fireData/actions/workflows/R-CMD-check.yaml)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/Kohze/fireData/master/LICENSE)
@@ -14,7 +16,7 @@ fireData integrates R with selected Google Firebase services, enabling data exch
 - **Shiny Integration**: Built-in authentication UI for Shiny applications
 - **Service Accounts**: Server-side authentication and automation
 
-> **Version 2.0.1** introduces a modern API with consistent naming, connection objects, and improved error handling. All v1.x functions remain available with deprecation warnings.
+> **Version 2.0.2** introduces a modern API with consistent naming, connection objects, and improved error handling. All v1.x functions remain available with deprecation warnings.
 
 fireData covers the common REST operations for Realtime Database, Cloud Firestore,
 Authentication, and Cloud Storage. It is not a client for every Firebase product or
@@ -25,8 +27,15 @@ audited support matrix.
 
 ## Installation
 
+Install the released version from [CRAN](https://CRAN.R-project.org/package=fireData):
+
 ```r
-# Install from GitHub
+install.packages("fireData")
+```
+
+Or install the development version from GitHub:
+
+```r
 # install.packages("pak")
 pak::pak("Kohze/fireData")
 ```
@@ -259,10 +268,10 @@ head(downloaded_data)
 
 ## Migration from v1.x
 
-Version 2.0.1 uses the modern naming convention introduced in the 2.x series.
+Version 2.0.2 uses the modern naming convention introduced in the 2.x series.
 The old functions still work but show deprecation warnings:
 
-| v1.x (deprecated) | v2.0.1 (recommended) |
+| v1.x (deprecated) | v2.0.2 (recommended) |
 |-------------------|-------------------|
 | `auth()` | `auth_sign_in()` |
 | `anonymous_login()` | `auth_anonymous()` |
